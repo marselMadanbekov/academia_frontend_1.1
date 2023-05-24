@@ -1,0 +1,69 @@
+<mat-tab-group style="overflow: auto;height: 400px">
+  <mat-tab label="Teacher" >
+    <!-- Card Header - Dropdown -->
+    <div style="margin: 10px;">
+      <div
+        class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+        <h4 class="m-0 font-weight-bold text-primary">All teachers</h4>
+        <p class="text-end">Selected teacher</p>
+      </div>
+      <!-- Card Body -->
+      <table class="table table-hover table-bordered">
+        <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Firstname</th>
+          <th scope="col">Lastname</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <th scope="row">1</th>
+          <td>Mark</td>
+          <td>Otto</td>
+        </tr>
+        <tr>
+          <th scope="row">2</th>
+          <td>Jacob</td>
+          <td>Thornton</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </mat-tab>
+  <mat-tab label="Subject">
+    <div style="margin: 10px;">
+      <div
+        class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+        <h4 class="m-0 font-weight-bold text-primary">All Subjects</h4>
+        <p class="text-end">Selected subject</p>
+      </div>
+      <!-- Card Body -->
+      <table class="table table-hover table-bordered">
+        <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Subject</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <th scope="row">1</th>
+          <td>Mental</td>
+        </tr>
+        <tr>
+          <th scope="row">2</th>
+          <td>Russian</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </mat-tab>
+  <mat-tab label="Save">
+    <div style="display: flex;justify-content: center;align-items: center;height: 100px">
+      <a (click)="save()" class=" d-sm-inline-block btn btn-sm btn-primary shadow-sm"
+         style="padding: 10px;margin-left:20px;margin-right: 20px;"><i
+        class="fas fa-download fa-sm text-white-50"></i>Save changes</a>
+    </div>
+  </mat-tab>
+</mat-tab-group>

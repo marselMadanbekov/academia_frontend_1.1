@@ -1,0 +1,89 @@
+<div style="padding: 15px">
+  <div
+    class="card-header py-3 d-flex flex-row align-items-center justify-content-center">
+    <h4 class="m-0 font-weight-bold text-primary">Timetable</h4>
+  </div>
+  <div class="card-body">
+    <form [formGroup]="timetableForm">
+      <table class="table table-hover table-bordered">
+        <thead>
+        <tr>
+          <th scope="col">Day</th>
+          <th scope="col">time</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <th scope="row">Monday</th>
+          <td>
+            <input matInput formControlName="mondayHH" type="number" max="23" min="0" class="timepicker"
+                   placeholder="HH"> :
+            <input matInput formControlName="mondayMM" type="number" max="59" min="0" class="timepicker"
+                   placeholder="mm">
+          </td>
+        </tr>
+        <tr>
+          <th scope="row">Tuesday</th>
+          <td>
+            <input matInput formControlName="tuesdayHH" type="number" max="23" min="0" class="timepicker"
+                   placeholder="HH"> :
+            <input matInput formControlName="tuesdayMM" type="number" max="59" min="0" class="timepicker"
+                   placeholder="mm">
+          </td>
+        </tr>
+        <tr>
+          <th scope="row">Wednesday</th>
+          <td>
+            <input matInput formControlName="wednesdayHH" type="number" max="23" min="0" class="timepicker"
+                   placeholder="HH"> :
+            <input matInput formControlName="wednesdayMM" type="number" max="59" min="0" class="timepicker"
+                   placeholder="mm">
+          </td>
+        </tr>
+        <tr>
+          <th scope="row">Thursday</th>
+          <td>
+            <input matInput formControlName="thursdayHH" type="number" max="23" min="0" class="timepicker"
+                   placeholder="HH"> :
+            <input matInput formControlName="thursdayMM" type="number" max="59" min="0" class="timepicker"
+                   placeholder="mm">
+          </td>
+        </tr>
+        <tr>
+          <th scope="row">Friday</th>
+          <td>
+            <input matInput formControlName="fridayHH" type="number" max="23" min="0" class="timepicker"
+                   placeholder="HH"> :
+            <input matInput formControlName="fridayMM" type="number" max="59" min="0" class="timepicker"
+                   placeholder="mm">
+          </td>
+        </tr>
+        <tr>
+          <th scope="row">Saturday</th>
+          <td>
+            <input matInput formControlName="saturdayHH" type="number" max="23" min="0" class="timepicker"
+                   placeholder="HH"> :
+            <input matInput formControlName="saturdayMM" type="number" max="59" min="0" class="timepicker"
+                   placeholder="mm">
+          </td>
+        </tr>
+        <tr>
+          <th scope="row">Sunday</th>
+          <td>
+            <input matInput formControlName="sundayHH" type="number" max="23" min="0" class="timepicker"
+                   placeholder="HH"> :
+            <input matInput formControlName="sundayMM" type="number" max="59" min="0" class="timepicker"
+                   placeholder="mm">
+          </td>
+        </tr>
+        </tbody>
+      </table>
+      <div style="display: flex;justify-content: center;align-items: center;width: 100%">
+        <button class="d-sm-inline-block btn btn-sm btn-primary shadow-sm" [disabled]="timetableForm.invalid"
+                (click)="save()"><i
+          class="fas fa-download fa-sm text-white-50"></i>Create timetable
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

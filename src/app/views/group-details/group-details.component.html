@@ -1,0 +1,197 @@
+<!-- Page Wrapper -->
+<div id="wrapper">
+  <!-- Content Wrapper -->
+  <div id="content-wrapper" class="d-flex flex-column">
+    <!-- Main Content -->
+    <div id="content">
+      <!-- Topbar -->
+      <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+        <!-- Sidebar Toggle (Topbar) -->
+        <button mat-icon-button (click)="sidebarToggle()">
+          <mat-icon>menu</mat-icon>
+        </button>
+        <!-- Topbar Search -->
+        <form
+          class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+          <div class="input-group">
+            <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
+                   aria-label="Search" aria-describedby="basic-addon2">
+            <div class="input-group-append">
+              <button class="btn btn-primary" type="button">
+                <i class="fas fa-search fa-sm">
+                  <div style="display: flex;justify-content: center;align-items: center;">
+                    <mat-icon>search</mat-icon>
+                  </div>
+                </i>
+              </button>
+            </div>
+          </div>
+        </form>
+        <!-- Topbar Navbar -->
+        <ul class="navbar-nav ml-auto">
+          <div style="display: flex;justify-content: center;align-items: center;">
+            <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+              <mat-icon>language</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+              <button mat-menu-item>
+                <span>RU</span>
+              </button>
+              <button mat-menu-item>
+                <span>KG</span>
+              </button>
+            </mat-menu>
+          </div>
+          <div class="topbar-divider d-none d-sm-block"></div>
+
+          <!-- Nav Item - User Information -->
+          <li class="nav-item dropdown no-arrow">
+            <a [matMenuTriggerFor]="menu1" class="nav-link dropdown-toggle" id="userDropdown" role="button"
+               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <mat-icon>account_circle</mat-icon>
+              <span class="mr-2 d-none d-lg-inline text-gray-600 small">Madanbekov Marsel</span>
+            </a>
+            <mat-menu #menu1="matMenu">
+              <button mat-menu-item>
+                <span>profile</span>
+              </button>
+              <button mat-menu-item>
+                <span>logout</span>
+              </button>
+            </mat-menu>
+          </li>
+        </ul>
+      </nav>
+      <!-- End of Topbar -->
+
+      <!-- Begin Page Content -->
+      <div class="container-fluid">
+        <!-- Page Heading -->
+        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+          <h1 class="h3 mb-0 text-gray-800">Group name</h1>
+
+        </div>
+
+        <!-- Content Row -->
+
+        <div class="row">
+
+          <!-- Area Chart -->
+          <div class="col-xl-8 col-lg-7">
+            <div class="card shadow mb-4">
+              <!-- Card Header - Dropdown -->
+              <div
+                class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h4 class="m-0 font-weight-bold text-primary">All pupils</h4>
+                <a class="d-sm-inline-block btn btn-sm btn-primary shadow-sm" (click)="addPupil()"><i
+                  class="fas fa-download fa-sm text-white-50"></i>add new pupil</a>
+              </div>
+              <!-- Card Body -->
+              <div class="card-body">
+                <table class="table table-hover table-bordered">
+                  <thead>
+                  <tr >
+                    <th scope="col">#</th>
+                    <th scope="col">Firstname</th>
+                    <th scope="col">Lastname</th>
+                    <th scope="col">Phone number</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr (click)="viewUser()">
+                    <th scope="row">1</th>
+                    <td>Mark</td>
+                    <td>Otto</td>
+                    <td>+996 999 999 999</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">2</th>
+                    <td>Jacob</td>
+                    <td>Thornton</td>
+                    <td>+996 999 999 999</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">3</th>
+                    <td colspan="2">Larry the Bird</td>
+                    <td>+996 999 999 999</td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- Pie Chart -->
+          <div class="col-xl-4 col-lg-5">
+            <div class="card shadow mb-4">
+              <!-- Card Header - Dropdown -->
+              <div
+                class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h4 class="m-0 font-weight-bold text-primary">Description</h4>
+                <a (click)="edit()" class="d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+                  class="fas fa-download fa-sm text-white-50"></i>Edit</a>
+              </div>
+              <!-- Card Body -->
+              <div class="card-body">
+                <table class="table table-bordered">
+                  <tr>
+                    <td>Teacher</td>
+                    <td>Teacher name</td>
+                  </tr>
+                  <tr>
+                    <td>Subject</td>
+                    <td>Subject name</td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+
+          <!-- Area Chart -->
+          <div class="col-xl-8 col-lg-7">
+            <div class="card shadow mb-4">
+              <!-- Card Header - Dropdown -->
+              <div
+                class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h4 class="m-0 font-weight-bold text-primary">Timetable</h4>
+                <a class="d-sm-inline-block btn btn-sm btn-primary shadow-sm" (click)="createTimetable()"><i
+                  class="fas fa-download fa-sm text-white-50"></i>Create timetable</a>
+              </div>
+              <!-- Card Body -->
+              <div class="card-body">
+                <table class="table table-hover table-bordered">
+                  <thead>
+                  <tr>
+                    <th scope="col">Day</th>
+                    <th scope="col">time</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr>
+                    <th scope="row">mon</th>
+                    <td>Mark</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">tue</th>
+                    <td>Mark</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">wed</th>
+                    <td>Mark</td>
+                  </tr>
+
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- End of Main Content -->
+    </div>
+    <!-- End of Content Wrapper -->
+  </div>
+  <!-- End of Page Wrapper -->
+</div>

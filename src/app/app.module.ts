@@ -1,0 +1,92 @@
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+import { MainPageComponent } from './views/main-page/main-page.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {MatDividerModule} from "@angular/material/divider";
+import {MatIconModule} from "@angular/material/icon";
+import {MatButtonModule} from "@angular/material/button";
+import {MatSidenavModule} from "@angular/material/sidenav";
+import {MatToolbarModule} from "@angular/material/toolbar";
+import {MatCheckboxModule} from "@angular/material/checkbox";
+import {MatFormFieldModule} from "@angular/material/form-field";
+import {SidebarService} from "./service/sidebar.service";
+import { BranchDetailsComponent } from './views/branch-details/branch-details.component';
+import { GroupsComponent } from './views/groups/groups.component';
+import { TeachersComponent } from './views/teachers/teachers.component';
+import { PupilsComponent } from './views/pupils/pupils.component';
+import { SubjectsComponent } from './views/subjects/subjects.component';
+import {MatMenuModule} from "@angular/material/menu";
+import {TranslationPipe} from "./service/translations/translation.pipe";
+import { AttendanceComponent } from './views/attendance/attendance.component';
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {CommonModule} from "@angular/common";
+import {MatRadioModule} from "@angular/material/radio";
+import {MatSelectModule} from "@angular/material/select";
+import { ConfirmationAlertComponent } from './views/dialogs/confirmation-alert/confirmation-alert.component';
+import {MatDialogModule, MatDialogRef} from "@angular/material/dialog";
+import { LoginComponent } from './auth/login/login.component';
+import { GroupDetailsComponent } from './views/group-details/group-details.component';
+import {AddPupilGroupComponent} from "./views/dialogs/add-pupil-group/add-pupil-group.component";
+import { EditGroupComponent } from './views/dialogs/edit-group/edit-group.component';
+import {MatStepperModule} from "@angular/material/stepper";
+import {MatTabsModule} from "@angular/material/tabs";
+import { UserDetailsComponent } from './views/user-details/user-details.component';
+import { DayStatComponent } from './views/charts/day-stat/day-stat.component';
+import {MatInputModule} from "@angular/material/input";
+import { CreateTimetableComponent } from './views/dialogs/create-timetable/create-timetable.component';
+import { EditUserComponent } from './views/dialogs/edit-user/edit-user.component';
+import { CreateUserComponent } from './views/dialogs/create-user/create-user.component';
+import { CreateGroupComponent } from './views/dialogs/create-group/create-group.component';
+import { CreateBranchComponent } from './views/dialogs/create-branch/create-branch.component';
+
+@NgModule({
+  declarations: [AppComponent,
+    MainPageComponent,
+    BranchDetailsComponent,
+    GroupsComponent,
+    TeachersComponent,
+    PupilsComponent,
+    TranslationPipe,
+    SubjectsComponent,
+    AttendanceComponent,
+    ConfirmationAlertComponent,
+    LoginComponent,
+    GroupDetailsComponent,
+    AddPupilGroupComponent,
+    EditGroupComponent,
+    UserDetailsComponent,
+    DayStatComponent,
+    CreateTimetableComponent,
+    EditUserComponent,
+    CreateUserComponent,
+    CreateGroupComponent,
+    CreateBranchComponent],
+  imports: [
+    ReactiveFormsModule,
+    CommonModule,
+    BrowserModule,
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    MatToolbarModule,
+    MatSidenavModule,
+    MatButtonModule,
+    MatIconModule,
+    MatDividerModule,
+    MatCheckboxModule,
+    MatFormFieldModule,
+    MatMenuModule,
+    FormsModule,
+    MatRadioModule,
+    MatSelectModule,
+    MatDialogModule,
+    MatStepperModule,
+    MatTabsModule,
+    MatInputModule,
+  ],
+  providers: [SidebarService,TranslationPipe],
+  bootstrap: [AppComponent],
+})
+export class AppModule { }

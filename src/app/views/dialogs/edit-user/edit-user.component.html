@@ -1,0 +1,37 @@
+<div style="padding: 20px">
+  <div
+    class="card-header py-3 d-flex flex-row align-items-center justify-content-center">
+    <h4 class="m-0 font-weight-bold text-primary">Edit user</h4>
+  </div>
+  <form [formGroup]="firstFormGroup">
+    <div style="display: flex;flex-wrap: wrap;justify-content: center;">
+
+      <mat-form-field appearance="fill">
+        <mat-label>Firstname</mat-label>
+        <input matInput formControlName="firstname">
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Email</mat-label>
+        <input matInput formControlName="email">
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Lastname</mat-label>
+        <input matInput formControlName="lastname">
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Address</mat-label>
+        <input matInput formControlName="address">
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Phone number</mat-label>
+        <input matInput formControlName="phoneNumber">
+      </mat-form-field>
+      <div style="display: flex;justify-content: center;align-items: center;width: 100%">
+        <button class="d-sm-inline-block btn btn-sm btn-primary shadow-sm" [disabled]="firstFormGroup.invalid"
+                (click)="save()"><i
+          class="fas fa-download fa-sm text-white-50"></i>Save
+        </button>
+      </div>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,15 @@
+.form-row {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.form-column {
+  flex-basis: 50%;
+  padding: 15px;
+}
+
+@media screen and (max-width: 767px) {
+  .form-column {
+    flex-basis: 100%;
+  }
+}

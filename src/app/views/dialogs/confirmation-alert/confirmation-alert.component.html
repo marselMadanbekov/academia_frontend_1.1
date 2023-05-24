@@ -1,0 +1,14 @@
+<!--<div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated&#45;&#45;grow-in"-->
+<!--     aria-labelledby="alertsDropdown">-->
+<!--  <h6 class="dropdown-header">-->
+<!--    Alerts Center-->
+<!--  </h6>-->
+
+<!--</div>-->
+<mat-dialog-content>{{ data }}</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <div style="width: 100%;display:flex;justify-content: space-between; padding: 10px">
+    <button mat-button mat-dialog-close>Нет</button>
+    <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Да</button>
+  </div>
+</mat-dialog-actions>

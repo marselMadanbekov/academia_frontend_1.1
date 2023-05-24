@@ -1,0 +1,36 @@
+<div class="card shadow mb-4">
+  <!-- Card Header - Dropdown -->
+  <div
+    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+    <h4 class="m-0 font-weight-bold text-primary">All pupils</h4>
+    <div style="width: 40%">
+      <input type="text" class="form-control bg-light border-2 small" placeholder="Search for..."
+             aria-label="Search" aria-describedby="basic-addon2">
+    </div>
+  </div>
+  <!-- Card Body -->
+  <div class="card-body">
+    <table class="table">
+      <thead class="table-dark">
+      <tr>
+        <th>#</th>
+        <th>Name</th>
+        <th>Select</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let student of students; let i = index">
+        <td>{{ i + 1 }}</td>
+        <td>{{ student.name }}</td>
+        <td>
+          <mat-checkbox color='primary' class="example-margin" [(ngModel)]="student.isChecked">
+          </mat-checkbox>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <a (click)="add()" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" style="padding: 10px;margin-left:20px;margin-right: 20px;"><i
+    class="fas fa-download fa-sm text-white-50"></i>add new pupil</a>
+</div>
