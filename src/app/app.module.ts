@@ -14,9 +14,9 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {SidebarService} from "./service/sidebar.service";
 import { BranchDetailsComponent } from './views/branch-details/branch-details.component';
-import { GroupsComponent } from './views/groups/groups.component';
-import { TeachersComponent } from './views/teachers/teachers.component';
-import { PupilsComponent } from './views/pupils/pupils.component';
+import { GroupsComponent } from './views/groupPages/groups/groups.component';
+import { TeachersComponent } from './views/userPages/teachers/teachers.component';
+import { PupilsComponent } from './views/userPages/pupils/pupils.component';
 import { SubjectsComponent } from './views/subjects/subjects.component';
 import {MatMenuModule} from "@angular/material/menu";
 import {TranslationPipe} from "./service/translations/translation.pipe";
@@ -28,12 +28,12 @@ import {MatSelectModule} from "@angular/material/select";
 import { ConfirmationAlertComponent } from './views/dialogs/confirmation-alert/confirmation-alert.component';
 import {MatDialogModule, MatDialogRef} from "@angular/material/dialog";
 import { LoginComponent } from './auth/login/login.component';
-import { GroupDetailsComponent } from './views/group-details/group-details.component';
+import { GroupDetailsComponent } from './views/groupPages/group-details/group-details.component';
 import {AddPupilGroupComponent} from "./views/dialogs/add-pupil-group/add-pupil-group.component";
 import { EditGroupComponent } from './views/dialogs/edit-group/edit-group.component';
 import {MatStepperModule} from "@angular/material/stepper";
 import {MatTabsModule} from "@angular/material/tabs";
-import { UserDetailsComponent } from './views/user-details/user-details.component';
+import { UserDetailsComponent } from './views/userPages/user-details/user-details.component';
 import { DayStatComponent } from './views/charts/day-stat/day-stat.component';
 import {MatInputModule} from "@angular/material/input";
 import { CreateTimetableComponent } from './views/dialogs/create-timetable/create-timetable.component';
@@ -41,6 +41,11 @@ import { EditUserComponent } from './views/dialogs/edit-user/edit-user.component
 import { CreateUserComponent } from './views/dialogs/create-user/create-user.component';
 import { CreateGroupComponent } from './views/dialogs/create-group/create-group.component';
 import { CreateBranchComponent } from './views/dialogs/create-branch/create-branch.component';
+import { NotFoundComponent } from './views/errorPages/not-found/not-found.component';
+import {HttpClientModule} from "@angular/common/http";
+import {MatSnackBarModule} from "@angular/material/snack-bar";
+import {MatProgressBarModule} from "@angular/material/progress-bar";
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 
 @NgModule({
   declarations: [AppComponent,
@@ -63,8 +68,11 @@ import { CreateBranchComponent } from './views/dialogs/create-branch/create-bran
     EditUserComponent,
     CreateUserComponent,
     CreateGroupComponent,
-    CreateBranchComponent],
+    CreateBranchComponent,
+    NotFoundComponent],
   imports: [
+    MatSnackBarModule,
+    HttpClientModule,
     ReactiveFormsModule,
     CommonModule,
     BrowserModule,
@@ -85,6 +93,8 @@ import { CreateBranchComponent } from './views/dialogs/create-branch/create-bran
     MatStepperModule,
     MatTabsModule,
     MatInputModule,
+    MatProgressBarModule,
+    MatProgressSpinnerModule,
   ],
   providers: [SidebarService,TranslationPipe],
   bootstrap: [AppComponent],

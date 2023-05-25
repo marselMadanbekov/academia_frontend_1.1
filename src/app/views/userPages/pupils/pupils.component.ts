@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {SidebarService} from "../../service/sidebar.service";
+import {SidebarService} from "../../../service/sidebar.service";
 
 @Component({
   selector: 'app-pupils',

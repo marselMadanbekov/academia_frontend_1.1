@@ -2,14 +2,14 @@ import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {MainPageComponent} from "./views/main-page/main-page.component";
 import {BranchDetailsComponent} from "./views/branch-details/branch-details.component";
-import {GroupsComponent} from "./views/groups/groups.component";
-import {TeachersComponent} from "./views/teachers/teachers.component";
-import {PupilsComponent} from "./views/pupils/pupils.component";
+import {GroupsComponent} from "./views/groupPages/groups/groups.component";
+import {TeachersComponent} from "./views/userPages/teachers/teachers.component";
+import {PupilsComponent} from "./views/userPages/pupils/pupils.component";
 import {SubjectsComponent} from "./views/subjects/subjects.component";
 import {AttendanceComponent} from "./views/attendance/attendance.component";
 import {LoginComponent} from "./auth/login/login.component";
-import {GroupDetailsComponent} from "./views/group-details/group-details.component";
-import {UserDetailsComponent} from "./views/user-details/user-details.component";
+import {GroupDetailsComponent} from "./views/groupPages/group-details/group-details.component";
+import {UserDetailsComponent} from "./views/userPages/user-details/user-details.component";
 
 const routes: Routes = [
   {path: 'main', component: MainPageComponent},

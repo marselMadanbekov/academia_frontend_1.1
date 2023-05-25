@@ -1,9 +1,9 @@
 import {Component} from '@angular/core';
-import {SidebarService} from "../../service/sidebar.service";
+import {SidebarService} from "../../../service/sidebar.service";
 import {Router} from "@angular/router";
 import {MatDialog, MatDialogRef} from "@angular/material/dialog";
-import {CreateUserComponent} from "../dialogs/create-user/create-user.component";
-import {CreateGroupComponent} from "../dialogs/create-group/create-group.component";
+import {CreateUserComponent} from "../../dialogs/create-user/create-user.component";
+import {CreateGroupComponent} from "../../dialogs/create-group/create-group.component";
 
 @Component({
   selector: 'app-groups',

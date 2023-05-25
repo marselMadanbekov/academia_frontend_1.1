@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import {SidebarService} from "../../service/sidebar.service";
+import {SidebarService} from "../../../service/sidebar.service";
 import {MatDialog, MatDialogRef} from "@angular/material/dialog";
-import {CreateTimetableComponent} from "../dialogs/create-timetable/create-timetable.component";
-import {CreateUserComponent} from "../dialogs/create-user/create-user.component";
+import {CreateTimetableComponent} from "../../dialogs/create-timetable/create-timetable.component";
+import {CreateUserComponent} from "../../dialogs/create-user/create-user.component";
 
 @Component({
   selector: 'app-teachers',

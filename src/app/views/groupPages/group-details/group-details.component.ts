@@ -1,10 +1,10 @@
 import {Component} from '@angular/core';
-import {SidebarService} from "../../service/sidebar.service";
+import {SidebarService} from "../../../service/sidebar.service";
 import {MatDialog, MatDialogRef} from "@angular/material/dialog";
-import {AddPupilGroupComponent} from "../dialogs/add-pupil-group/add-pupil-group.component";
-import {EditGroupComponent} from "../dialogs/edit-group/edit-group.component";
+import {AddPupilGroupComponent} from "../../dialogs/add-pupil-group/add-pupil-group.component";
+import {EditGroupComponent} from "../../dialogs/edit-group/edit-group.component";
 import {Router} from "@angular/router";
-import {CreateTimetableComponent} from "../dialogs/create-timetable/create-timetable.component";
+import {CreateTimetableComponent} from "../../dialogs/create-timetable/create-timetable.component";
 
 @Component({
   selector: 'app-group-details',

@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
-import {SidebarService} from "../../service/sidebar.service";
+import {SidebarService} from "../../../service/sidebar.service";
 import {MatDialog, MatDialogRef} from "@angular/material/dialog";
-import {AddPupilGroupComponent} from "../dialogs/add-pupil-group/add-pupil-group.component";
-import {EditGroupComponent} from "../dialogs/edit-group/edit-group.component";
+import {AddPupilGroupComponent} from "../../dialogs/add-pupil-group/add-pupil-group.component";
+import {EditGroupComponent} from "../../dialogs/edit-group/edit-group.component";
 import {Router} from "@angular/router";
-import {EditUserComponent} from "../dialogs/edit-user/edit-user.component";
+import {EditUserComponent} from "../../dialogs/edit-user/edit-user.component";
 
 @Component({
   selector: 'app-user-details',
