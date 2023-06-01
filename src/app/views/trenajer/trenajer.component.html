@@ -1,0 +1,239 @@
+<mat-drawer-container class="example-container bg-gradient-primary" autosize style="width: 100%;height: 100vh;">
+  <mat-drawer #drawer class="example-sidenav" mode="side" opened="true">
+    <div
+      class="card-header py-3 d-flex flex-row align-items-center" style="justify-content: space-between;">
+      <h1 class="m-0 font-weight-bold text-primary">Main</h1>
+      <button mat-icon-button [matMenuTriggerFor]="menu" class="example-icon favorite-icon"
+              aria-label="Example icon-button with heart icon">
+        <mat-icon>language</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item (click)="changeLanguage('ru')">ru</button>
+        <button mat-menu-item (click)="changeLanguage('kg')">kg</button>
+      </mat-menu>
+    </div>
+    <div class="row" style="margin-top: 20px">
+      <div class="col-8">
+        <mat-icon color="primary">alarm_on</mat-icon>
+        <h4>Speed</h4>
+      </div>
+      <div class="col-3">
+        <input class="inputs" type="number" step="0.2"
+               max="23"
+               min="0.2" [(ngModel)]="inter">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-8">
+        <mat-icon color="primary">settings_input_component</mat-icon>
+        <h4>digits</h4>
+      </div>
+      <div class="col-3">
+        <input class="inputs" type="number" max="20" min="1" [(ngModel)]="digits" (input)="digitsChange()">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-8">
+        <mat-icon color="primary">123</mat-icon>
+        <h4>Count</h4>
+      </div>
+      <div class="col-3">
+        <input class="inputs" type="number" max="100"
+               min="3" [(ngModel)]="count">
+      </div>
+    </div>
+    <hr>
+    <div class="row" style="display: flex;justify-content: center;">
+      <mat-form-field>
+        <mat-label>{{'PSV'|translationPipe:lang}}</mat-label>
+        <mat-select>
+          <mat-option>None</mat-option>
+          <mat-option *ngFor="let task of pbSelectInfo" [value]="task">{{task.name}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="row" style="display: flex;justify-content: center;">
+      <mat-form-field>
+        <mat-label>{{'BRO_HELP'|translationPipe:lang}}</mat-label>
+        <mat-select [disabled]="!(startButtonEnable || showAnswerEnable)" [(ngModel)]="pbSelectedTask"
+                    (selectionChange)="pbSelected()">
+          <mat-option>None</mat-option>
+          <mat-option *ngFor="let task of pbSelectInfo" [value]="task">{{task.name}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="row" style="display: flex;justify-content: center;">
+      <mat-form-field>
+        <mat-label>{{'FRIEND_HELP'|translationPipe:lang}}</mat-label>
+        <mat-select [disabled]="!(startButtonEnable || showAnswerEnable)" [(ngModel)]="pdSelectedTask" (selectionChange)="pdSelected()">
+          <mat-option>None</mat-option>
+          <mat-option *ngFor="let task of pdSelectInfo" [value]="task">{{task.name}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="row" style="display: flex;justify-content: center;">
+      <mat-form-field [hidden]="isPupil">
+        <mat-label>{{'COUNT_OF_PUPILS'|translationPipe:lang}}</mat-label>
+        <mat-select [(ngModel)]="countOfPupils" (selectionChange)="countOfPupilChange()">
+          <mat-option>None</mat-option>
+          <mat-option *ngFor="let pupCount of countFrames" [value]="pupCount">{{pupCount}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="row" style="display: flex;justify-content: center;">
+      <mat-form-field [hidden]="isPupil">
+        <mat-label>{{'GROUP'|translationPipe:lang}}</mat-label>
+        <mat-select>
+          <mat-option>None</mat-option>
+          <mat-option *ngFor="let pupCount of countFrames" [value]="pupCount">{{pupCount}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </mat-drawer>
+
+  <div class="example-sidenav-content">
+    <mat-toolbar>
+      <button (click)="drawer.toggle()" mat-icon-button class="example-icon"
+              aria-label="Example icon-button with menu icon">
+        <mat-icon class="white-icon">menu</mat-icon>
+      </button>
+      <div class="container" style="width: 100%">
+        <div class="row" style="display: flex;align-items: center">
+          <div class="col-10" style="display: flex; justify-content: center;">
+            <div class="btn-container" [hidden]="!startButtonEnable">
+              <a class="btn btn-success btn-icon-split" (click)="start()">
+                <span class="text">Start</span>
+              </a>
+            </div>
+            <div class="btn-container"  [hidden]="startButtonEnable || showAnswerEnable">
+              <a class="btn btn-warning btn-icon-split" (click)="break()">
+                <span class="text">break</span>
+              </a>
+            </div>
+            <div class="btn-container" [hidden]="!showAnswerEnable">
+              <a class="btn btn-light btn-icon-split" (click)="answer()">
+                <span class="text">answer</span>
+              </a>
+            </div>
+          </div>
+          <div class="col-2">
+            <div style="display: flex;align-items:end;justify-content: center;">
+              <span class="example-spacer"></span>
+              <label class="toggleButton">
+                <input type="checkbox" [checked]="voice" [(ngModel)]="voice">
+                <div>
+                  <svg viewBox="0 0 44 44">
+                    <path
+                      d="M14,24 L21,31 L39.7428882,11.5937758 C35.2809627,6.53125861 30.0333333,4 24,4 C12.95,4 4,12.95 4,24 C4,35.05 12.95,44 24,44 C35.05,44 44,35.05 44,24 C44,19.3 42.5809627,15.1645919 39.7428882,11.5937758"
+                      transform="translate(-2.000000, -2.000000)"></path>
+                  </svg>
+                </div>
+              </label>
+
+              <h3 style="margin-left: 10px" class="white-icon">{{'VOICE'|translationPipe:lang}}</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+    </mat-toolbar>
+    <!--    content-->
+    <div style="display:flex;flex-wrap: wrap;justify-content: center;align-items: center; height: 90vh">
+      <mat-card *ngIf="countOfPupils > 0" class="example-card" [style.width]="countedWidth + '%'" [style.height]="countedHeight + '%'">
+        <mat-card-header>
+          <div class="d-flex align-items-center" [hidden]="isPupil">
+            <a>
+              <mat-icon class="example-icon" style="margin-right: 20px">assignment_ind</mat-icon>
+            </a>
+            <mat-select class="marsForm" placeholder="{{'SELECT_PUPIL'|translationPipe:lang}}">
+              <mat-option [value]="defaultUser()">{{'NO'|translationPipe:lang}}</mat-option>
+              <mat-option *ngFor="let pupil of pupils"></mat-option>
+            </mat-select>
+          </div>
+        </mat-card-header>
+        <mat-card-content>
+          <h1 [style.font-size]="fontSize + 'vh'">This</h1>
+        </mat-card-content>
+        <mat-card-actions style="justify-content: space-between;padding: 20px">
+          <a class="btn btn-success btn-icon-split">
+            <span class="text">correct</span>
+          </a>
+          <a class="btn btn-danger btn-icon-split">
+            <span class="text">incorrect</span>
+          </a>
+        </mat-card-actions>
+      </mat-card>
+      <mat-card *ngIf="countOfPupils > 1" class="example-card" [style.width]="countedWidth + '%'" [style.height]="countedHeight + '%'">
+        <mat-card-header>
+          <div class="d-flex align-items-center" [hidden]="isPupil">
+            <a>
+              <mat-icon class="example-icon" style="margin-right: 20px">assignment_ind</mat-icon>
+            </a>
+            <mat-select class="marsForm" placeholder="{{'SELECT_PUPIL'|translationPipe:lang}}">
+              <mat-option [value]="defaultUser()">{{'NO'|translationPipe:lang}}</mat-option>
+              <mat-option *ngFor="let pupil of pupils"></mat-option>
+            </mat-select>
+          </div>
+        </mat-card-header>
+        <mat-card-content>
+          <h1 [style.font-size]="fontSize + 'vh'">This</h1>
+        </mat-card-content>
+        <mat-card-actions style="justify-content: space-between;padding: 20px">
+          <a class="btn btn-success btn-icon-split">
+            <span class="text">correct</span>
+          </a>
+          <a class="btn btn-danger btn-icon-split">
+            <span class="text">incorrect</span>
+          </a>
+        </mat-card-actions>
+      </mat-card>
+      <mat-card *ngIf="countOfPupils > 2" class="example-card" [style.width]="countedWidth + '%'" [style.height]="countedHeight + '%'">
+        <mat-card-header>
+          <div class="d-flex align-items-center" [hidden]="isPupil">
+            <a>
+              <mat-icon class="example-icon" style="margin-right: 20px">assignment_ind</mat-icon>
+            </a>
+            <mat-select class="marsForm" placeholder="{{'SELECT_PUPIL'|translationPipe:lang}}">
+              <mat-option [value]="defaultUser()">{{'NO'|translationPipe:lang}}</mat-option>
+              <mat-option *ngFor="let pupil of pupils"></mat-option>
+            </mat-select>
+          </div>
+        </mat-card-header>
+        <mat-card-content>
+          <h1 [style.font-size]="fontSize + 'vh'">This</h1>
+        </mat-card-content>
+        <mat-card-actions style="justify-content: space-between;padding: 20px">
+          <a class="btn btn-success btn-icon-split">
+            <span class="text">correct</span>
+          </a>
+          <a class="btn btn-danger btn-icon-split">
+            <span class="text">incorrect</span>
+          </a>
+        </mat-card-actions>
+      </mat-card>
+      <mat-card *ngIf="countOfPupils > 3" class="example-card" [style.width]="countedWidth + '%'" [style.height]="countedHeight + '%'">
+        <mat-card-header>
+          <div class="d-flex align-items-center" [hidden]="isPupil">
+            <a>
+              <mat-icon class="example-icon" style="margin-right: 20px">assignment_ind</mat-icon>
+            </a>
+            <mat-select class="marsForm" placeholder="{{'SELECT_PUPIL'|translationPipe:lang}}">
+              <mat-option [value]="defaultUser()">{{'NO'|translationPipe:lang}}</mat-option>
+              <mat-option *ngFor="let pupil of pupils"></mat-option>
+            </mat-select>
+          </div>
+        </mat-card-header>
+        <mat-card-content>
+          <h1 [style.font-size]="fontSize + 'vh'">This</h1>
+        </mat-card-content>
+        <mat-card-actions style="justify-content: space-between;padding: 20px">
+          <a class="btn btn-success btn-icon-split">
+            <span class="text">correct</span>
+          </a>
+          <a class="btn btn-danger btn-icon-split">
+            <span class="text">incorrect</span>
+          </a>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </div>
+</mat-drawer-container>

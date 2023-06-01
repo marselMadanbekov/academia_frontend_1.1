@@ -4,6 +4,7 @@ import {AuthService} from "../../service/auth.service";
 import {TokenStorageService} from "../../service/token-storage.service";
 import {NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Router} from "@angular/router";
 import {NotificationService} from "../../service/notification.service";
+import {CRoleService} from "../../service/current/c-role.service";
 
 @Component({
   selector: 'app-login',
@@ -21,6 +22,7 @@ export class LoginComponent implements OnInit {
     private tokenStorage: TokenStorageService,
     private notificationService: NotificationService,
     private router: Router,
+    private roleService: CRoleService,
     private fb: FormBuilder,) {
     this.loginForm = this.createLoginForm();
   }
@@ -53,24 +55,27 @@ export class LoginComponent implements OnInit {
 
   async submit(): Promise<void> {
     this.showProgressBar = true;
-    await this.sleep(5000);
-    // this.authService.login({
-    //   username: this.loginForm.value.username,
-    //   password: this.loginForm.value.password
-    // }).subscribe(data => {
-    //   console.log(data);
-    //
-    //
-    //   this.tokenStorage.saveToken(data.token);
-    //   this.tokenStorage.saveUser(data);
-    //
-    //   console.log(data.role);
-    //   this.router.navigate(['main']);
-    //   this.notificationService.showSnackBar('Successfully logged in');
-    // }, error => {
-    //   console.log(error);
-    //   this.notificationService.showSnackBar(error.message);
-    // });
-    this.router.navigate(['main']);
+    this.authService.login({
+      username: this.loginForm.value.username,
+      password: this.loginForm.value.password
+    }).subscribe(data => {
+      console.log(data);
+
+
+      this.tokenStorage.saveToken(data.token);
+      this.tokenStorage.saveUser(data);
+
+      console.log('setting current role' + data.role);
+      console.log(this.roleService.currentRole$);
+      this.roleService.setCurrentRole(data.role);
+      if(data.role === 'ROLE_PUPIL' || data.role === "ROLE_TEACHER")
+        this.router.navigate(['main-user'])
+      else
+        this.router.navigate(['main-admin']);
+      this.notificationService.showSnackBar('Successfully logged in');
+    }, error => {
+      console.log(error);
+      this.notificationService.showSnackBar(error.message);
+    });
   }
 }

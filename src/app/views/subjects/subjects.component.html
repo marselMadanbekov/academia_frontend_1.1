@@ -69,54 +69,23 @@
         <!-- Page Heading -->
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
           <h1 class="h3 mb-0 text-gray-800">Groups</h1>
-          <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-            class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
+          <a class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" (click)="createSubject()"><i
+            class="fas fa-download fa-sm text-white-50"></i> Create subject</a>
         </div>
 
         <!-- Content Row -->
         <div class="row">
 
           <!-- Earnings (Monthly) Card Example -->
-          <div class="col-xl-3 col-md-6 mb-4">
-            <div class="card bg-warning text-white shadow">
+          <div class="col-xl-3 col-md-6 mb-4" *ngFor="let subject of subjects; let i = index">
+            <div class="card {{ i % 5 === 0 ? 'bg-dark' : i % 5 === 1 ? 'bg-info' : i % 5 === 2 ? 'bg-success' :  i % 5 === 3 ? 'bg-danger' :'bg-primary' }} text-white shadow">
               <div class="card-body">
-                Subject #1
-                <div class="text-white-50 small">cost</div>
+                <h3>{{subject.name}}</h3>
+                <div class="text-white-50 small">{{subject.cost_per_lesson}}</div>
               </div>
             </div>
           </div>
 
-          <!-- Earnings (Monthly) Card Example -->
-          <div class="col-xl-3 col-md-6 mb-4">
-            <div class="card bg-info text-white shadow">
-              <div class="card-body">
-                Subject #2
-                <div class="text-white-50 small">cost</div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Earnings (Monthly) Card Example -->
-          <div class="col-xl-3 col-md-6 mb-4">
-            <div class="card bg-success text-white shadow">
-              <div class="card-body">
-                Subject #3
-                <div class="text-white-50 small">cost</div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Pending Requests Card Example -->
-          <div class="col-xl-3 col-md-6 mb-4">
-            <div class="card bg-primary text-white shadow">
-              <div class="card-body">
-                Subject #4
-                <div class="text-white-50 small">cost</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
       <!-- End of Content Wrapper -->
     </div>
     <!-- End of Page Wrapper -->

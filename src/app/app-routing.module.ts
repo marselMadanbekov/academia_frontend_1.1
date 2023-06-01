@@ -10,9 +10,14 @@ import {AttendanceComponent} from "./views/attendance/attendance.component";
 import {LoginComponent} from "./auth/login/login.component";
 import {GroupDetailsComponent} from "./views/groupPages/group-details/group-details.component";
 import {UserDetailsComponent} from "./views/userPages/user-details/user-details.component";
+import {TrenajerComponent} from "./views/trenajer/trenajer.component";
+import {AuthGuardService} from "./helper/auth-guard.service";
+import {MainUserComponent} from "./views/main-user/main-user.component";
+import {MainAdminComponent} from "./views/main-admin/main-admin.component";
+import {RoleGuardService} from "./helper/role-guard.service";
 
 const routes: Routes = [
-  {path: 'main', component: MainPageComponent},
+  {path: 'main', component: MainAdminComponent, canActivate:[RoleGuardService,AuthGuardService]},
   {path: 'branch', component: BranchDetailsComponent},
   {path: 'groups', component: GroupsComponent},
   {path: 'teachers', component: TeachersComponent},
@@ -23,6 +28,10 @@ const routes: Routes = [
   {path: 'group-details', component: GroupDetailsComponent},
   {path: 'user-details', component: UserDetailsComponent},
   {path: '', redirectTo: 'main', pathMatch: 'full'},
+  {path: 'trenajer', component: TrenajerComponent},
+  {path: 'main-user', component: MainUserComponent},
+  {path: 'main-admin', component: MainAdminComponent},
+
   // {path: 'errorPage', component: ErrorPageComponent},
 ];
 

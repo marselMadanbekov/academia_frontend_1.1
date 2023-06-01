@@ -2,7 +2,6 @@
   <mat-sidenav [opened]="isSidebarOpen" (closedStart)="handleSidebarClosed()" style="width: 224px">
     <!-- Содержимое боковой панели -->
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
-
       <!-- Sidebar - Brand -->
       <a class="sidebar-brand d-flex align-items-center justify-content-center">
         <div class="sidebar-brand-icon rotate-n-15">
@@ -15,10 +14,11 @@
       <hr class="sidebar-divider my-0">
 
       <!-- Nav Item - Dashboard -->
-      <li class="nav-item active">
+      <li class="nav-item active" [hidden]="isShowAdminButtons">
         <a class="nav-link" routerLink="main">
           <i class="fas fa-fw fa-tachometer-alt"></i>
-          <span>Branches</span></a>
+          <span>Branches</span>
+        </a>
       </li>
 
       <!-- Divider -->
@@ -30,7 +30,7 @@
       </div>
 
       <!-- Nav Item - Pages Collapse Menu -->
-      <li class="nav-item">
+      <li class="nav-item" [hidden]="isShowAdminButtons">
         <a class="nav-link collapsed" routerLink="branch" data-toggle="collapse" data-target="#collapseTwo"
            aria-expanded="true" aria-controls="collapseTwo">
           <i class="fas fa-fw fa-cog"></i>
@@ -56,7 +56,7 @@
       </div>
 
       <!-- Nav Item - Pages Collapse Menu -->
-      <li class="nav-item">
+      <li class="nav-item" [hidden]="isShowAdminButtons">
         <a class="nav-link collapsed" data-toggle="collapse" routerLink="teachers" data-target="#collapsePages"
            aria-expanded="true" aria-controls="collapsePages">
           <i class="fas fa-fw fa-folder"></i>
@@ -65,35 +65,41 @@
       </li>
 
       <!-- Nav Item - Charts -->
-      <li class="nav-item">
+      <li class="nav-item" [hidden]="isShowAdminButtons">
         <a class="nav-link" routerLink="pupils">
           <i class="fas fa-fw fa-chart-area"></i>
-          <span>Pupils</span></a>
+          <span>Pupils</span>
+        </a>
       </li>
 
       <!-- Nav Item - Tables -->
-      <li class="nav-item">
+      <li class="nav-item" [hidden]="isShowAdminButtons">
         <a class="nav-link" routerLink="subjects">
           <i class="fas fa-fw fa-table"></i>
-          <span>Subjects</span></a>
+          <span>Subjects</span>
+        </a>
       </li>
-      <li class="nav-item">
+      <li class="nav-item" [hidden]="isShowAdminButtons">
         <a class="nav-link" routerLink="attendance">
           <i class="fas fa-fw fa-table"></i>
-          <span>Attendance</span></a>
+          <span>Attendance</span>
+        </a>
       </li>
       <li class="nav-item">
         <a class="nav-link" routerLink="login">
           <i class="fas fa-fw fa-table"></i>
-          <span>Login</span></a>
+          <span>Login</span>
+        </a>
       </li>
-
-
+      <li class="nav-item">
+        <a class="nav-link" routerLink="trenajer">
+          <i class="fas fa-fw fa-table"></i>
+          <span>Trenajer</span>
+        </a>
+      </li>
     </ul>
   </mat-sidenav>
   <mat-sidenav-content>
-<!--    <app-not-found></app-not-found>-->
     <router-outlet></router-outlet>
-<!--    <app-create-timetable></app-create-timetable>-->
   </mat-sidenav-content>
 </mat-sidenav-container>

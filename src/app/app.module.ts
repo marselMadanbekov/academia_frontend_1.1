@@ -46,6 +46,17 @@ import {HttpClientModule} from "@angular/common/http";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
 import {MatProgressBarModule} from "@angular/material/progress-bar";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import { TestComponent } from './views/test/test.component';
+import {MatChipsModule} from "@angular/material/chips";
+import {MatListModule} from "@angular/material/list";
+import {MatCardModule} from "@angular/material/card";
+import { TrenajerComponent } from './views/trenajer/trenajer.component';
+import { MainAdminComponent } from './views/main-admin/main-admin.component';
+import { MainUserComponent } from './views/main-user/main-user.component';
+import {CRoleService} from "./service/current/c-role.service";
+import {authInterceptorProviders} from "./helper/auth-interceptor.service";
+import {authErrorInterceptorProvider} from "./helper/error-interceptor.service";
+import { CreateSubjectComponent } from './views/dialogs/create-subject/create-subject.component';
 
 @NgModule({
   declarations: [AppComponent,
@@ -69,34 +80,42 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
     CreateUserComponent,
     CreateGroupComponent,
     CreateBranchComponent,
-    NotFoundComponent],
-  imports: [
-    MatSnackBarModule,
-    HttpClientModule,
-    ReactiveFormsModule,
-    CommonModule,
-    BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    MatToolbarModule,
-    MatSidenavModule,
-    MatButtonModule,
-    MatIconModule,
-    MatDividerModule,
-    MatCheckboxModule,
-    MatFormFieldModule,
-    MatMenuModule,
-    FormsModule,
-    MatRadioModule,
-    MatSelectModule,
-    MatDialogModule,
-    MatStepperModule,
-    MatTabsModule,
-    MatInputModule,
-    MatProgressBarModule,
-    MatProgressSpinnerModule,
-  ],
-  providers: [SidebarService,TranslationPipe],
+    NotFoundComponent,
+    TestComponent,
+    TrenajerComponent,
+    MainAdminComponent,
+    MainUserComponent,
+    CreateSubjectComponent],
+    imports: [
+        MatSnackBarModule,
+        HttpClientModule,
+        ReactiveFormsModule,
+        CommonModule,
+        BrowserModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        MatToolbarModule,
+        MatSidenavModule,
+        MatButtonModule,
+        MatIconModule,
+        MatDividerModule,
+        MatCheckboxModule,
+        MatFormFieldModule,
+        MatMenuModule,
+        FormsModule,
+        MatRadioModule,
+        MatSelectModule,
+        MatDialogModule,
+        MatStepperModule,
+        MatTabsModule,
+        MatInputModule,
+        MatProgressBarModule,
+        MatProgressSpinnerModule,
+        MatChipsModule,
+        MatListModule,
+        MatCardModule,
+    ],
+  providers: [authInterceptorProviders,authErrorInterceptorProvider,SidebarService,TranslationPipe,CRoleService],
   bootstrap: [AppComponent],
 })
 export class AppModule { }

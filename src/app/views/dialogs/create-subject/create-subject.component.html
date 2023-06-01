@@ -1,0 +1,28 @@
+<div style="padding: 15px">
+  <div
+    class="card-header py-3 d-flex flex-row align-items-center justify-content-center">
+    <h4 class="m-0 font-weight-bold text-primary">Timetable</h4>
+  </div>
+  <div class="card-body">
+    <form [formGroup]="subjectForm">
+      <div>
+        <mat-form-field>
+          <input matInput placeholder="Subject name" formControlName="name"
+                 class="modal-input">
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field>
+          <input matInput placeholder="Cost per lesson" formControlName="cost_per_lesson"
+                 class="modal-input">
+        </mat-form-field>
+      </div>
+      <div style="display: flex;justify-content: center;align-items: center;width: 100%">
+        <button class="d-sm-inline-block btn btn-sm btn-primary shadow-sm" [disabled]="subjectForm.invalid"
+                (click)="onSubmit()"><i
+          class="fas fa-download fa-sm text-white-50"></i>Create timetable
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

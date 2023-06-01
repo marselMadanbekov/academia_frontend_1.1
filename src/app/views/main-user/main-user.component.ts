@@ -1,15 +1,15 @@
-import {Component} from '@angular/core';
-import {SidebarService} from "../../../service/sidebar.service";
-import {Router} from "@angular/router";
+import { Component } from '@angular/core';
+import {SidebarService} from "../../service/sidebar.service";
 import {MatDialog, MatDialogRef} from "@angular/material/dialog";
-import {CreateGroupComponent} from "../../dialogs/create-group/create-group.component";
+import {Router} from "@angular/router";
+import {CreateGroupComponent} from "../dialogs/create-group/create-group.component";
 
 @Component({
-  selector: 'app-groups',
-  templateUrl: './groups.component.html',
-  styleUrls: ['./groups.component.scss']
+  selector: 'app-main-user',
+  templateUrl: './main-user.component.html',
+  styleUrls: ['./main-user.component.scss']
 })
-export class GroupsComponent {
+export class MainUserComponent {
   constructor(private sidebarService: SidebarService,
               private dialog: MatDialog,
               private router: Router) {
