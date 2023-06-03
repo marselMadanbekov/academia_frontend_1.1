@@ -13,12 +13,9 @@
       </div>
       <div>
         <mat-form-field>
-          <mat-select placeholder="Owner" formControlName="owner">
-            <mat-option>
-              Madanbekov Marsel
-            </mat-option>
-            <mat-option>
-              Madanbekov Marsel
+          <mat-select [(ngModel)]="selectedOwner" placeholder="Owner" formControlName="owner">
+            <mat-option *ngFor="let owner of branchOwners;let i = index" [value]="owner">
+              {{owner?.firstname}} {{owner?.lastname}}
             </mat-option>
           </mat-select>
         </mat-form-field>

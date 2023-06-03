@@ -68,10 +68,11 @@ export class LoginComponent implements OnInit {
       console.log('setting current role' + data.role);
       console.log(this.roleService.currentRole$);
       this.roleService.setCurrentRole(data.role);
+      console.log('set role ' + this.roleService.currentRole$);
       if(data.role === 'ROLE_PUPIL' || data.role === "ROLE_TEACHER")
         this.router.navigate(['main-user'])
       else
-        this.router.navigate(['main-admin']);
+        this.router.navigate(['main']);
       this.notificationService.showSnackBar('Successfully logged in');
     }, error => {
       console.log(error);

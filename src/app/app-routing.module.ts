@@ -18,7 +18,7 @@ import {RoleGuardService} from "./helper/role-guard.service";
 
 const routes: Routes = [
   {path: 'main', component: MainAdminComponent, canActivate:[RoleGuardService,AuthGuardService]},
-  {path: 'branch', component: BranchDetailsComponent},
+  {path: 'branch-details', component: BranchDetailsComponent},
   {path: 'groups', component: GroupsComponent},
   {path: 'teachers', component: TeachersComponent},
   {path: 'pupils', component: PupilsComponent},

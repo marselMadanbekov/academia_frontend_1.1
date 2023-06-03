@@ -7,6 +7,9 @@ export interface Branch{
   town: string;
   owner: User;
   admin: User;
+  total_pupils?: number;
+  total_subjects?: number;
+  total_teachers?: number;
   groups?: Group[];
   teachers?: User[];
   pupils?: User[];

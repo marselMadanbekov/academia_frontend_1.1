@@ -3,13 +3,13 @@ export interface User {
   username: string;
   firstname: string;
   lastname: string;
-  fathersName?: string;
   role: string;
   age?: number;
   balance?: number;
-  phoneNumber?: string;
+  phone_number?: string;
   address?: string;
   email?: string;
   password?: string;
-  confirmPassword?: string;
+  confirm_password?: string;
+  branchId?: number;
 }

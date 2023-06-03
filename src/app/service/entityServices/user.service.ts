@@ -12,8 +12,12 @@ const USER_API = 'http://' + ipAddress.ip +':8080/api/users/';
 export class UserService {
   constructor(private http: HttpClient) { }
 
-  createUser(user: User):Observable<any>{
+  createUser(user: { firstname: string | null | undefined; password: string | null | undefined; role: any; address: string | null | undefined; phone_number: string | null | undefined; email: string | null | undefined; age: string | null | undefined; lastname: string | null | undefined; username: string | null | undefined; confirm_password: string | null | undefined;branchId:number }):Observable<any>{
     return this.http.post(USER_API + 'create',user);
+  }
+
+  getBranchOwners():Observable<any>{
+    return this.http.get(USER_API + 'getBranchOwners');
   }
 
   getUserById(id: number): Observable<any>{
@@ -28,12 +32,12 @@ export class UserService {
     return this.http.get(USER_API);
   }
 
-  getAllPupils(): Observable<any>{
-    return this.http.get(USER_API + 'pupils');
+  getAllPupils(branchId: number): Observable<any>{
+    return this.http.get(USER_API + 'pupils/byBranch/' + branchId);
   }
 
-  getAllTeachers():Observable<any>{
-    return this.http.get(USER_API + 'teachers');
+  getAllTeachers(branchId:number):Observable<any>{
+    return this.http.get(USER_API + 'teachers/byBranch/' + branchId);
   }
   getMembersOfGroup(groupId: number | undefined): Observable<any>{
     return this.http.get(USER_API  + groupId + "/members");

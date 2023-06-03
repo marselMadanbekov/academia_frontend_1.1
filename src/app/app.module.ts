@@ -57,6 +57,7 @@ import {CRoleService} from "./service/current/c-role.service";
 import {authInterceptorProviders} from "./helper/auth-interceptor.service";
 import {authErrorInterceptorProvider} from "./helper/error-interceptor.service";
 import { CreateSubjectComponent } from './views/dialogs/create-subject/create-subject.component';
+import {MatAutocompleteModule} from "@angular/material/autocomplete";
 
 @NgModule({
   declarations: [AppComponent,
@@ -114,6 +115,7 @@ import { CreateSubjectComponent } from './views/dialogs/create-subject/create-su
         MatChipsModule,
         MatListModule,
         MatCardModule,
+        MatAutocompleteModule,
     ],
   providers: [authInterceptorProviders,authErrorInterceptorProvider,SidebarService,TranslationPipe,CRoleService],
   bootstrap: [AppComponent],

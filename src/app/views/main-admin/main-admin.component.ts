@@ -9,6 +9,8 @@ import {NotificationService} from "../../service/notification.service";
 import {GeneralInfo} from "../../models/GeneralInfo";
 import {TokenStorageService} from "../../service/token-storage.service";
 import {Router} from "@angular/router";
+import {map, Observable, startWith} from "rxjs";
+import {FormControl} from "@angular/forms";
 
 @Component({
   selector: 'app-main-admin',
@@ -19,7 +21,8 @@ export class MainAdminComponent {
   currentLang!: string;
   genelar!: GeneralInfo;
   branches !: Branch[];
-
+  myControl = new FormControl<string | Branch>('');
+  filteredOptions!: Observable<Branch[]>;
 
   constructor(private sidebarService: SidebarService,
               private dialog: MatDialog,
@@ -34,18 +37,41 @@ export class MainAdminComponent {
     this.languageService.lang$.subscribe(lang => {
       this.currentLang = lang;
     });
+    this.refreshData();
+  }
 
+  branchDetails(branch: Branch){
+    const queryParams = { id: branch.id};
+    this.route.navigate(['/branch-details'], {queryParams:{id:branch.id}});
+  }
+
+  refreshData():void{
     this.branchService.getMainGeneralInfo().subscribe(data => {
       this.genelar = data;
     })
     this.branchService.getBranches().subscribe(data =>{
       this.branches = data;
       console.log(data);
+      this.filteredOptions = this.myControl.valueChanges.pipe(
+        startWith(''),
+        map((value) => {
+          const name = typeof value === 'string' ? value : value?.name;
+          return name ? this._filter(name as string) : this.branches.slice();
+        })
+      );
     },error => {
       console.log(error);
       this.notification.showSnackBar(error);
     })
   }
+  displayFn(branch: Branch): string {
+    return branch && branch.name ? branch.name : '';
+  }
+  private _filter(name: string): Branch[] {
+    const filterValue = name.toLowerCase();
+    return this.branches.filter(branch => branch.name.toLowerCase().includes(filterValue));
+  }
+
   sidebarToggle() {
     this.sidebarService.toggle();
   }
@@ -65,11 +91,7 @@ export class MainAdminComponent {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        console.log("YES confirmed");
-      } else {
-        console.log("Oh no!")
-      }
+      this.refreshData();
     });
   }
 }

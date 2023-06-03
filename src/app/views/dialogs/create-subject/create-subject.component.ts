@@ -24,13 +24,13 @@ export class CreateSubjectComponent {
   createGroupForm(): FormGroup {
     return this.formBuilder.group({
       name: ['', Validators.compose([Validators.required])],
-      cost_per_lesson:[''],
+      cost_per_lesson: [''],
     });
   }
 
   onSubmit() {
     const dialogRef: MatDialogRef<any> = this.dialog.open(ConfirmationAlertComponent, {
-      width:'250px',
+      width: '250px',
       data: 'Do you want create this branch?',
     });
 
@@ -40,10 +40,10 @@ export class CreateSubjectComponent {
         this.subjectService.createSubject({
           name: this.subjectForm.value.name,
           cost_per_lesson: this.subjectForm.value.cost_per_lesson,
-        }).subscribe(data =>{
+        }).subscribe(data => {
           console.log(data);
+          this.dialogRef.close();
         })
-        this.dialogRef.close();
       } else {
         console.log("Oh no!")
         this.dialogRef.close();
@@ -52,15 +52,5 @@ export class CreateSubjectComponent {
   }
 
   ngOnInit(): void {
-    // this.subjectService.getAllSubjects().subscribe(data =>{
-    //   this.subjects = data;
-    // },error => {
-    //   console.log(error);
-    // });
-    // this.userService.getAllTeachers().subscribe(data =>{
-    //   this.teachers = data;
-    // },error =>{
-    //   console.log(error);
-    // })
   }
 }
