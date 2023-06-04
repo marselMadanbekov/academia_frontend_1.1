@@ -1,4 +1,4 @@
-import {Component, Inject, Input} from '@angular/core';
+import {Component, Inject, Input, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {GroupService} from "../../../service/entityServices/group.service";
@@ -12,10 +12,9 @@ import {SubjectService} from "../../../service/entityServices/subject.service";
   templateUrl: './create-group.component.html',
   styleUrls: ['./create-group.component.scss']
 })
-export class CreateGroupComponent {
+export class CreateGroupComponent implements OnInit{
   groupForm: FormGroup;
   toBranchId: number;
-  message:string;
   subjects!: Subject[];
   teachers!: User[];
   name!: string;
@@ -29,41 +28,39 @@ export class CreateGroupComponent {
               @Inject(MAT_DIALOG_DATA) public data: any,
               private formBuilder: FormBuilder) {
     this.toBranchId = data.branchId;
-    this.message = data.message;
     this.groupForm = this.createGroupForm();
   }
 
   createGroupForm(): FormGroup {
     return this.formBuilder.group({
       name: ['', Validators.compose([Validators.required])],
-      subject:[''],
-      teacher:[''],
     });
   }
 
   onSubmit() {
     this.groupService.createGroup({
-      name: this.name,
+      name: this.groupForm.value.name,
       subject: this.selectedSubject,
-      teacher:this.selectedTeacher,
-    }).subscribe(data =>{
+      teacher: this.selectedTeacher,
+      branchId: this.toBranchId,
+    }).subscribe(data => {
       console.log(data);
-    },error => {
+      this.dialogRef.close();
+    }, error => {
       console.log(error);
+      this.dialogRef.close();
     });
-    this.dialogRef.close();
-    this.dialogRef.close();
   }
 
   ngOnInit(): void {
-    this.subjectService.getAllSubjects().subscribe(data =>{
+    this.subjectService.getSubjectsByBranch(this.toBranchId).subscribe(data => {
       this.subjects = data;
-    },error => {
+    }, error => {
       console.log(error);
     });
-    this.userService.getAllTeachers(this.toBranchId).subscribe(data =>{
+    this.userService.getTeachersByBranch(this.toBranchId).subscribe(data => {
       this.teachers = data;
-    },error =>{
+    }, error => {
       console.log(error);
     })
   }

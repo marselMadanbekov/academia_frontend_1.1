@@ -1,6 +1,5 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {Group} from "../../models/Group";
 import {Observable} from "rxjs";
 import ipAddress from "../../../assets/ipAddress.json"
 import {User} from "../../models/User";
@@ -16,7 +15,15 @@ export class GroupService {
 
   constructor(private http: HttpClient) { }
 
-  createGroup(group: { teacher: User; subject: Subject; name: string }):Observable<any>{
+  createGroup(group: { branchId: number; teacher: User; subject: Subject; name: string }):Observable<any>{
     return this.http.post(GROUP_API + 'create',group);
+  }
+
+  getGroupsByBranch(branchId: number): Observable<any>{
+    return this.http.get(GROUP_API + 'getByBranch/' + branchId);
+  }
+
+  deleteGroup(groupId: number):Observable<any> {
+    return this.http.delete(GROUP_API + groupId);
   }
 }

@@ -10,6 +10,7 @@ export interface Branch{
   total_pupils?: number;
   total_subjects?: number;
   total_teachers?: number;
+  total_groups?:number;
   groups?: Group[];
   teachers?: User[];
   pupils?: User[];

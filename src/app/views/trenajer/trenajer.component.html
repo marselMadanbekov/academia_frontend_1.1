@@ -2,7 +2,7 @@
   <mat-drawer #drawer class="example-sidenav" mode="side" opened="true">
     <div
       class="card-header py-3 d-flex flex-row align-items-center" style="justify-content: space-between;">
-      <h1 class="m-0 font-weight-bold text-primary">Main</h1>
+      <h1 class="m-0 font-weight-bold text-primary" (click)="main()">Main</h1>
       <button mat-icon-button [matMenuTriggerFor]="menu" class="example-icon favorite-icon"
               aria-label="Example icon-button with heart icon">
         <mat-icon>language</mat-icon>

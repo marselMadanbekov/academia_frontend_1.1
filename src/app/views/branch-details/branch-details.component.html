@@ -78,7 +78,7 @@
 
           <!-- Earnings (Monthly) Card Example -->
           <div class="col-xl-3 col-md-6 mb-4">
-            <div class="card border-left-primary shadow h-100 py-2">
+            <div class="card border-left-primary shadow h-100 py-2" (click)="routeToPupils()">
               <div class="card-body">
                 <div class="row no-gutters align-items-center">
                   <div class="col mr-2">
@@ -97,7 +97,7 @@
 
           <!-- Earnings (Monthly) Card Example -->
           <div class="col-xl-3 col-md-6 mb-4">
-            <div class="card border-left-success shadow h-100 py-2">
+            <div class="card border-left-success shadow h-100 py-2" (click)="routeToSubject()">
               <div class="card-body">
                 <div class="row no-gutters align-items-center">
                   <div class="col mr-2">
@@ -116,22 +116,15 @@
 
           <!-- Earnings (Monthly) Card Example -->
           <div class="col-xl-3 col-md-6 mb-4">
-            <div class="card border-left-info shadow h-100 py-2">
+            <div class="card border-left-info shadow h-100 py-2" (click)="routeToGroups()">
               <div class="card-body">
                 <div class="row no-gutters align-items-center">
                   <div class="col mr-2">
-                    <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Total Profit
+                    <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Total Groups
                     </div>
                     <div class="row no-gutters align-items-center">
                       <div class="col-auto">
-                        <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">50</div>
-                      </div>
-                      <div class="col">
-                        <div class="progress progress-sm mr-2">
-                          <div class="progress-bar bg-info" role="progressbar"
-                               style="width: 50%" aria-valuenow="50" aria-valuemin="0"
-                               aria-valuemax="100"></div>
-                        </div>
+                        <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">{{branch?.total_groups}}</div>
                       </div>
                     </div>
                   </div>
@@ -145,7 +138,7 @@
 
           <!-- Pending Requests Card Example -->
           <div class="col-xl-3 col-md-6 mb-4">
-            <div class="card border-left-warning shadow h-100 py-2">
+            <div class="card border-left-warning shadow h-100 py-2" (click)="routeToTeachers()">
               <div class="card-body">
                 <div class="row no-gutters align-items-center">
                   <div class="col mr-2">
@@ -170,34 +163,35 @@
           <!-- Area Chart -->
           <div class="col-xl-8 col-lg-7">
             <div class="card shadow mb-4">
+              <router-outlet></router-outlet>
               <!-- Card Header - Dropdown -->
-              <div
-                class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                <h4 class="m-0 font-weight-bold text-primary">Groups</h4>
-                <a (click)="groupCreate()" class="d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-                  class="fas fa-download fa-sm text-white-50"></i>new Group</a>
-              </div>
-              <!-- Card Body -->
-              <div class="card-body">
-                <table class="table table-hover table-bordered">
-                  <thead>
-                  <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Subject</th>
-                    <th scope="col">Teacher</th>
-                  </tr>
-                  </thead>
-                  <tbody>
-                  <tr *ngFor="let group of branch?.groups;let i=index">
-                    <th scope="row">{{i}}</th>
-                    <td>{{group.name}}</td>
-                    <td>{{group.subject?.name}}</td>
-                    <td>{{group.teacher?.firstname}}</td>
-                  </tr>
-                  </tbody>
-                </table>
-              </div>
+<!--              <div-->
+<!--                class="card-header py-3 d-flex flex-row align-items-center justify-content-between">-->
+<!--                <h4 class="m-0 font-weight-bold text-primary">Groups</h4>-->
+<!--                <a (click)="groupCreate()" class="d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i-->
+<!--                  class="fas fa-download fa-sm text-white-50"></i>new Group</a>-->
+<!--              </div>-->
+<!--              &lt;!&ndash; Card Body &ndash;&gt;-->
+<!--              <div class="card-body">-->
+<!--                <table class="table table-hover table-bordered">-->
+<!--                  <thead>-->
+<!--                  <tr>-->
+<!--                    <th scope="col">#</th>-->
+<!--                    <th scope="col">Name</th>-->
+<!--                    <th scope="col">Subject</th>-->
+<!--                    <th scope="col">Teacher</th>-->
+<!--                  </tr>-->
+<!--                  </thead>-->
+<!--                  <tbody>-->
+<!--                  <tr *ngFor="let group of branch?.groups;let i=index">-->
+<!--                    <th scope="row">{{i}}</th>-->
+<!--                    <td>{{group.name}}</td>-->
+<!--                    <td>{{group.subject?.name}}</td>-->
+<!--                    <td>{{group.teacher?.firstname}}</td>-->
+<!--                  </tr>-->
+<!--                  </tbody>-->
+<!--                </table>-->
+<!--              </div>-->
             </div>
           </div>
 

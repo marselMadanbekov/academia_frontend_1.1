@@ -5,6 +5,8 @@ import {CreateSubjectComponent} from "../dialogs/create-subject/create-subject.c
 import {SubjectService} from "../../service/entityServices/subject.service";
 import {Subject} from "../../models/Subject";
 import {NotificationService} from "../../service/notification.service";
+import {ActivatedRoute} from "@angular/router";
+import {ConfirmationAlertComponent} from "../dialogs/confirmation-alert/confirmation-alert.component";
 
 @Component({
   selector: 'app-subjects',
@@ -13,11 +15,17 @@ import {NotificationService} from "../../service/notification.service";
 })
 export class SubjectsComponent implements OnInit{
   subjects!: Subject[];
+  branchId!: number;
 
   constructor(private sidebarService: SidebarService,
               private subjectService: SubjectService,
+              private activatedRoute: ActivatedRoute,
               private notification: NotificationService,
               private dialog: MatDialog) {
+    this.activatedRoute.queryParams.subscribe(param => {
+      this.branchId = param['id'];
+      console.log(param);
+    })
   }
 
   getClassByIndex(): string {
@@ -31,11 +39,10 @@ export class SubjectsComponent implements OnInit{
   }
 
   refreshData():void{
-    this.subjectService.getAllSubjects().subscribe(data =>{
+    this.subjectService.getSubjectsByBranch(this.branchId).subscribe(data =>{
       this.subjects = data;
-      this.notification.showSnackBar("Successfully");
+      console.log(data);
     },error => {
-      this.notification.showSnackBar(error);
       console.log(error);
     })
   }
@@ -47,11 +54,35 @@ export class SubjectsComponent implements OnInit{
     console.log("Hello arert is coming")
     const dialogRef: MatDialogRef<any> = this.dialog.open(CreateSubjectComponent, {
       width:'300px',
-      data: 'Save, attendance?',
+      data: {
+        branchId: this.branchId
+      },
     });
 
     dialogRef.afterClosed().subscribe(result => {
       this.refreshData();
+    });
+  }
+
+  deleteSubject(subject: Subject) {
+    const dialogRef: MatDialogRef<any> = this.dialog.open(ConfirmationAlertComponent, {
+      width:'250px',
+      data: 'Do you want create this branch?',
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        console.log("YES confirmed");
+        this.subjectService.deleteSubject(subject.id).subscribe(data =>{
+          console.log(data);
+          this.notification.showSnackBar(data);
+          this.refreshData();
+        },error => {
+          this.notification.showSnackBar(error);
+        })
+      } else {
+        console.log("Oh no!")
+      }
     });
   }
 }

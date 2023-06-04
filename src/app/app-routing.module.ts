@@ -1,6 +1,5 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {MainPageComponent} from "./views/main-page/main-page.component";
 import {BranchDetailsComponent} from "./views/branch-details/branch-details.component";
 import {GroupsComponent} from "./views/groupPages/groups/groups.component";
 import {TeachersComponent} from "./views/userPages/teachers/teachers.component";
@@ -18,7 +17,13 @@ import {RoleGuardService} from "./helper/role-guard.service";
 
 const routes: Routes = [
   {path: 'main', component: MainAdminComponent, canActivate:[RoleGuardService,AuthGuardService]},
-  {path: 'branch-details', component: BranchDetailsComponent},
+  {path: 'branch-details', component: BranchDetailsComponent, children: [
+      {path:'groups',component: GroupsComponent},
+      {path:'pupils',component: PupilsComponent},
+      {path:'subjects', component: SubjectsComponent},
+      {path:'teachers',component: TeachersComponent},
+      {path:'',component:GroupsComponent}
+    ]},
   {path: 'groups', component: GroupsComponent},
   {path: 'teachers', component: TeachersComponent},
   {path: 'pupils', component: PupilsComponent},
@@ -27,10 +32,10 @@ const routes: Routes = [
   {path: 'login', component: LoginComponent},
   {path: 'group-details', component: GroupDetailsComponent},
   {path: 'user-details', component: UserDetailsComponent},
-  {path: '', redirectTo: 'main', pathMatch: 'full'},
   {path: 'trenajer', component: TrenajerComponent},
   {path: 'main-user', component: MainUserComponent},
   {path: 'main-admin', component: MainAdminComponent},
+  {path: '', redirectTo: 'main', pathMatch: 'full'},
 
   // {path: 'errorPage', component: ErrorPageComponent},
 ];

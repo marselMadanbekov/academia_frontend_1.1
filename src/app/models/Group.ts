@@ -5,8 +5,9 @@ import {Subject} from "./Subject";
 export interface Group{
   id: number;
   name: string;
-  subject: Subject;
+  subject?: Subject;
   pupils?: User[];
   teacher?: User;
   timetable?: Timetable;
+  branchId?: number;
 }

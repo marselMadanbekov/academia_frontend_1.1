@@ -475,6 +475,6 @@ export class TrenajerComponent {
   }
 
   main() {
-    this.route.navigate(['/main']);
+    this.route.navigate(['main']);
   }
 }

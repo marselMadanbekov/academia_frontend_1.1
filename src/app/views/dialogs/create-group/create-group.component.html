@@ -11,27 +11,23 @@
                  class="modal-input">
         </mat-form-field>
       </div>
+    </form>
       <div>
         <mat-form-field>
-          <mat-select placeholder="Subject" formControlName="subject">
-            <mat-option>
-              Mental
-            </mat-option>
-            <mat-option>
-              Russian
+          <mat-select [(ngModel)]="selectedSubject" placeholder="Subject">
+            <mat-option *ngFor="let subject of subjects;" [value]="subject">
+              {{subject.name}}
             </mat-option>
           </mat-select>
         </mat-form-field>
       </div>
       <div>
-        <mat-form-field>
-          <mat-select placeholder="Teahcer" formControlName="teacher">
-            <mat-option>
-              Madanbekov Marsel
+        <mat-form-field >
+          <mat-select [(ngModel)]="selectedTeacher" placeholder="Teahcer">
+            <mat-option *ngFor="let teacher of teachers;" [value]="selectedTeacher">
+              {{teacher?.firstname}} {{teacher?.lastname}}
             </mat-option>
-            <mat-option>
-              Madanbekov Marsel
-            </mat-option>
+            <mat-option [hidden]="teachers?.length !== 0">Not available teachers</mat-option>
           </mat-select>
         </mat-form-field>
       </div>
@@ -41,6 +37,5 @@
           class="fas fa-download fa-sm text-white-50"></i>Create timetable
         </button>
       </div>
-    </form>
   </div>
 </div>

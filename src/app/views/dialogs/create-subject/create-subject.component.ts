@@ -12,12 +12,14 @@ import {SubjectService} from "../../../service/entityServices/subject.service";
 export class CreateSubjectComponent {
   subjectForm: FormGroup;
   name!: string;
+  branchId!: number;
 
   constructor(private dialogRef: MatDialogRef<CreateSubjectComponent>,
               private subjectService: SubjectService,
               private dialog: MatDialog,
-              @Inject(MAT_DIALOG_DATA) public data: string,
+              @Inject(MAT_DIALOG_DATA) public data: any,
               private formBuilder: FormBuilder) {
+    this.branchId = data.branchId;
     this.subjectForm = this.createGroupForm();
   }
 
@@ -40,6 +42,7 @@ export class CreateSubjectComponent {
         this.subjectService.createSubject({
           name: this.subjectForm.value.name,
           cost_per_lesson: this.subjectForm.value.cost_per_lesson,
+          branchId: this.branchId,
         }).subscribe(data => {
           console.log(data);
           this.dialogRef.close();

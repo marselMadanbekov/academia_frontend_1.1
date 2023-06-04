@@ -40,7 +40,7 @@ export class AppComponent implements OnInit {
   }
 
   checkAdminButtonsVisibility(): void {
-    if (this.role === 'ROLE_PUPIL' || this.role === 'ROLE_TEACHER') {
+    if (this.role === 'ROLE_PUPIL' || this.role === 'ROLE_TEACHER' || this.role === 'ROLE_ADMIN') {
       this.isShowAdminButtons = true;
     } else {
       this.isShowAdminButtons = false;
