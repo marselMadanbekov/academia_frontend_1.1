@@ -1,16 +1,18 @@
 import { Component } from '@angular/core';
-import {SidebarService} from "../../service/sidebar.service";
+import {SidebarService} from "../../../service/sidebar.service";
 import {MatDialog, MatDialogRef} from "@angular/material/dialog";
-import {LanguageService} from "../../service/translations/language.service";
-import {CreateBranchComponent} from "../dialogs/create-branch/create-branch.component";
-import {BranchService} from "../../service/entityServices/branch.service";
-import {Branch} from "../../models/Branch";
-import {NotificationService} from "../../service/notification.service";
-import {GeneralInfo} from "../../models/GeneralInfo";
-import {TokenStorageService} from "../../service/token-storage.service";
+import {LanguageService} from "../../../service/translations/language.service";
+import {CreateBranchComponent} from "../../dialogs/create-branch/create-branch.component";
+import {BranchService} from "../../../service/entityServices/branch.service";
+import {Branch} from "../../../models/Branch";
+import {NotificationService} from "../../../service/notification.service";
+import {GeneralInfo} from "../../../models/GeneralInfo";
+import {TokenStorageService} from "../../../service/token-storage.service";
 import {Router} from "@angular/router";
 import {map, Observable, startWith} from "rxjs";
 import {FormControl} from "@angular/forms";
+import {UserService} from "../../../service/entityServices/user.service";
+import {User} from "../../../models/User";
 
 @Component({
   selector: 'app-main-admin',
@@ -19,18 +21,25 @@ import {FormControl} from "@angular/forms";
 })
 export class MainAdminComponent {
   currentLang!: string;
+  currentUser!: User;
   genelar!: GeneralInfo;
+
   branches !: Branch[];
   myControl = new FormControl<string | Branch>('');
   filteredOptions!: Observable<Branch[]>;
 
   constructor(private sidebarService: SidebarService,
+              private userService: UserService,
               private dialog: MatDialog,
               private languageService: LanguageService,
               private tokenStorage: TokenStorageService,
               private route: Router,
               private branchService: BranchService,
               private notification: NotificationService) {
+    this.userService.getCurrentUser().subscribe(data =>{
+        this.currentUser = data;
+      }
+    )
   }
 
   ngOnInit(): void {

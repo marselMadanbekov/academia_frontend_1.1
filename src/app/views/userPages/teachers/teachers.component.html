@@ -10,6 +10,11 @@
         <!-- Page Heading -->
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
           <h1 class="h3 mb-0 text-gray-800">Teachers</h1>
+          <input type="text" class="form-control bg-light border-8 small hello" placeholder="Search for..."
+                 aria-label="Search" aria-describedby="basic-addon2" [formControl]="myControl"
+                 [matAutocomplete]="auto">
+          <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+          </mat-autocomplete>
           <a (click)="createTeacher()" class="d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
             class="fas fa-download fa-sm text-white-50"></i> Create user</a>
         </div>
@@ -32,7 +37,7 @@
                   </tr>
                   </thead>
                   <tbody>
-                  <tr *ngFor="let teacher of teachers;">
+                  <tr *ngFor="let teacher of filteredOptions | async;">
                     <th scope="row">{{teacher.id}}</th>
                     <td>{{teacher?.firstname}}</td>
                     <td>{{teacher?.lastname}}</td>

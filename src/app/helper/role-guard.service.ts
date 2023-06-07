@@ -19,6 +19,10 @@ export class RoleGuardService {
         if (role === 'ROLE_SUPER_ADMIN' || role === "ROLE_BRANCH_OWNER") {
           return true;
         }
+        else if (role === 'ROLE_ADMIN'){
+          this.router.navigate(['admin']);
+          return false;
+        }
         else {
           this.router.navigate(['main-user']);
           return false;

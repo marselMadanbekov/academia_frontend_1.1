@@ -7,6 +7,9 @@ import {Subject} from "../../models/Subject";
 import {NotificationService} from "../../service/notification.service";
 import {ActivatedRoute} from "@angular/router";
 import {ConfirmationAlertComponent} from "../dialogs/confirmation-alert/confirmation-alert.component";
+import {Group} from "../../models/Group";
+import {map, Observable, startWith} from "rxjs";
+import {FormControl} from "@angular/forms";
 
 @Component({
   selector: 'app-subjects',
@@ -17,6 +20,8 @@ export class SubjectsComponent implements OnInit{
   subjects!: Subject[];
   branchId!: number;
 
+  myControl = new FormControl<string | Subject>('');
+  filteredOptions!: Observable<Subject[]>;
   constructor(private sidebarService: SidebarService,
               private subjectService: SubjectService,
               private activatedRoute: ActivatedRoute,
@@ -42,6 +47,13 @@ export class SubjectsComponent implements OnInit{
     this.subjectService.getSubjectsByBranch(this.branchId).subscribe(data =>{
       this.subjects = data;
       console.log(data);
+      this.filteredOptions = this.myControl.valueChanges.pipe(
+        startWith(''),
+        map((value) => {
+          const name = typeof value === 'string' ? value : value?.name;
+          return name ? this._filter(name as string) : this.subjects.slice();
+        })
+      );
     },error => {
       console.log(error);
     })
@@ -62,6 +74,13 @@ export class SubjectsComponent implements OnInit{
     dialogRef.afterClosed().subscribe(result => {
       this.refreshData();
     });
+  }
+  displayFn(subject: Subject): string {
+    return subject && subject.name ? subject.name : '';
+  }
+  private _filter(name: string): Subject[] {
+    const filterValue = name.toLowerCase();
+    return this.subjects.filter(branch => branch.name.toLowerCase().includes(filterValue));
   }
 
   deleteSubject(subject: Subject) {

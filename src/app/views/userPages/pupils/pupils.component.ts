@@ -8,6 +8,9 @@ import {CreateGroupComponent} from "../../dialogs/create-group/create-group.comp
 import {CreateUserComponent} from "../../dialogs/create-user/create-user.component";
 import {ConfirmationAlertComponent} from "../../dialogs/confirmation-alert/confirmation-alert.component";
 import {NotificationService} from "../../../service/notification.service";
+import {Subject} from "../../../models/Subject";
+import {map, Observable, startWith} from "rxjs";
+import {FormControl} from "@angular/forms";
 
 @Component({
   selector: 'app-pupils',
@@ -17,6 +20,9 @@ import {NotificationService} from "../../../service/notification.service";
 export class PupilsComponent implements OnInit{
   branchId!: number;
   pupils!: User[];
+
+  myControl = new FormControl<string | User>('');
+  filteredOptions!: Observable<User[]>;
   constructor(private sidebarService: SidebarService,
               private activatedRoute: ActivatedRoute,
               private notification: NotificationService,
@@ -35,6 +41,13 @@ export class PupilsComponent implements OnInit{
   refreshData():void{
     this.userService.getPupilsByBranch(this.branchId).subscribe(data =>{
       this.pupils = data;
+      this.filteredOptions = this.myControl.valueChanges.pipe(
+        startWith(''),
+        map((value) => {
+          const name = typeof value === 'string' ? value : value?.firstname;
+          return name ? this._filter(name as string) : this.pupils.slice();
+        })
+      );
     })
   }
   sidebarToggle() {
@@ -58,6 +71,13 @@ export class PupilsComponent implements OnInit{
     });
   }
 
+  displayFn(pupil: User): string {
+    return pupil && pupil.firstname ? pupil.firstname : '';
+  }
+  private _filter(name: string): User[] {
+    const filterValue = name.toLowerCase();
+    return this.pupils.filter(user => user.firstname.toLowerCase().includes(filterValue));
+  }
   pupilDelete(pupil: User) {
     const dialogRef: MatDialogRef<any> = this.dialog.open(ConfirmationAlertComponent, {
       width:'250px',

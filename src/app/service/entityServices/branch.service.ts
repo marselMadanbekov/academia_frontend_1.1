@@ -23,6 +23,11 @@ export class BranchService {
   getBranchDetails(branchId:number):Observable<any>{
     return this.http.get(BRANCH_API + branchId);
   }
+
+  getBranchCurrentAdmin(): Observable<any>{
+    return this.http.get(BRANCH_API + 'admin');
+  }
+
   getBranches(): Observable<any> {
     return this.http.get(BRANCH_API + 'getAll');
   }

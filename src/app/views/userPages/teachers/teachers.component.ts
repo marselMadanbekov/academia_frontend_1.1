@@ -6,6 +6,8 @@ import {CreateUserComponent} from "../../dialogs/create-user/create-user.compone
 import {User} from "../../../models/User";
 import {ActivatedRoute} from "@angular/router";
 import {UserService} from "../../../service/entityServices/user.service";
+import {map, Observable, startWith} from "rxjs";
+import {FormControl} from "@angular/forms";
 
 @Component({
   selector: 'app-teachers',
@@ -16,6 +18,8 @@ export class TeachersComponent implements OnInit{
   teachers!: User[];
   branchId!: number;
 
+  myControl = new FormControl<string | User>('');
+  filteredOptions!: Observable<User[]>;
   constructor(private sidebarService: SidebarService,
               private userService: UserService,
               private activatedRout: ActivatedRoute,
@@ -35,9 +39,23 @@ export class TeachersComponent implements OnInit{
   refreshData(): void{
     this.userService.getTeachersByBranch(this.branchId).subscribe(data =>{
       this.teachers = data;
+      this.filteredOptions = this.myControl.valueChanges.pipe(
+        startWith(''),
+        map((value) => {
+          const name = typeof value === 'string' ? value : value?.firstname;
+          return name ? this._filter(name as string) : this.teachers.slice();
+        })
+      );
     })
   }
 
+  displayFn(pupil: User): string {
+    return pupil && pupil.firstname ? pupil.firstname : '';
+  }
+  private _filter(name: string): User[] {
+    const filterValue = name.toLowerCase();
+    return this.teachers.filter(user => user.firstname.toLowerCase().includes(filterValue));
+  }
   createTeacher() {
     console.log("Hello arert is coming")
     const dialogRef: MatDialogRef<any> = this.dialog.open(CreateUserComponent, {

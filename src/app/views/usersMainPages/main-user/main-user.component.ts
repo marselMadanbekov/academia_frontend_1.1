@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import {SidebarService} from "../../service/sidebar.service";
+import {SidebarService} from "../../../service/sidebar.service";
 import {MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {Router} from "@angular/router";
-import {CreateGroupComponent} from "../dialogs/create-group/create-group.component";
+import {CreateGroupComponent} from "../../dialogs/create-group/create-group.component";
 
 @Component({
   selector: 'app-main-user',

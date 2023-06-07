@@ -50,13 +50,14 @@ import {MatChipsModule} from "@angular/material/chips";
 import {MatListModule} from "@angular/material/list";
 import {MatCardModule} from "@angular/material/card";
 import { TrenajerComponent } from './views/trenajer/trenajer.component';
-import { MainAdminComponent } from './views/main-admin/main-admin.component';
-import { MainUserComponent } from './views/main-user/main-user.component';
+import { MainAdminComponent } from './views/usersMainPages/main-admin/main-admin.component';
+import { MainUserComponent } from './views/usersMainPages/main-user/main-user.component';
 import {CRoleService} from "./service/current/c-role.service";
 import {authInterceptorProviders} from "./helper/auth-interceptor.service";
 import {authErrorInterceptorProvider} from "./helper/error-interceptor.service";
 import { CreateSubjectComponent } from './views/dialogs/create-subject/create-subject.component';
 import {MatAutocompleteModule} from "@angular/material/autocomplete";
+import { AdminComponent } from './views/usersMainPages/admin/admin.component';
 
 @NgModule({
   declarations: [AppComponent,
@@ -84,7 +85,8 @@ import {MatAutocompleteModule} from "@angular/material/autocomplete";
     TrenajerComponent,
     MainAdminComponent,
     MainUserComponent,
-    CreateSubjectComponent],
+    CreateSubjectComponent,
+    AdminComponent],
     imports: [
         MatSnackBarModule,
         HttpClientModule,

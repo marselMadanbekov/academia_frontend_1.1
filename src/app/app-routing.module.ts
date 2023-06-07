@@ -11,23 +11,31 @@ import {GroupDetailsComponent} from "./views/groupPages/group-details/group-deta
 import {UserDetailsComponent} from "./views/userPages/user-details/user-details.component";
 import {TrenajerComponent} from "./views/trenajer/trenajer.component";
 import {AuthGuardService} from "./helper/auth-guard.service";
-import {MainUserComponent} from "./views/main-user/main-user.component";
-import {MainAdminComponent} from "./views/main-admin/main-admin.component";
+import {MainUserComponent} from "./views/usersMainPages/main-user/main-user.component";
+import {MainAdminComponent} from "./views/usersMainPages/main-admin/main-admin.component";
 import {RoleGuardService} from "./helper/role-guard.service";
+import {AdminComponent} from "./views/usersMainPages/admin/admin.component";
 
 const routes: Routes = [
-  {path: 'main', component: MainAdminComponent, canActivate:[RoleGuardService,AuthGuardService]},
-  {path: 'branch-details', component: BranchDetailsComponent, children: [
-      {path:'groups',component: GroupsComponent},
-      {path:'pupils',component: PupilsComponent},
-      {path:'subjects', component: SubjectsComponent},
-      {path:'teachers',component: TeachersComponent},
-      {path:'',component:GroupsComponent}
-    ]},
-  {path: 'groups', component: GroupsComponent},
-  {path: 'teachers', component: TeachersComponent},
-  {path: 'pupils', component: PupilsComponent},
-  {path: 'subjects', component: SubjectsComponent},
+  {path: 'main', component: MainAdminComponent, canActivate: [RoleGuardService, AuthGuardService]},
+  {
+    path: 'branch-details', component: BranchDetailsComponent, children: [
+      {path: 'groups', component: GroupsComponent},
+      {path: 'pupils', component: PupilsComponent},
+      {path: 'subjects', component: SubjectsComponent},
+      {path: 'teachers', component: TeachersComponent},
+      {path: '', component: GroupsComponent}
+    ]
+  },
+  {
+    path: 'admin', component: AdminComponent, children: [
+      {path: 'groups', component: GroupsComponent},
+      {path: 'pupils', component: PupilsComponent},
+      {path: 'subjects', component: SubjectsComponent},
+      {path: 'teachers', component: TeachersComponent},
+      {path: '', component: GroupsComponent}
+    ]
+  },
   {path: 'attendance', component: AttendanceComponent},
   {path: 'login', component: LoginComponent},
   {path: 'group-details', component: GroupDetailsComponent},
@@ -44,4 +52,5 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {
+}

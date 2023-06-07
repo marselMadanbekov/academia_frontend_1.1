@@ -24,7 +24,7 @@
       <div>
         <mat-form-field >
           <mat-select [(ngModel)]="selectedTeacher" placeholder="Teahcer">
-            <mat-option *ngFor="let teacher of teachers;" [value]="selectedTeacher">
+            <mat-option *ngFor="let teacher of teachers;" [value]="teacher">
               {{teacher?.firstname}} {{teacher?.lastname}}
             </mat-option>
             <mat-option [hidden]="teachers?.length !== 0">Not available teachers</mat-option>
