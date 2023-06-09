@@ -32,6 +32,7 @@ export class CreateUserComponent {
   });
   selectedRole: number = 1;
   toBranch: number;
+  toGroup: number;
   message: string;
   @Input() lang!: string;
 
@@ -43,6 +44,7 @@ export class CreateUserComponent {
     console.log(data);
     this.selectedRole = data.role;
     this.toBranch = data.branchId;
+    this.toGroup = data.groupId;
     this.lang = data.lang;
     this.message = data.message;
   }
@@ -70,24 +72,46 @@ export class CreateUserComponent {
     }
     console.log(currentRole);
 
-    this.userService.createUser({
-      firstname: this.firstFormGroup.value.firstname,
-      lastname: this.firstFormGroup.value.lastname,
-      username: this.firstFormGroup.value.username,
-      password: this.firstFormGroup.value.password,
-      confirm_password: this.firstFormGroup.value.confirmPassword,
-      role: currentRole,
-      phone_number: this.secondFormGroup.value.phoneNumber,
-      email: this.secondFormGroup.value.email,
-      address: this.secondFormGroup.value.address,
-      age: this.secondFormGroup.value.age,
-      branchId: this.toBranch,
-    }).subscribe(data => {
-      console.log(data);
-      this.dialogRef.close();
-    }, error => {
-      this.notification.showSnackBar(error);
-      console.log(error);
-    })
+    if(this.toGroup == undefined) {
+      this.userService.createUserByBranch({
+        firstname: this.firstFormGroup.value.firstname,
+        lastname: this.firstFormGroup.value.lastname,
+        username: this.firstFormGroup.value.username,
+        password: this.firstFormGroup.value.password,
+        confirm_password: this.firstFormGroup.value.confirmPassword,
+        role: currentRole,
+        phone_number: this.secondFormGroup.value.phoneNumber,
+        email: this.secondFormGroup.value.email,
+        address: this.secondFormGroup.value.address,
+        age: this.secondFormGroup.value.age,
+        branchId: this.toBranch,
+      }).subscribe(data => {
+        console.log(data);
+        this.dialogRef.close();
+      }, error => {
+        this.notification.showSnackBar(error);
+        console.log(error);
+      })
+    }else if(this.toBranch == undefined){
+     this.userService.createUserByGroup({
+       firstname: this.firstFormGroup.value.firstname,
+       lastname: this.firstFormGroup.value.lastname,
+       username: this.firstFormGroup.value.username,
+       password: this.firstFormGroup.value.password,
+       confirm_password: this.firstFormGroup.value.confirmPassword,
+       role: currentRole,
+       phone_number: this.secondFormGroup.value.phoneNumber,
+       email: this.secondFormGroup.value.email,
+       address: this.secondFormGroup.value.address,
+       age: this.secondFormGroup.value.age,
+       branchId: this.toBranch,
+     },this.toGroup).subscribe(data => {
+       console.log(data);
+       this.dialogRef.close();
+     }, error => {
+       this.notification.showSnackBar(error);
+       console.log(error);
+     })
+    }
   }
 }

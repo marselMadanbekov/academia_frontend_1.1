@@ -19,18 +19,18 @@
       </tr>
       </thead>
       <tbody>
-      <tr *ngFor="let student of students; let i = index">
+      <tr *ngFor="let pupil of pupils; let i = index" (click)="selectedPupil=pupil">
         <td>{{ i + 1 }}</td>
-        <td>{{ student.name }}</td>
-        <td>
-          <mat-checkbox color='primary' class="example-margin" [(ngModel)]="student.isChecked">
-          </mat-checkbox>
-        </td>
+        <td>{{ pupil.firstname }}</td>
+        <td>{{pupil.lastname}}</td>
       </tr>
       </tbody>
     </table>
+
+    <div *ngIf="selectedPupil!== undefined">{{selectedPupil?.firstname}} {{selectedPupil?.lastname}}</div>
   </div>
 
-  <a (click)="add()" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" style="padding: 10px;margin-left:20px;margin-right: 20px;"><i
+  <a (click)="add()" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"
+     style="padding: 10px;margin-left:20px;margin-right: 20px;"><i
     class="fas fa-download fa-sm text-white-50"></i>add new pupil</a>
 </div>

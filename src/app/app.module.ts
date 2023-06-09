@@ -86,7 +86,7 @@ import { AdminComponent } from './views/usersMainPages/admin/admin.component';
     MainAdminComponent,
     MainUserComponent,
     CreateSubjectComponent,
-    AdminComponent],
+    AdminComponent,],
     imports: [
         MatSnackBarModule,
         HttpClientModule,

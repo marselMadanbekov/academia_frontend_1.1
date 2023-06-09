@@ -14,8 +14,11 @@ export class UserService {
   constructor(private http: HttpClient) {
   }
 
-  createUser(user: { firstname: string | null | undefined; password: string | null | undefined; role: any; address: string | null | undefined; phone_number: string | null | undefined; email: string | null | undefined; age: string | null | undefined; lastname: string | null | undefined; username: string | null | undefined; confirm_password: string | null | undefined; branchId: number }): Observable<any> {
+  createUserByBranch(user: { firstname: string | null | undefined; password: string | null | undefined; role: any; address: string | null | undefined; phone_number: string | null | undefined; email: string | null | undefined; age: string | null | undefined; lastname: string | null | undefined; username: string | null | undefined; confirm_password: string | null | undefined; branchId: number }): Observable<any> {
     return this.http.post(USER_API + 'create', user);
+  }
+  createUserByGroup(user: { firstname: string | null | undefined; password: string | null | undefined; role: any; address: string | null | undefined; phone_number: string | null | undefined; email: string | null | undefined; age: string | null | undefined; lastname: string | null | undefined; username: string | null | undefined; confirm_password: string | null | undefined; branchId: number }, groupId:number):Observable<any>{
+    return this.http.post(USER_API + 'createByGroup/' + groupId, user);
   }
 
   getBranchOwners(): Observable<any> {

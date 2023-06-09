@@ -11,26 +11,7 @@
           <mat-icon>menu</mat-icon>
         </button>
         <!-- Topbar Search -->
-        <form
-          class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-          <div class="input-group">
-
-            <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
-                   aria-label="Search" aria-describedby="basic-addon2" [formControl]="myControl"
-                   [matAutocomplete]="auto">
-            <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
-            </mat-autocomplete>
-            <div class="input-group-append">
-              <button class="btn btn-primary" type="button">
-                <i class="fas fa-search fa-sm">
-                  <div style="display: flex;justify-content: center;align-items: center;">
-                    <mat-icon>search</mat-icon>
-                  </div>
-                </i>
-              </button>
-            </div>
-          </div>
-        </form>
+        <h1 style="margin: 0;">Academia Rosta</h1>
 
         <!-- Topbar Navbar -->
         <ul class="navbar-nav ml-auto">
@@ -179,9 +160,28 @@
             <div class="card shadow mb-4">
               <!-- Card Header - Dropdown -->
               <div
-                class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                <h4 class="m-0 font-weight-bold text-primary">Branches Overview</h4>
+                class="card-header py-3 d-flex flex-row align-items-center justify-content-lg-between">
+                <h4 class="m-0 font-weight-bold text-primary" style="margin-right: 20px">Branches Overview</h4>
+                <form
+                  class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                  <div class="input-group">
 
+                    <input type="text" class="form-control bg-light border-6 small" placeholder="Search for..."
+                           aria-label="Search" aria-describedby="basic-addon2" [formControl]="myControl"
+                           [matAutocomplete]="auto">
+                    <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+                    </mat-autocomplete>
+                    <div class="input-group-append">
+                      <button class="btn btn-primary" type="button">
+                        <i class="fas fa-search fa-sm">
+                          <div style="display: flex;justify-content: center;align-items: center;">
+                            <mat-icon>search</mat-icon>
+                          </div>
+                        </i>
+                      </button>
+                    </div>
+                  </div>
+                </form>
               </div>
               <!-- Card Body -->
               <div class="card-body">

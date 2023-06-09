@@ -55,7 +55,6 @@ export class PupilsComponent implements OnInit{
   }
 
   createUser() {
-    console.log("Hello arert is coming")
     const dialogRef: MatDialogRef<any> = this.dialog.open(CreateUserComponent, {
       width:'600px',
       data: {

@@ -30,7 +30,6 @@ export class GroupsComponent implements OnInit{
               private router: Router) {
     this.activatedRoute.queryParams.subscribe(param => {
       this.branchId = param['id'];
-
     })
   }
   ngOnInit(): void {
@@ -60,8 +59,11 @@ export class GroupsComponent implements OnInit{
   sidebarToggle() {
     this.sidebarService.toggle();
   }
-  groupDetails(){
-    this.router.navigate(['group-details']);
+  groupDetails(group: Group){
+    this.router.navigate(['group-details'],
+      {queryParams:
+          {id: group.id,
+          branchId: this.branchId}});
   }
 
   createGroup() {

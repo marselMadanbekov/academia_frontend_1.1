@@ -8,6 +8,6 @@ export interface Group{
   subject?: Subject;
   pupils?: User[];
   teacher?: User;
-  timetable?: Timetable;
+  timetableDTO?: Timetable;
   branchId?: number;
 }

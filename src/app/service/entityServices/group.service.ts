@@ -23,7 +23,22 @@ export class GroupService {
     return this.http.get(GROUP_API + 'getByBranch/' + branchId);
   }
 
+  getGroupById(groupId: number):Observable<any>{
+    return this.http.get(GROUP_API + groupId);
+  }
   deleteGroup(groupId: number):Observable<any> {
     return this.http.delete(GROUP_API + groupId);
+  }
+
+  addPupilToGroup(userId: number | undefined, groupId: number) {
+    return this.http.put(GROUP_API + userId + "/addPupilToGroup/" + groupId,null);
+  }
+
+  editGroupById(groupId: number, group: { teacher: User; subject: Subject }) : Observable<any>{
+    return this.http.put(GROUP_API + groupId + "/edit",group);
+  }
+
+  removePupilFromGroup(groupId: number, pupilId : number | undefined) {
+    return this.http.put(GROUP_API + pupilId + "/remove/" + groupId,null);
   }
 }

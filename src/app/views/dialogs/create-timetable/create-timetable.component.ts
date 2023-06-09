@@ -2,6 +2,7 @@ import {Component, Inject, Optional} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {ConfirmationAlertComponent} from "../confirmation-alert/confirmation-alert.component";
+import {TimetableService} from "../../../service/entityServices/timetable.service";
 
 @Component({
   selector: 'app-create-timetable',
@@ -9,12 +10,15 @@ import {ConfirmationAlertComponent} from "../confirmation-alert/confirmation-ale
   styleUrls: ['./create-timetable.component.scss']
 })
 export class CreateTimetableComponent {
+  groupId: number;
   public timetableForm: FormGroup;
   constructor(public dialogRef: MatDialogRef<CreateTimetableComponent>,
               private dialog: MatDialog,
-              @Inject(MAT_DIALOG_DATA) public data: string,
+              private timetableService: TimetableService,
+              @Inject(MAT_DIALOG_DATA) public data: number,
               private fb: FormBuilder) {
     this.timetableForm = this.createTimetableForm();
+    this.groupId = data;
   }
 
   createTimetableForm():FormGroup{
@@ -45,23 +49,23 @@ export class CreateTimetableComponent {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        console.log("YES confirmed");
-        this.dialogRef.close();
+        this.timetableService.createTimetableToGroup(this.groupId,{
+          monday: (this.timetableForm.value.mondayHH)? this.timetableForm.value.mondayHH + ":" + this.timetableForm.value.mondayMM:"undefined",
+          tuesday: (this.timetableForm.value.tuesdayHH)? this.timetableForm.value.tuesdayHH + ":" + this.timetableForm.value.tuesdayMM:"undefined",
+          wednesday: (this.timetableForm.value.wednesdayHH)? this.timetableForm.value.wednesdayHH + ":" + this.timetableForm.value.wednesdayMM:"undefined",
+          thursday: (this.timetableForm.value.thursdayHH)? this.timetableForm.value.thursdayHH + ":" + this.timetableForm.value.thursdayMM:"undefined",
+          friday: (this.timetableForm.value.fridayHH)? this.timetableForm.value.fridayHH + ":" + this.timetableForm.value.fridayMM:"undefined",
+          saturday: (this.timetableForm.value.saturdayHH)? this.timetableForm.value.saturdayHH + ":" + this.timetableForm.value.saturdayMM:"undefined",
+          sunday: (this.timetableForm.value.sundayHH)? this.timetableForm.value.sundayHH + ":" + this.timetableForm.value.sundayMM:"undefined",
+        }).subscribe(data =>{
+          console.log(data);
+          this.dialogRef.close();
+        });
       } else {
         console.log("Oh no!")
         this.dialogRef.close();
       }
     });
-    // this.groupService.setTimetableToGroup(this.group.name,{
-    //   monday: (this.timetableForm.value.mondayHH)? this.timetableForm.value.mondayHH + ":" + this.timetableForm.value.mondayMM:"undefined",
-    //   tuesday: (this.timetableForm.value.tuesdayHH)? this.timetableForm.value.tuesdayHH + ":" + this.timetableForm.value.tuesdayMM:"undefined",
-    //   wednesday: (this.timetableForm.value.wednesdayHH)? this.timetableForm.value.wednesdayHH + ":" + this.timetableForm.value.wednesdayMM:"undefined",
-    //   thursday: (this.timetableForm.value.thursdayHH)? this.timetableForm.value.thursdayHH + ":" + this.timetableForm.value.thursdayMM:"undefined",
-    //   friday: (this.timetableForm.value.fridayHH)? this.timetableForm.value.fridayHH + ":" + this.timetableForm.value.fridayMM:"undefined",
-    //   saturday: (this.timetableForm.value.saturdayHH)? this.timetableForm.value.saturdayHH + ":" + this.timetableForm.value.saturdayMM:"undefined",
-    //   sunday: (this.timetableForm.value.sundayHH)? this.timetableForm.value.sundayHH + ":" + this.timetableForm.value.sundayMM:"undefined",
-    // }).subscribe(data =>{
-    //   console.log(data);
-    // });
+
   }
 }
