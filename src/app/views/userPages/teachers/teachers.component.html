@@ -39,9 +39,9 @@
                   <tbody>
                   <tr *ngFor="let teacher of filteredOptions | async;">
                     <th scope="row">{{teacher.id}}</th>
-                    <td>{{teacher?.firstname}}</td>
-                    <td>{{teacher?.lastname}}</td>
-                    <td>{{teacher?.phone_number}}</td>
+                    <td (click)="viewUser(teacher)">{{teacher?.firstname}}</td>
+                    <td (click)="viewUser(teacher)">{{teacher?.lastname}}</td>
+                    <td (click)="viewUser(teacher)">{{teacher?.phone_number}}</td>
                   </tr>
                   </tbody>
                 </table>

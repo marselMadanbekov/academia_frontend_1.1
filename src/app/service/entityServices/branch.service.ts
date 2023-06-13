@@ -35,4 +35,8 @@ export class BranchService {
   getMainGeneralInfo(): Observable<any> {
     return this.http.get(BRANCH_API + 'general')
   }
+
+  deleteBranch(branchId: number) {
+    return this.http.delete(BRANCH_API + branchId);
+  }
 }

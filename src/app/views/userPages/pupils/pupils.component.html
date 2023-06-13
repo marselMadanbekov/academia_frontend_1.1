@@ -41,7 +41,7 @@
                     <th scope="row" (click)="pupilDelete(pupil)">
                       <mat-icon>delete</mat-icon>
                     </th>
-                    <td>{{pupil?.firstname}}</td>
+                    <td (click)="viewUser(pupil)">{{pupil?.firstname}}</td>
                     <td>{{pupil?.lastname}}</td>
                     <td>{{pupil?.phone_number}}</td>
                   </tr>

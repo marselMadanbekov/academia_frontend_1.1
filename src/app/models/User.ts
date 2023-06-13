@@ -1,3 +1,5 @@
+import {Group} from "./Group";
+
 export interface User {
   id?: number;
   username: string;
@@ -10,6 +12,7 @@ export interface User {
   address?: string;
   email?: string;
   password?: string;
+  groups?: Group[];
   confirm_password?: string;
   branchId?: number;
 }

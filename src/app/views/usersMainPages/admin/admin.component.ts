@@ -8,6 +8,7 @@ import {MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {CreateUserComponent} from "../../dialogs/create-user/create-user.component";
 import {User} from "../../../models/User";
 import {UserService} from "../../../service/entityServices/user.service";
+import {LanguageService} from "../../../service/translations/language.service";
 
 @Component({
   selector: 'app-admin',
@@ -16,10 +17,12 @@ import {UserService} from "../../../service/entityServices/user.service";
 })
 export class AdminComponent {
   branch!: Branch;
+  currentLang!: string;
   currentUser!: User;
 
   constructor(private sidebarService: SidebarService,
               private branchService: BranchService,
+              private languageService: LanguageService,
               private userService: UserService,
               private router: Router,
               private notification: NotificationService,
@@ -31,6 +34,9 @@ export class AdminComponent {
   }
 
   ngOnInit(): void {
+    this.languageService.lang$.subscribe(lang => {
+      this.currentLang = lang;
+    });
     this.refreshData();
   }
   refreshData():void{
@@ -93,5 +99,9 @@ export class AdminComponent {
 
   routeToTeachers() {
     this.router.navigate(['admin/teachers'],{queryParams:{id: this.branch.id}});
+  }
+
+  profile() {
+    this.router.navigate(['user-details'],{queryParams:{userId:0}});
   }
 }

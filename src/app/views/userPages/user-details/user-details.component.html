@@ -68,8 +68,16 @@
       <div class="container-fluid">
         <!-- Page Heading -->
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-          <h1 class="h3 mb-0 text-gray-800">User name (role)</h1>
-          <h1 class="h3 mb-0 text-gray-800">Balance: 1000</h1>
+          <div>
+            <div>
+              <h1 class="h3 mb-0 text-gray-800">{{user.firstname}} ({{user.role}})</h1>
+            </div>
+            <div>
+              <a class="d-sm-inline-block btn btn-sm btn-primary shadow-sm" (click)="balanceUp()"><i
+                class="fas fa-download fa-sm text-white-50"></i>Top up balance</a>
+            </div>
+          </div>
+          <h1 class="h3 mb-0 text-gray-800">Balance: {{user.balance}}</h1>
         </div>
 
         <!-- Content Row -->
@@ -93,23 +101,23 @@
                     <tbody>
                     <tr>
                       <td scope="col">Full name</td>
-                      <td scope="col">Madanbekov Marsel</td>
+                      <td scope="col">{{user.firstname}} {{user.lastname}}</td>
                     </tr>
                     <tr>
                       <td>Username</td>
-                      <td>marsel</td>
+                      <td>{{user.username}}</td>
                     </tr>
                     <tr>
                       <td>Phone number</td>
-                      <td>+996 999 999 999</td>
+                      <td>{{user.phone_number}}</td>
                     </tr>
                     <tr>
                       <td>Address</td>
-                      <td>Jal</td>
+                      <td>{{user.address}}</td>
                     </tr>
                     <tr>
                       <td>email</td>
-                      <td>madanbekovmarsel@gmail.com</td>
+                      <td>{{user.email}}</td>
                     </tr>
                     </tbody>
                   </table>
@@ -135,13 +143,9 @@
                     <th>Subject</th>
                   </tr>
                   </thead>
-                  <tr (click)="viewGroup()">
-                    <td>Group #1</td>
-                    <td>Russian</td>
-                  </tr>
-                  <tr>
-                    <td>Group #2</td>
-                    <td>Mental</td>
+                  <tr (click)="viewGroup(group)" *ngFor="let group of user?.groups">
+                    <td>{{group.name}}</td>
+                    <td>{{group.subject?.name}}</td>
                   </tr>
                 </table>
               </div>

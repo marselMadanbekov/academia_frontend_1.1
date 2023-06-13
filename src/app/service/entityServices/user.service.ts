@@ -37,6 +37,9 @@ export class UserService {
     return this.http.get(USER_API);
   }
 
+  getProfile(): Observable<any>{
+    return this.http.get(USER_API + "profile");
+  }
   getAllPupils(branchId: number): Observable<any> {
     return this.http.get(USER_API + 'pupils/byBranch/' + branchId);
   }
@@ -66,5 +69,9 @@ export class UserService {
   }
   getTeachersByBranch(branchId: number): Observable<any> {
     return this.http.get(USER_API + "teachers/getByBranch/" + branchId);
+  }
+
+  balanceUp(userId: number, balance: number) {
+    return this.http.post(USER_API + "balance/" + balance,userId);
   }
 }

@@ -12,10 +12,11 @@ import {NotificationService} from "../../../service/notification.service";
   templateUrl: './create-branch.component.html',
   styleUrls: ['./create-branch.component.scss']
 })
-export class CreateBranchComponent implements OnInit{
+export class CreateBranchComponent implements OnInit {
   branchForm: FormGroup;
   branchOwners!: User[];
   selectedOwner!: User;
+
   constructor(private dialogRef: MatDialogRef<CreateBranchComponent>,
               private branchService: BranchService,
               private userService: UserService,
@@ -29,14 +30,14 @@ export class CreateBranchComponent implements OnInit{
   createGroupForm(): FormGroup {
     return this.formBuilder.group({
       name: ['', Validators.compose([Validators.required])],
-      owner:[''],
-      town:[''],
+      owner: [''],
+      town: ['', Validators.compose([Validators.required])],
     });
   }
 
   onSubmit() {
     const dialogRef: MatDialogRef<any> = this.dialog.open(ConfirmationAlertComponent, {
-      width:'250px',
+      width: '250px',
       data: 'Do you want create this branch?',
     });
 
@@ -47,24 +48,21 @@ export class CreateBranchComponent implements OnInit{
           name: this.branchForm.value.name,
           owner: this.selectedOwner,
           town: this.branchForm.value.town,
-        }).subscribe(data =>{
+        }).subscribe(data => {
           console.log(data);
+          this.dialogRef.close();
         })
-        this.dialogRef.close();
       } else {
         console.log("Oh no!")
         this.dialogRef.close();
       }
     });
-
-
-    this.dialogRef.close();
   }
 
   ngOnInit(): void {
-    this.userService.getBranchOwners().subscribe(data =>{
+    this.userService.getBranchOwners().subscribe(data => {
       this.branchOwners = data;
-    },error => {
+    }, error => {
       this.notification.showSnackBar(error);
     })
   }

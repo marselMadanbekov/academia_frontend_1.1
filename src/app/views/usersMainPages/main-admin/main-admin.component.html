@@ -38,7 +38,7 @@
               <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{currentUser?.firstname}} {{currentUser.lastname}}</span>
             </a>
             <mat-menu #menu1="matMenu">
-              <button mat-menu-item>
+              <button mat-menu-item (click)="profile()">
                 <span>profile</span>
               </button>
               <button mat-menu-item (click)="logout()">
@@ -56,11 +56,10 @@
 
         <!-- Page Heading -->
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-          <h1 class="h3 mb-0 text-gray-800">Branches</h1>
+          <h1 class="h3 mb-0 text-gray-800">{{'BRANCHES'|translationPipe:currentLang}}</h1>
           <a (click)="createBranch()" class="d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
             class="fas fa-download fa-sm text-white-50"></i>Create Branch</a>
         </div>
-
         <!-- Content Row -->
         <div class="row">
 
@@ -73,7 +72,7 @@
                     <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                       Total Pupils
                     </div>
-                    <div class="h5 mb-0 font-weight-bold text-gray-800">{{genelar?.total_pupils}}</div>
+                    <div class="h5 mb-0 font-weight-bold text-gray-800">{{general?.total_pupils}}</div>
                   </div>
                   <div class="col-auto">
                     <i class="fas fa-calendar fa-2x text-gray-300"></i>
@@ -92,7 +91,7 @@
                     <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                       Total Subjects
                     </div>
-                    <div class="h5 mb-0 font-weight-bold text-gray-800">{{genelar?.total_subjects}}</div>
+                    <div class="h5 mb-0 font-weight-bold text-gray-800">{{general?.total_subjects}}</div>
                   </div>
                   <div class="col-auto">
                     <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
@@ -112,7 +111,7 @@
                     </div>
                     <div class="row no-gutters align-items-center">
                       <div class="col-auto">
-                        <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">{{genelar?.total_branches}}</div>
+                        <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">{{general?.total_branches}}</div>
                       </div>
                       <div class="col">
                         <div class="progress progress-sm mr-2">
@@ -140,7 +139,7 @@
                     <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
                       Total Teachers
                     </div>
-                    <div class="h5 mb-0 font-weight-bold text-gray-800">{{genelar?.total_teachers}}</div>
+                    <div class="h5 mb-0 font-weight-bold text-gray-800">{{general?.total_teachers}}</div>
                   </div>
                   <div class="col-auto">
                     <i class="fas fa-comments fa-2x text-gray-300"></i>
@@ -196,7 +195,7 @@
                   </thead>
                   <tbody>
                   <tr *ngFor="let branch of filteredOptions | async; let i index">
-                    <th scope="row">{{branch.id}}</th>
+                    <th scope="row" ><mat-icon (click)="deleteBranch(branch)">delete</mat-icon></th>
                     <td (click)="branchDetails(branch)">{{branch.name}}</td>
                     <td>{{branch.town}}</td>
                     <td>{{branch.owner?.firstname}}</td>

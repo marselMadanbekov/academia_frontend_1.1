@@ -1,0 +1,22 @@
+<div style="padding: 15px">
+  <div
+    class="card-header py-3 d-flex flex-row align-items-center justify-content-center">
+    <h4 class="m-0 font-weight-bold text-primary">Balance Up</h4>
+  </div>
+  <div class="card-body">
+    <form [formGroup]="balanceForm">
+      <div>
+        <mat-form-field>
+          <input matInput type="number" placeholder="Sum" formControlName="balance"
+                 class="modal-input">
+        </mat-form-field>
+      </div>
+      <div style="display: flex;justify-content: center;align-items: center;width: 100%">
+        <button class="d-sm-inline-block btn btn-sm btn-primary shadow-sm" [disabled]="balanceForm.invalid"
+                (click)="onSubmit()"><i
+          class="fas fa-download fa-sm text-white-50"></i>top up
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

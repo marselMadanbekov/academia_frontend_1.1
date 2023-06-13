@@ -1,14 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 import {SidebarService} from "../../../service/sidebar.service";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {UserService} from "../../../service/entityServices/user.service";
 import {User} from "../../../models/User";
-import {CreateGroupComponent} from "../../dialogs/create-group/create-group.component";
 import {CreateUserComponent} from "../../dialogs/create-user/create-user.component";
 import {ConfirmationAlertComponent} from "../../dialogs/confirmation-alert/confirmation-alert.component";
 import {NotificationService} from "../../../service/notification.service";
-import {Subject} from "../../../models/Subject";
 import {map, Observable, startWith} from "rxjs";
 import {FormControl} from "@angular/forms";
 
@@ -26,6 +24,7 @@ export class PupilsComponent implements OnInit{
   constructor(private sidebarService: SidebarService,
               private activatedRoute: ActivatedRoute,
               private notification: NotificationService,
+              private router: Router,
               private userService: UserService,
               private dialog: MatDialog,
   ) {
@@ -96,6 +95,13 @@ export class PupilsComponent implements OnInit{
       } else {
         console.log("Oh no!")
       }
+    });
+  }
+
+  viewUser(pupil: User) {
+    this.router.navigate(['user-details'],{
+      queryParams:
+        {userId: pupil.id}
     });
   }
 }

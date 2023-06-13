@@ -39,6 +39,8 @@ export class GroupDetailsComponent implements OnInit{
     this.groupService.getGroupById(this.groupId).subscribe(data =>{
       this.group = data;
       console.log(data);
+    },error => {
+      console.log(error);
     })
   }
   sidebarToggle() {
@@ -51,7 +53,7 @@ export class GroupDetailsComponent implements OnInit{
       width:'600px',
       data: {
         groupId: this.groupId,
-        branchId: this.branchId,
+        branchId: this.group.branchId,
       },
     });
 
@@ -76,8 +78,11 @@ export class GroupDetailsComponent implements OnInit{
     });
   }
 
-  viewUser() {
-    this.router.navigate(['user-details']);
+  viewUser(pupil : User) {
+    this.router.navigate(['user-details'],{
+      queryParams:
+        {userId: pupil.id}
+    });
   }
 
   createTimetable() {

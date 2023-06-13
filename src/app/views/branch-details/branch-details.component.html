@@ -33,10 +33,10 @@
               <mat-icon>language</mat-icon>
             </button>
             <mat-menu #menu="matMenu">
-              <button mat-menu-item>
+              <button mat-menu-item (click)="language('ru')">
                 <span>RU</span>
               </button>
-              <button mat-menu-item>
+              <button mat-menu-item (click)="language('kg')">
                 <span>KG</span>
               </button>
             </mat-menu>
@@ -83,7 +83,7 @@
                 <div class="row no-gutters align-items-center">
                   <div class="col mr-2">
                     <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                      Total Pupils
+                      Total {{'PUPILS' |translationPipe:currentLang}}
                     </div>
                     <div class="h5 mb-0 font-weight-bold text-gray-800">{{branch?.total_pupils}}</div>
                   </div>
@@ -188,7 +188,7 @@
                   </tr>
                   </thead>
                   <tbody>
-                  <tr>
+                  <tr (click)="viewUser(branch?.admin)">
                     <th scope="row">{{branch?.admin?.id}}</th>
                     <td>{{branch?.admin?.firstname}}</td>
                     <td>{{branch?.admin?.lastname}}</td>

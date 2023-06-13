@@ -49,34 +49,27 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  sleep(milliseconds: number) {
-    return new Promise(resolve => setTimeout(resolve, milliseconds));
-  }
-
-  async submit(): Promise<void> {
+  submit(): void {
     this.showProgressBar = true;
     this.authService.login({
       username: this.loginForm.value.username,
       password: this.loginForm.value.password
     }).subscribe(data => {
-      console.log(data);
-
-
       this.tokenStorage.saveToken(data.token);
       this.tokenStorage.saveUser(data);
 
-      console.log('setting current role' + data.role);
-      console.log(this.roleService.currentRole$);
       this.roleService.setCurrentRole(data.role);
-      console.log('set role ' + this.roleService.currentRole$);
       if(data.role === 'ROLE_PUPIL' || data.role === "ROLE_TEACHER")
         this.router.navigate(['main-user'])
       else
         this.router.navigate(['main']);
       this.notificationService.showSnackBar('Successfully logged in');
     }, error => {
-      console.log(error);
-      this.notificationService.showSnackBar(error.message);
+      if(error.status == 401){
+        this.notificationService.showSnackBar(error);
+      }
+      this.showProgressBar = false;
+      this.router.navigate(['login']);
     });
   }
 }

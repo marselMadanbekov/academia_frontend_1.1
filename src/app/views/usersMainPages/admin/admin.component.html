@@ -51,7 +51,7 @@
               <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{currentUser?.firstname}} {{currentUser?.lastname}}</span>
             </a>
             <mat-menu #menu1="matMenu">
-              <button mat-menu-item>
+              <button mat-menu-item (click)="profile()">
                 <span>profile</span>
               </button>
               <button mat-menu-item>

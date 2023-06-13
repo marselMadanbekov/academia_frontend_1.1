@@ -4,7 +4,7 @@ import {MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {CreateTimetableComponent} from "../../dialogs/create-timetable/create-timetable.component";
 import {CreateUserComponent} from "../../dialogs/create-user/create-user.component";
 import {User} from "../../../models/User";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {UserService} from "../../../service/entityServices/user.service";
 import {map, Observable, startWith} from "rxjs";
 import {FormControl} from "@angular/forms";
@@ -22,6 +22,7 @@ export class TeachersComponent implements OnInit{
   filteredOptions!: Observable<User[]>;
   constructor(private sidebarService: SidebarService,
               private userService: UserService,
+              private router: Router,
               private activatedRout: ActivatedRoute,
               private dialog: MatDialog) {
     this.activatedRout.queryParams.subscribe(param =>{
@@ -70,6 +71,13 @@ export class TeachersComponent implements OnInit{
 
     dialogRef.afterClosed().subscribe(result => {
       this.refreshData();
+    });
+  }
+
+  viewUser(teacher: User) {
+    this.router.navigate(['user-details'],{
+      queryParams:
+        {userId: teacher.id}
     });
   }
 }

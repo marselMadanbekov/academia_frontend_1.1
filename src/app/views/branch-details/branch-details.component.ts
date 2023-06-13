@@ -6,6 +6,8 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {BranchService} from "../../service/entityServices/branch.service";
 import {Branch} from "../../models/Branch";
 import {NotificationService} from "../../service/notification.service";
+import {User} from "../../models/User";
+import {LanguageService} from "../../service/translations/language.service";
 
 @Component({
   selector: 'app-branch-details',
@@ -15,9 +17,11 @@ import {NotificationService} from "../../service/notification.service";
 export class BranchDetailsComponent implements OnInit{
   branchId!: number;
   branch!: Branch;
+  currentLang!: string;
 
   constructor(private sidebarService: SidebarService,
               private branchService: BranchService,
+              private languageService: LanguageService,
               private router: Router,
               private notification: NotificationService,
               private activatedRoute: ActivatedRoute,
@@ -29,6 +33,9 @@ export class BranchDetailsComponent implements OnInit{
   }
 
   ngOnInit(): void {
+    this.languageService.lang$.subscribe(lang =>{
+      this.currentLang = lang;
+    })
     this.refreshData();
   }
   refreshData():void{
@@ -90,5 +97,16 @@ export class BranchDetailsComponent implements OnInit{
 
   routeToTeachers() {
     this.router.navigate(['branch-details/teachers'],{queryParams:{id: this.branch.id}});
+  }
+
+  viewUser(admin: User | undefined) {
+    this.router.navigate(['user-details'],{
+      queryParams:
+        {userId: admin?.id}
+    });
+  }
+
+  language(lang: string) {
+    this.languageService.toggle(lang);
   }
 }

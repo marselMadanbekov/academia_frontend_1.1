@@ -108,9 +108,9 @@
                   <tbody>
                   <tr *ngFor="let pupil of group?.pupils">
                     <th scope="row"><mat-icon (click)="removePupil(pupil)">remove_circle</mat-icon></th>
-                    <td (click)="viewUser()">{{pupil?.firstname}}</td>
-                    <td (click)="viewUser()">{{pupil?.lastname}}</td>
-                    <td (click)="viewUser()">{{pupil?.phone_number}}</td>
+                    <td (click)="viewUser(pupil)">{{pupil?.firstname}}</td>
+                    <td (click)="viewUser(pupil)">{{pupil?.lastname}}</td>
+                    <td (click)="viewUser(pupil)">{{pupil?.phone_number}}</td>
                   </tr>
                   </tbody>
                 </table>

@@ -13,6 +13,8 @@ import {map, Observable, startWith} from "rxjs";
 import {FormControl} from "@angular/forms";
 import {UserService} from "../../../service/entityServices/user.service";
 import {User} from "../../../models/User";
+import {ConfirmationAlertComponent} from "../../dialogs/confirmation-alert/confirmation-alert.component";
+import {getMatIconFailedToSanitizeLiteralError} from "@angular/material/icon";
 
 @Component({
   selector: 'app-main-admin',
@@ -22,7 +24,7 @@ import {User} from "../../../models/User";
 export class MainAdminComponent {
   currentLang!: string;
   currentUser!: User;
-  genelar!: GeneralInfo;
+  general!: GeneralInfo;
 
   branches !: Branch[];
   myControl = new FormControl<string | Branch>('');
@@ -50,13 +52,12 @@ export class MainAdminComponent {
   }
 
   branchDetails(branch: Branch){
-    const queryParams = { id: branch.id};
     this.route.navigate(['/branch-details'], {queryParams:{id:branch.id}});
   }
 
   refreshData():void{
     this.branchService.getMainGeneralInfo().subscribe(data => {
-      this.genelar = data;
+      this.general = data;
     })
     this.branchService.getBranches().subscribe(data =>{
       this.branches = data;
@@ -102,5 +103,27 @@ export class MainAdminComponent {
     dialogRef.afterClosed().subscribe(result => {
       this.refreshData();
     });
+  }
+
+  deleteBranch(branch: Branch) {
+    const dialogRef: MatDialogRef<any> = this.dialog.open(ConfirmationAlertComponent, {
+      width: '250px',
+      data: 'Do you want create this branch?',
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.branchService.deleteBranch(branch.id).subscribe(data =>{
+          console.log(data);
+          this.refreshData();
+        },error => {
+          console.log(error);
+        })
+      }
+    });
+  }
+
+  profile() {
+    this.route.navigate(['user-details'],{queryParams: {userId:0}});
   }
 }
