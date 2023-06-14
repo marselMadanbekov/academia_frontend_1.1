@@ -3,7 +3,7 @@
     class="card-header py-3 d-flex flex-row align-items-center justify-content-center">
     <h4 class="m-0 font-weight-bold text-primary">Edit user</h4>
   </div>
-  <form [formGroup]="firstFormGroup">
+  <form [formGroup]="userForm">
     <div style="display: flex;flex-wrap: wrap;justify-content: center;">
 
       <mat-form-field appearance="fill">
@@ -27,7 +27,7 @@
         <input matInput formControlName="phoneNumber">
       </mat-form-field>
       <div style="display: flex;justify-content: center;align-items: center;width: 100%">
-        <button class="d-sm-inline-block btn btn-sm btn-primary shadow-sm" [disabled]="firstFormGroup.invalid"
+        <button class="d-sm-inline-block btn btn-sm btn-primary shadow-sm" [disabled]="userForm.invalid"
                 (click)="save()"><i
           class="fas fa-download fa-sm text-white-50"></i>Save
         </button>

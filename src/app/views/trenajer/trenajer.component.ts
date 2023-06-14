@@ -180,6 +180,7 @@ export class TrenajerComponent {
 
   defaultUser(): User {
     return {
+      id:0,
       username: '',
       firstname: '',
       lastname: '',

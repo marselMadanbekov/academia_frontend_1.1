@@ -1,7 +1,7 @@
 import {Group} from "./Group";
 
 export interface User {
-  id?: number;
+  id: number;
   username: string;
   firstname: string;
   lastname: string;

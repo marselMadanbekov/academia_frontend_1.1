@@ -70,7 +70,7 @@
         <!-- Page Heading -->
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
           <h1 class="h3 mb-0 text-gray-800">Attendance</h1>
-          <button class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" (click)="openConfirmationDialog()"><i
+          <button class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" (click)="save()"><i
             class="fas fa-download fa-sm text-white-50" ></i> SAVE</button>
         </div>
 
@@ -135,12 +135,12 @@
                   </tr>
                   </thead>
                   <tbody>
-                  <tr *ngFor="let student of students; let i = index">
+                  <tr *ngFor="let student of studentAttendance; let i = index">
                     <td>{{ i + 1 }}</td>
-                    <td>{{ student.name }}</td>
+                    <td>{{ student.firstname }} {{student.lastname}}</td>
                     <td>
-                      <mat-checkbox color='primary' class="example-margin" [(ngModel)]="student.isChecked"
-                                    (change)="updateAttendance(student)">
+                      <mat-checkbox color='primary' class="example-margin"
+                                    [(ngModel)]="student.attend" (change)="change()">
                       </mat-checkbox>
                     </td>
                   </tr>

@@ -61,15 +61,11 @@ export class UserDetailsComponent implements OnInit {
     console.log("Hello arert is coming")
     const dialogRef: MatDialogRef<any> = this.dialog.open(EditUserComponent, {
       width: '600px',
-      data: 'Save, attendance?',
+      data: this.userId,
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        console.log("YES confirmed");
-      } else {
-        console.log("Oh no!")
-      }
+      this.refreshData();
     });
   }
 
@@ -79,7 +75,8 @@ export class UserDetailsComponent implements OnInit {
       {
         queryParams:
           {
-            id: group.id
+            id: group.id,
+            branchId: group.branchId,
           }
       });
   }

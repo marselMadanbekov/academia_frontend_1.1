@@ -70,6 +70,8 @@
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
           <h1 class="h3 mb-0 text-gray-800">{{group?.name}}</h1>
 
+          <a (click)="attendance()" class="d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+            class="fas fa-download fa-sm text-white-50"></i>Attendance</a>
         </div>
 
         <!-- Content Row -->
@@ -141,7 +143,6 @@
                     <td>{{group.subject?.name}}</td>
                   </tr>
                 </table>
-
               </div>
             </div>
           </div>

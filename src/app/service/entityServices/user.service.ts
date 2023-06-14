@@ -48,12 +48,12 @@ export class UserService {
     return this.http.get(USER_API + 'teachers/');
   }
 
-  getMembersOfGroup(groupId: number | undefined): Observable<any> {
-    return this.http.get(USER_API + groupId + "/members");
+  getPupilsByGroup(groupId: number | undefined): Observable<any> {
+    return this.http.get(USER_API + groupId + "/pupils");
   }
 
-  updateUser(user: any, targetUsername: string): Observable<any> {
-    return this.http.put(USER_API + targetUsername + "/update", user);
+  updateUser(user: any, targetUserId: number): Observable<any> {
+    return this.http.put(USER_API + targetUserId + "/edit", user);
   }
 
   getRole(): Observable<string> {

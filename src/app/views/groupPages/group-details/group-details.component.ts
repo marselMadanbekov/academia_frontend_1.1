@@ -133,4 +133,8 @@ export class GroupDetailsComponent implements OnInit{
       }
     });
   }
+
+  attendance() {
+    this.router.navigate(['attendance'],{queryParams:{groupId: this.groupId}});
+  }
 }
