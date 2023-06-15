@@ -9,6 +9,7 @@ import {UserAttend} from "../../models/UserAttend";
 import {LessonService} from "../../service/entityServices/lesson.service";
 import {Group} from "../../models/Group";
 import {GroupService} from "../../service/entityServices/group.service";
+import {Lesson} from "../../models/Lesson";
 
 
 @Component({
@@ -16,10 +17,13 @@ import {GroupService} from "../../service/entityServices/group.service";
   templateUrl: './attendance.component.html',
   styleUrls: ['./attendance.component.scss']
 })
-export class AttendanceComponent implements OnInit{
+export class AttendanceComponent implements OnInit {
   groupId!: number;
   group!: Group;
+  pupils!: User[];
   studentAttendance!: UserAttend[];
+  last3Lessons!: Lesson[];
+  selectedLesson: Lesson | null = null;
 
   constructor(private sidebarService: SidebarService,
               private activatedRoute: ActivatedRoute,
@@ -27,13 +31,14 @@ export class AttendanceComponent implements OnInit{
               private groupService: GroupService,
               private userService: UserService,
               private dialog: MatDialog) {
-    this.activatedRoute.queryParams.subscribe(param =>{
+    this.activatedRoute.queryParams.subscribe(param => {
       this.groupId = param['groupId'];
     })
   }
 
   ngOnInit(): void {
     this.userService.getPupilsByGroup(this.groupId).subscribe(data => {
+      this.pupils = data;
       this.studentAttendance = data.map((pupil: User) => {
         return {
           id: pupil.id,
@@ -42,15 +47,23 @@ export class AttendanceComponent implements OnInit{
           attend: false
         };
       });
+      this.lessonService.getLast3LessonsByGroupId(this.groupId).subscribe(data => {
+        this.last3Lessons = data;
+        console.log(data);
+      }, error => {
+        console.log(error)
+      })
       console.log(this.studentAttendance);
     });
-    this.groupService.getGroupById(this.groupId).subscribe(data =>{
+    this.groupService.getGroupById(this.groupId).subscribe(data => {
       this.group = data;
       console.log(data);
     }, error => {
       console.log(error);
     })
+
   }
+
   sidebarToggle() {
     this.sidebarService.toggle();
   }
@@ -64,14 +77,25 @@ export class AttendanceComponent implements OnInit{
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.lessonService.createLesson({
-          group: this.group,
-          attendance: this.studentAttendance,
-        }).subscribe(data =>{
-          console.log(data);
-        },error => {
-          console.log(error);
-        })
+        if (this.selectedLesson === null) {
+          this.lessonService.createLesson({
+            group: this.group,
+            attendance: this.studentAttendance,
+          }).subscribe(data => {
+            console.log(data);
+          }, error => {
+            console.log(error);
+          })
+        }else{
+          this.lessonService.updateLesson(this.selectedLesson.id,{
+            attendance: this.studentAttendance,
+            group: this.group
+          }).subscribe(data =>{
+            console.log(data);
+          },error => {
+            console.log(error);
+          })
+        }
       } else {
         console.log("Oh no!")
       }
@@ -80,5 +104,20 @@ export class AttendanceComponent implements OnInit{
 
   change() {
     console.log(this.studentAttendance);
+  }
+
+  lessonChange() {
+    if (this.selectedLesson === null) {
+      this.studentAttendance = this.pupils.map((pupil: User) => {
+        return {
+          id: pupil.id,
+          firstname: pupil.firstname,
+          lastname: pupil.lastname,
+          attend: false
+        };
+      });
+    } else {
+      this.studentAttendance = this.selectedLesson.attendance;
+    }
   }
 }

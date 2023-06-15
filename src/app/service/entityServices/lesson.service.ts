@@ -19,7 +19,11 @@ export class LessonService {
     return this.http.post(LESSON_API + "create",lesson);
   }
 
-  updateLesson(targetLessonId: number, lesson: Lesson){
+  getLast3LessonsByGroupId(groupId: number):Observable<any>{
+    return this.http.get(LESSON_API +"last3/" + groupId);
+  }
+
+  updateLesson(targetLessonId: number, lesson: { attendance: UserAttend[]; group: Group }){
     return this.http.put(LESSON_API + targetLessonId + "/update", lesson);
   }
 

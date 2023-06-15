@@ -87,25 +87,17 @@
               </div>
               <!-- Card Body -->
               <div class="card-body">
-                <mat-radio-group>
-                  <div class="radio-group">
-                    <mat-radio-button color="primary" class="example-margin"></mat-radio-button>
-                    <h4>Today</h4>
+                <mat-radio-group [(ngModel)]="selectedLesson" (change)="lessonChange()">
+                  <mat-radio-button color="primary" class="example-margin" [value]="null">
+                    <div class="lesson-date">Today</div>
+                  </mat-radio-button>
+                  <div style="width: 100%; display: flex; justify-content: center;">
+                    <h4>Last lessons</h4>
                   </div>
-                  <div style="width: 100%;display: flex;justify-content: center;">
-                    <h4>Last 3 lessons</h4>
-                  </div>
-                  <div class="radio-group">
-                    <mat-radio-button color="primary" class="example-margin"></mat-radio-button>
-                    <h4>First</h4>
-                  </div>
-                  <div class="radio-group">
-                    <mat-radio-button color="primary" class="example-margin"></mat-radio-button>
-                    <h4>Second</h4>
-                  </div>
-                  <div class="radio-group">
-                    <mat-radio-button color="primary" class="example-margin"></mat-radio-button>
-                    <h4>Third</h4>
+                  <div class="radio-group" *ngFor="let lesson of last3Lessons;">
+                    <mat-radio-button color="primary" class="example-margin" [value]="lesson">
+                      <div class="lesson-date">{{ lesson.date }}</div>
+                    </mat-radio-button>
                   </div>
                 </mat-radio-group>
               </div>
@@ -118,11 +110,8 @@
               <div
                 class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                 <h4 class="m-0 font-weight-bold text-primary">Select Group</h4>
+                <h4 class="mr-5 text-primary">{{group.name}}</h4>
 
-                <mat-select class="form-control bg-light border-1 small" style="width: 25%;" placeholder="SELECT_GROUP">
-                  <mat-option>NO</mat-option>
-                  <mat-option>Yes</mat-option>
-                </mat-select>
               </div>
               <!-- Card Body -->
               <div class="card-body">
