@@ -8,6 +8,8 @@ import {User} from "../../../models/User";
 import {UserService} from "../../../service/entityServices/user.service";
 import {Group} from "../../../models/Group";
 import {UpBalanceComponent} from "../../dialogs/up-balance/up-balance.component";
+import {TokenStorageService} from "../../../service/token-storage.service";
+import {LanguageService} from "../../../service/translations/language.service";
 
 @Component({
   selector: 'app-user-details',
@@ -16,10 +18,14 @@ import {UpBalanceComponent} from "../../dialogs/up-balance/up-balance.component"
 })
 export class UserDetailsComponent implements OnInit {
   userId!: number;
+  currentLang!: string;
+  currentUser!: User;
   user!: User;
 
   constructor(private sidebarService: SidebarService,
               private activatedRoute: ActivatedRoute,
+              private tokenStorage: TokenStorageService,
+              private languageService: LanguageService,
               private userService: UserService,
               private dialog: MatDialog,
               private router: Router) {
@@ -29,7 +35,16 @@ export class UserDetailsComponent implements OnInit {
     })
   }
 
+  language(lang:string){
+    this.languageService.toggle(lang);
+  }
   ngOnInit(): void {
+    this.languageService.lang$.subscribe(lang => {
+      this.currentLang = lang;
+    });
+    this.userService.getCurrentUser().subscribe(data =>{
+      this.currentUser = data;
+    })
     this.refreshData();
   }
 
@@ -90,5 +105,14 @@ export class UserDetailsComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       this.refreshData();
     });
+  }
+  logout() {
+    this.tokenStorage.logOut();
+    this.router.navigate(['login'])
+  }
+
+  profile() {
+    this.userId = 0;
+    this.refreshData();
   }
 }

@@ -3,13 +3,15 @@ import {SidebarService} from "../../service/sidebar.service";
 import {MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {ConfirmationAlertComponent} from "../dialogs/confirmation-alert/confirmation-alert.component";
 import {UserService} from "../../service/entityServices/user.service";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {User} from "../../models/User";
 import {UserAttend} from "../../models/UserAttend";
 import {LessonService} from "../../service/entityServices/lesson.service";
 import {Group} from "../../models/Group";
 import {GroupService} from "../../service/entityServices/group.service";
 import {Lesson} from "../../models/Lesson";
+import {TokenStorageService} from "../../service/token-storage.service";
+import {LanguageService} from "../../service/translations/language.service";
 
 
 @Component({
@@ -19,6 +21,9 @@ import {Lesson} from "../../models/Lesson";
 })
 export class AttendanceComponent implements OnInit {
   groupId!: number;
+  currentUser!: User;
+  currentLang!: string;
+  isLoad: boolean = false;
   group!: Group;
   pupils!: User[];
   studentAttendance!: UserAttend[];
@@ -26,7 +31,10 @@ export class AttendanceComponent implements OnInit {
   selectedLesson: Lesson | null = null;
 
   constructor(private sidebarService: SidebarService,
+              private router: Router,
+              private tokenStorage: TokenStorageService,
               private activatedRoute: ActivatedRoute,
+              private languageService: LanguageService,
               private lessonService: LessonService,
               private groupService: GroupService,
               private userService: UserService,
@@ -37,6 +45,12 @@ export class AttendanceComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.languageService.lang$.subscribe(lang =>{
+      this.currentLang = lang;
+    })
+    this.userService.getCurrentUser().subscribe(user =>{
+      this.currentUser = user;
+    })
     this.userService.getPupilsByGroup(this.groupId).subscribe(data => {
       this.pupils = data;
       this.studentAttendance = data.map((pupil: User) => {
@@ -49,10 +63,12 @@ export class AttendanceComponent implements OnInit {
       });
       this.lessonService.getLast3LessonsByGroupId(this.groupId).subscribe(data => {
         this.last3Lessons = data;
+        this.isLoad = true;
         console.log(data);
       }, error => {
         console.log(error)
       })
+
       console.log(this.studentAttendance);
     });
     this.groupService.getGroupById(this.groupId).subscribe(data => {
@@ -63,7 +79,9 @@ export class AttendanceComponent implements OnInit {
     })
 
   }
-
+  language(lang:string){
+    this.languageService.toggle(lang);
+  }
   sidebarToggle() {
     this.sidebarService.toggle();
   }
@@ -119,5 +137,12 @@ export class AttendanceComponent implements OnInit {
     } else {
       this.studentAttendance = this.selectedLesson.attendance;
     }
+  }
+  profile() {
+    this.router.navigate(['user-details'],{queryParams: {userId:0}});
+  }
+  logout() {
+    this.tokenStorage.logOut();
+    this.router.navigate(['login'])
   }
 }

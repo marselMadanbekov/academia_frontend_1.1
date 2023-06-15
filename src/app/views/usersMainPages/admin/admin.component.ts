@@ -9,6 +9,7 @@ import {CreateUserComponent} from "../../dialogs/create-user/create-user.compone
 import {User} from "../../../models/User";
 import {UserService} from "../../../service/entityServices/user.service";
 import {LanguageService} from "../../../service/translations/language.service";
+import {TokenStorageService} from "../../../service/token-storage.service";
 
 @Component({
   selector: 'app-admin',
@@ -23,6 +24,7 @@ export class AdminComponent {
   constructor(private sidebarService: SidebarService,
               private branchService: BranchService,
               private languageService: LanguageService,
+              private tokenStorage: TokenStorageService,
               private userService: UserService,
               private router: Router,
               private notification: NotificationService,
@@ -85,7 +87,13 @@ export class AdminComponent {
       this.refreshData();
     });
   }
-
+  language(lang:string){
+    this.languageService.toggle(lang);
+  }
+  logout(){
+    this.tokenStorage.logOut();
+    this.router.navigate(["/login"]);
+  }
   routeToSubject() {
     this.router.navigate(['admin/subjects'],{queryParams: {id: this.branch.id}});
   }

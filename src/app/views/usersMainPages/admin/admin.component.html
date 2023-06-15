@@ -10,33 +10,26 @@
           <mat-icon>menu</mat-icon>
         </button>
         <!-- Topbar Search -->
-        <form
-          class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-          <div class="input-group">
-            <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
-                   aria-label="Search" aria-describedby="basic-addon2">
-            <div class="input-group-append">
-              <button class="btn btn-primary" type="button">
-                <i class="fas fa-search fa-sm">
-                  <div style="display: flex;justify-content: center;align-items: center;">
-                    <mat-icon>search</mat-icon>
-                  </div>
-                </i>
-              </button>
-            </div>
-          </div>
-        </form>
+        <h1 style="margin: 0;">Academia Rosta</h1>
+
         <!-- Topbar Navbar -->
         <ul class="navbar-nav ml-auto">
           <div style="display: flex;justify-content: center;align-items: center;">
-            <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+            <button mat-icon-button routerLink="/trenajer"
+                    matTooltip="trenajer"
+                    aria-label="Button that displays a tooltip when focused or hovered over">
+              <mat-icon>extension</mat-icon>
+            </button>
+            <button mat-icon-button
+                    matTooltip="language"
+                    [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
               <mat-icon>language</mat-icon>
             </button>
             <mat-menu #menu="matMenu">
-              <button mat-menu-item>
+              <button mat-menu-item (click)="language('ru')">
                 <span>RU</span>
               </button>
-              <button mat-menu-item>
+              <button mat-menu-item (click)="language('kg')">
                 <span>KG</span>
               </button>
             </mat-menu>
@@ -48,17 +41,18 @@
             <a [matMenuTriggerFor]="menu1" class="nav-link dropdown-toggle" id="userDropdown" role="button"
                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <mat-icon style="margin-right: 5px">account_circle</mat-icon>
-              <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{currentUser?.firstname}} {{currentUser?.lastname}}</span>
+              <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{currentUser?.firstname}} {{currentUser.lastname}}</span>
             </a>
             <mat-menu #menu1="matMenu">
               <button mat-menu-item (click)="profile()">
                 <span>profile</span>
               </button>
-              <button mat-menu-item>
+              <button mat-menu-item (click)="logout()">
                 <span>logout</span>
               </button>
             </mat-menu>
           </li>
+
         </ul>
       </nav>
       <!-- Begin Page Content -->

@@ -86,10 +86,6 @@ export class MainAdminComponent {
     this.sidebarService.toggle();
   }
 
-  logout() {
-    this.tokenStorage.logOut();
-    this.route.navigate(['login'])
-  }
 
   language(lang:string){
     this.languageService.toggle(lang);
@@ -125,5 +121,9 @@ export class MainAdminComponent {
 
   profile() {
     this.route.navigate(['user-details'],{queryParams: {userId:0}});
+  }
+  logout() {
+    this.tokenStorage.logOut();
+    this.route.navigate(['login'])
   }
 }

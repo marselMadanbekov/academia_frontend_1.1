@@ -16,7 +16,14 @@
         <!-- Topbar Navbar -->
         <ul class="navbar-nav ml-auto">
           <div style="display: flex;justify-content: center;align-items: center;">
-            <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+            <button mat-icon-button routerLink="/trenajer"
+                    matTooltip="trenajer"
+                    aria-label="Button that displays a tooltip when focused or hovered over">
+              <mat-icon>extension</mat-icon>
+            </button>
+            <button mat-icon-button
+                    matTooltip="language"
+                    [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
               <mat-icon>language</mat-icon>
             </button>
             <mat-menu #menu="matMenu">

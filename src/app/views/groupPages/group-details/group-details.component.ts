@@ -10,6 +10,9 @@ import {GroupService} from "../../../service/entityServices/group.service";
 import {CreateUserComponent} from "../../dialogs/create-user/create-user.component";
 import {User} from "../../../models/User";
 import {ConfirmationAlertComponent} from "../../dialogs/confirmation-alert/confirmation-alert.component";
+import {LanguageService} from "../../../service/translations/language.service";
+import {UserService} from "../../../service/entityServices/user.service";
+import {TokenStorageService} from "../../../service/token-storage.service";
 
 @Component({
   selector: 'app-group-details',
@@ -19,10 +22,15 @@ import {ConfirmationAlertComponent} from "../../dialogs/confirmation-alert/confi
 export class GroupDetailsComponent implements OnInit{
   groupId!: number;
   branchId!: number;
+  currentLang!: string;
+  currentUser!: User;
   group!: Group;
   constructor(private sidebarService: SidebarService,
               private activatedRoute: ActivatedRoute,
               private groupService: GroupService,
+              private languageService: LanguageService,
+              private userService: UserService,
+              private tokenStorage: TokenStorageService,
               private dialog: MatDialog,
               private router: Router) {
     this.activatedRoute.queryParams.subscribe(param =>{
@@ -33,6 +41,12 @@ export class GroupDetailsComponent implements OnInit{
   }
 
   ngOnInit(): void {
+    this.languageService.lang$.subscribe(lang =>{
+      this.currentLang = lang;
+    })
+    this.userService.getCurrentUser().subscribe(data =>{
+      this.currentUser = data;
+    })
    this.refreshData();
   }
   refreshData(): void{
@@ -136,5 +150,15 @@ export class GroupDetailsComponent implements OnInit{
 
   attendance() {
     this.router.navigate(['attendance'],{queryParams:{groupId: this.groupId}});
+  }
+  language(lang: string) {
+    this.languageService.toggle(lang);
+  }
+  profile() {
+    this.router.navigate(['user-details'],{queryParams: {userId:0}});
+  }
+  logout() {
+    this.tokenStorage.logOut();
+    this.router.navigate(['login'])
   }
 }

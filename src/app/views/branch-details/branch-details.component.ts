@@ -8,6 +8,8 @@ import {Branch} from "../../models/Branch";
 import {NotificationService} from "../../service/notification.service";
 import {User} from "../../models/User";
 import {LanguageService} from "../../service/translations/language.service";
+import {TokenStorageService} from "../../service/token-storage.service";
+import {UserService} from "../../service/entityServices/user.service";
 
 @Component({
   selector: 'app-branch-details',
@@ -18,11 +20,14 @@ export class BranchDetailsComponent implements OnInit{
   branchId!: number;
   branch!: Branch;
   currentLang!: string;
+  currentUser!: User;
 
   constructor(private sidebarService: SidebarService,
               private branchService: BranchService,
               private languageService: LanguageService,
+              private tokenStorage: TokenStorageService,
               private router: Router,
+              private userService: UserService,
               private notification: NotificationService,
               private activatedRoute: ActivatedRoute,
               private dialog: MatDialog,) {
@@ -35,6 +40,9 @@ export class BranchDetailsComponent implements OnInit{
   ngOnInit(): void {
     this.languageService.lang$.subscribe(lang =>{
       this.currentLang = lang;
+    })
+    this.userService.getCurrentUser().subscribe(data =>{
+      this.currentUser = data;
     })
     this.refreshData();
   }
@@ -108,5 +116,12 @@ export class BranchDetailsComponent implements OnInit{
 
   language(lang: string) {
     this.languageService.toggle(lang);
+  }
+  profile() {
+    this.router.navigate(['user-details'],{queryParams: {userId:0}});
+  }
+  logout() {
+    this.tokenStorage.logOut();
+    this.router.navigate(['login'])
   }
 }

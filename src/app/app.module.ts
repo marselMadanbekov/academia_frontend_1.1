@@ -59,7 +59,8 @@ import {CreateSubjectComponent} from './views/dialogs/create-subject/create-subj
 import {MatAutocompleteModule} from "@angular/material/autocomplete";
 import {AdminComponent} from './views/usersMainPages/admin/admin.component';
 import {UpBalanceComponent} from './views/dialogs/up-balance/up-balance.component';
-
+import {MatTooltipModule} from "@angular/material/tooltip";
+import { ChunkPipe } from './service/chunk.pipe';
 @NgModule({
   declarations: [AppComponent,
     BranchDetailsComponent,
@@ -89,6 +90,8 @@ import {UpBalanceComponent} from './views/dialogs/up-balance/up-balance.componen
     CreateSubjectComponent,
     AdminComponent,
     UpBalanceComponent,
+    ChunkPipe,
+
   ],
   imports: [
     MatSnackBarModule,
@@ -119,6 +122,7 @@ import {UpBalanceComponent} from './views/dialogs/up-balance/up-balance.componen
     MatListModule,
     MatCardModule,
     MatAutocompleteModule,
+    MatTooltipModule,
   ],
   providers: [authInterceptorProviders, authErrorInterceptorProvider, SidebarService, TranslationPipe, CRoleService],
   bootstrap: [AppComponent],

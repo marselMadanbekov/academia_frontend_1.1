@@ -3,6 +3,7 @@
     <div
       class="card-header py-3 d-flex flex-row align-items-center" style="justify-content: space-between;">
       <h1 class="m-0 font-weight-bold text-primary" (click)="main()">Main</h1>
+
       <button mat-icon-button [matMenuTriggerFor]="menu" class="example-icon favorite-icon"
               aria-label="Example icon-button with heart icon">
         <mat-icon>language</mat-icon>
@@ -140,7 +141,7 @@
     <div style="display:flex;flex-wrap: wrap;justify-content: center;align-items: center; height: 90vh">
       <mat-card *ngIf="countOfPupils > 0" class="example-card" [style.width]="countedWidth + '%'" [style.height]="countedHeight + '%'">
         <mat-card-header>
-          <div class="d-flex align-items-center" [hidden]="isPupil">
+          <div class="d-flex align-items-center"  [hidden]="isPupil">
             <a>
               <mat-icon class="example-icon" style="margin-right: 20px">assignment_ind</mat-icon>
             </a>
