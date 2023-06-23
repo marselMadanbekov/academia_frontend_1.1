@@ -42,7 +42,8 @@
             <a [matMenuTriggerFor]="menu1" class="nav-link dropdown-toggle" id="userDropdown" role="button"
                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <mat-icon style="margin-right: 5px">account_circle</mat-icon>
-              <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{currentUser?.firstname}} {{currentUser.lastname}}</span>
+              <span
+                class="mr-2 d-none d-lg-inline text-gray-600 small">{{currentUser?.firstname}} {{currentUser.lastname}}</span>
             </a>
             <mat-menu #menu1="matMenu">
               <button mat-menu-item (click)="profile()">
@@ -79,34 +80,46 @@
               <div
                 class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                 <h4 class="m-0 font-weight-bold text-primary">All pupils</h4>
-                <a class="d-sm-inline-block btn btn-sm btn-primary shadow-sm" [matMenuTriggerFor]="menu2"><i
-                  class="fas fa-download fa-sm text-white-50" ></i>add new pupil</a>
-                <mat-menu #menu2="matMenu">
-                  <button mat-menu-item>
-                    <span (click)="createPupil()">create new</span>
-                  </button>
-                  <button mat-menu-item (click)="addPupil()">
-                    <span>choose pupils</span>
-                  </button>
-                </mat-menu>
+                <div>
+                  <a class="d-sm-inline-block btn btn-sm btn-primary shadow-sm"
+                     (click)="showMarksCol = !showMarksCol" style="margin-right: 10px"><i
+                    class="fas fa-download fa-sm text-white-50"></i>mark</a>
+                  <a class="d-sm-inline-block btn btn-sm btn-primary shadow-sm" [matMenuTriggerFor]="menu2"><i
+                    class="fas fa-download fa-sm text-white-50"></i>add new pupil</a>
+                  <mat-menu #menu2="matMenu">
+                    <button mat-menu-item>
+                      <span (click)="createPupil()">create new</span>
+                    </button>
+                    <button mat-menu-item (click)="addPupil()">
+                      <span>choose pupils</span>
+                    </button>
+                  </mat-menu>
+                </div>
               </div>
               <!-- Card Body -->
               <div class="card-body">
                 <table class="table table-hover table-bordered" *ngIf="group?.pupils?.length! > 0">
                   <thead>
-                  <tr >
+                  <tr>
                     <th scope="col">#</th>
                     <th scope="col">Firstname</th>
                     <th scope="col">Lastname</th>
                     <th scope="col">Phone number</th>
+                    <th *ngIf="showMarksCol">Mark</th>
                   </tr>
                   </thead>
                   <tbody>
                   <tr *ngFor="let pupil of group?.pupils">
-                    <th scope="row"><mat-icon (click)="removePupil(pupil)">remove_circle</mat-icon></th>
+                    <th scope="row">
+                      <mat-icon (click)="removePupil(pupil)">remove_circle</mat-icon>
+                    </th>
                     <td (click)="viewUser(pupil)">{{pupil?.firstname}}</td>
                     <td (click)="viewUser(pupil)">{{pupil?.lastname}}</td>
                     <td (click)="viewUser(pupil)">{{pupil?.phone_number}}</td>
+                    <td *ngIf="showMarksCol" class="markInput">
+                      <a class="d-sm-inline-block btn btn-sm btn-info shadow-sm" (click)="saveMark(pupil)"><i
+                        class="fas fa-download fa-sm text-white-50"></i>to mark</a>
+                    </td>
                   </tr>
                   </tbody>
                 </table>
@@ -127,7 +140,7 @@
               </div>
               <!-- Card Body -->
               <div class="card-body">
-                <table class="table table-bordered" >
+                <table class="table table-bordered">
                   <tr>
                     <td>Teacher</td>
                     <td>{{group?.teacher?.firstname}} {{group.teacher?.lastname}}</td>
@@ -168,27 +181,27 @@
                     <td scope="col">{{group?.timetableDTO?.monday}}</td>
                   </tr>
                   <tr *ngIf="group?.timetableDTO?.tuesday !== null">
-                    <th scope="row" >Tuesday</th>
+                    <th scope="row">Tuesday</th>
                     <td>{{group?.timetableDTO?.tuesday}}</td>
                   </tr>
                   <tr *ngIf="group?.timetableDTO?.wednesday !== null">
-                    <th scope="row" >Wednesday</th>
+                    <th scope="row">Wednesday</th>
                     <td>{{group?.timetableDTO?.wednesday}}</td>
                   </tr>
                   <tr *ngIf="group?.timetableDTO?.thursday !== null">
-                    <th scope="row" >Thursday</th>
+                    <th scope="row">Thursday</th>
                     <td>{{group?.timetableDTO?.thursday}}</td>
                   </tr>
                   <tr *ngIf="group?.timetableDTO?.friday !== null">
-                    <th scope="row" >Friday</th>
+                    <th scope="row">Friday</th>
                     <td>{{group?.timetableDTO?.friday}}</td>
                   </tr>
                   <tr *ngIf="group?.timetableDTO?.saturday !== null">
-                    <th scope="row" >Saturday</th>
+                    <th scope="row">Saturday</th>
                     <td>{{group?.timetableDTO?.saturday}}</td>
                   </tr>
                   <tr *ngIf="group?.timetableDTO?.sunday !== null">
-                    <th scope="row" >Sunday</th>
+                    <th scope="row">Sunday</th>
                     <td>{{group?.timetableDTO?.sunday}}</td>
                   </tr>
 

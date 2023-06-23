@@ -74,7 +74,7 @@ export class PupilsComponent implements OnInit{
   }
   private _filter(name: string): User[] {
     const filterValue = name.toLowerCase();
-    return this.pupils.filter(user => user.firstname.toLowerCase().includes(filterValue));
+    return this.pupils.filter(user => (user.firstname.toLowerCase().includes(filterValue) || user.lastname.toLowerCase().includes(filterValue) && user.active));
   }
   pupilDelete(pupil: User) {
     const dialogRef: MatDialogRef<any> = this.dialog.open(ConfirmationAlertComponent, {

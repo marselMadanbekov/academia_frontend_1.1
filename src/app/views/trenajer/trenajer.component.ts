@@ -171,10 +171,10 @@ export class TrenajerComponent {
 
   defaultMark(): Mark {
     return {
-      correctAnswers: 0,
-      totalQuestions: 0,
+      correct_answers: 0,
+      total_questions: 0,
       topic: this.selectedTaskName(),
-      date: new Date(),
+      createdDate: new Date(),
     }
   }
 
@@ -289,29 +289,29 @@ export class TrenajerComponent {
 
     switch (frameNum) {
       case 1:
-        this.firstPupilsMark.totalQuestions++;
-        this.firstPupilsMark.correctAnswers++;
+        this.firstPupilsMark.total_questions++;
+        this.firstPupilsMark.correct_answers++;
         this.firstFrameCheckers = false;
         console.log("this is a first frame")
         console.log(this.firstPupilsMark);
         break;
       case 2:
-        this.secondPupilsMark.totalQuestions++;
-        this.secondPupilsMark.correctAnswers++;
+        this.secondPupilsMark.total_questions++;
+        this.secondPupilsMark.correct_answers++;
         console.log('this is a second frame');
         console.log(this.secondPupilsMark);
         this.secondFrameCheckers = false;
         break;
       case 3:
-        this.thirdPupilsMark.totalQuestions++;
-        this.thirdPupilsMark.correctAnswers++;
+        this.thirdPupilsMark.total_questions++;
+        this.thirdPupilsMark.correct_answers++;
         console.log('this is a third frame');
         console.log(this.thirdPupilsMark);
         this.thirdFrameCheckers = false;
         break;
       case 4:
-        this.fourthPupilsMark.totalQuestions++;
-        this.fourthPupilsMark.correctAnswers++;
+        this.fourthPupilsMark.total_questions++;
+        this.fourthPupilsMark.correct_answers++;
         console.log('this is a fourth frame');
         console.log(this.fourthPupilsMark);
         this.fourthFrameCheckers = false;
@@ -350,25 +350,25 @@ export class TrenajerComponent {
 
     switch (frameNum) {
       case 1:
-        this.firstPupilsMark.totalQuestions++;
+        this.firstPupilsMark.total_questions++;
         this.firstFrameCheckers = false;
         console.log('this is a first frame');
         console.log(this.firstPupilsMark);
         break;
       case 2:
-        this.secondPupilsMark.totalQuestions++;
+        this.secondPupilsMark.total_questions++;
         console.log('this is a second frame');
         console.log(this.secondPupilsMark);
         this.secondFrameCheckers = false;
         break;
       case 3:
-        this.thirdPupilsMark.totalQuestions++;
+        this.thirdPupilsMark.total_questions++;
         console.log('this is a third frame');
         console.log(this.thirdPupilsMark);
         this.thirdFrameCheckers = false;
         break;
       case 4:
-        this.fourthPupilsMark.totalQuestions++;
+        this.fourthPupilsMark.total_questions++;
         console.log('this is a fourth frame');
         console.log(this.fourthPupilsMark);
         this.fourthFrameCheckers = false;

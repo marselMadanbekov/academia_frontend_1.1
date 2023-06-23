@@ -37,14 +37,16 @@
                   </tr>
                   </thead>
                   <tbody>
-                  <tr *ngFor="let pupil of filteredOptions | async;">
-                    <th scope="row" (click)="pupilDelete(pupil)">
-                      <mat-icon>delete</mat-icon>
-                    </th>
-                    <td (click)="viewUser(pupil)">{{pupil?.firstname}}</td>
-                    <td>{{pupil?.lastname}}</td>
-                    <td>{{pupil?.phone_number}}</td>
-                  </tr>
+                  <ng-container *ngFor="let pupil of filteredOptions | async; let i = index;">
+                    <tr >
+                      <th scope="row" (click)="pupilDelete(pupil)" [ngClass]="{'btn-warning': !pupil?.active}">
+                        <mat-icon>delete</mat-icon>
+                      </th>
+                      <td (click)="viewUser(pupil)">{{pupil?.firstname}}</td>
+                      <td>{{pupil?.lastname}}</td>
+                      <td>{{pupil?.phone_number}}</td>
+                    </tr>
+                  </ng-container>
                   </tbody>
                 </table>
               </div>

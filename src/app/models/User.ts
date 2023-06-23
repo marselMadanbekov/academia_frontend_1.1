@@ -11,8 +11,10 @@ export interface User {
   phone_number?: string;
   address?: string;
   email?: string;
+  active?: boolean;
   password?: string;
   groups?: Group[];
   confirm_password?: string;
   branchId?: number;
+  mark?:number;
 }

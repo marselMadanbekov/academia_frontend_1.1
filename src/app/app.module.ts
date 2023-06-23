@@ -25,7 +25,7 @@ import {CommonModule} from "@angular/common";
 import {MatRadioModule} from "@angular/material/radio";
 import {MatSelectModule} from "@angular/material/select";
 import {ConfirmationAlertComponent} from './views/dialogs/confirmation-alert/confirmation-alert.component';
-import {MatDialogModule, MatDialogRef} from "@angular/material/dialog";
+import {MatDialogModule} from "@angular/material/dialog";
 import {LoginComponent} from './auth/login/login.component';
 import {GroupDetailsComponent} from './views/groupPages/group-details/group-details.component';
 import {AddPupilGroupComponent} from "./views/dialogs/add-pupil-group/add-pupil-group.component";
@@ -60,7 +60,9 @@ import {MatAutocompleteModule} from "@angular/material/autocomplete";
 import {AdminComponent} from './views/usersMainPages/admin/admin.component';
 import {UpBalanceComponent} from './views/dialogs/up-balance/up-balance.component';
 import {MatTooltipModule} from "@angular/material/tooltip";
-import { ChunkPipe } from './service/chunk.pipe';
+import {ChunkPipe} from './service/chunk.pipe';
+import { CreateMarkComponent } from './views/dialogs/create-mark/create-mark.component';
+
 @NgModule({
   declarations: [AppComponent,
     BranchDetailsComponent,
@@ -91,6 +93,7 @@ import { ChunkPipe } from './service/chunk.pipe';
     AdminComponent,
     UpBalanceComponent,
     ChunkPipe,
+    CreateMarkComponent,
 
   ],
   imports: [

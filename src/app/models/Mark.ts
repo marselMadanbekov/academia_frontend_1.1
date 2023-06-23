@@ -1,8 +1,11 @@
+import {Subject} from "./Subject";
+
 export interface Mark{
   id?: number;
-  correctAnswers: number;
-  totalQuestions: number;
-  subject?: string;
+  userId?: number;
+  correct_answers: number;
+  total_questions: number;
+  subject?: Subject;
   topic: string;
-  date: Date;
+  createdDate: Date;
 }

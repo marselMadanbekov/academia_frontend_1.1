@@ -1,0 +1,26 @@
+<div style="padding: 15px">
+  <div
+    class="card-header py-3 d-flex flex-row align-items-center justify-content-center">
+    <h4 class="m-0 font-weight-bold text-primary">{{message}}</h4>
+  </div>
+  <div class="card-body">
+    <form [formGroup]="markForm">
+      <mat-form-field style="width: 100%">
+        <input matInput placeholder="topic" formControlName="topic"
+               class="modal-input">
+      </mat-form-field>
+      <div style="display: flex;align-items: center">
+        <mat-form-field style="width: 50%; margin-right: 5px">
+          <input matInput type="number" max="10" min="0" placeholder="mark" formControlName="mark">
+        </mat-form-field>
+        <h2> / 10</h2>
+      </div>
+      <div style="display: flex;justify-content: center;align-items: center;width: 100%">
+        <button class="d-sm-inline-block btn btn-sm btn-primary shadow-sm" [disabled]="markForm.invalid"
+                (click)="onSubmit()"><i
+          class="fas fa-download fa-sm text-white-50"></i>Create branch
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

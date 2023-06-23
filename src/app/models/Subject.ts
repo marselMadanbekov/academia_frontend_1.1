@@ -1,5 +1,5 @@
 export interface Subject{
-  id?: number;
+  id: number;
   name: string;
   cost_per_lesson: number;
   branchId: number;

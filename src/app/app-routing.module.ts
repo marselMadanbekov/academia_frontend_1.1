@@ -45,6 +45,7 @@ const routes: Routes = [
   {path: 'main-admin', component: MainAdminComponent},
   {path: '', redirectTo: 'main', pathMatch: 'full'},
 
+  {path:"**",redirectTo: 'main'}
   // {path: 'errorPage', component: ErrorPageComponent},
 ];
 
