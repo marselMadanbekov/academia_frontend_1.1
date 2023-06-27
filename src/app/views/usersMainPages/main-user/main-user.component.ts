@@ -7,6 +7,8 @@ import {User} from "../../../models/User";
 import {UserService} from "../../../service/entityServices/user.service";
 import {LanguageService} from "../../../service/translations/language.service";
 import {TokenStorageService} from "../../../service/token-storage.service";
+import {GroupService} from "../../../service/entityServices/group.service";
+import {Group} from "../../../models/Group";
 
 @Component({
   selector: 'app-main-user',
@@ -16,8 +18,11 @@ import {TokenStorageService} from "../../../service/token-storage.service";
 export class MainUserComponent implements OnInit{
   currentLang!: string;
   currentUser!: User;
+
+  groups!: Group[];
   constructor(private sidebarService: SidebarService,
               private userService: UserService,
+              private groupService: GroupService,
               private languageService: LanguageService,
               private tokenService: TokenStorageService,
               private dialog: MatDialog,
@@ -33,27 +38,19 @@ export class MainUserComponent implements OnInit{
     });
     this.userService.getCurrentUser().subscribe(user =>{
       this.currentUser = user;
+      this.groupService.getGroupsByBranch(this.currentUser.branchId).subscribe(data =>{
+        this.groups = data;
+      },error => {
+        console.log(error);
+      })
     })
   }
-  groupDetails(){
-    this.router.navigate(['group-details']);
+  groupDetails(group: Group){
+    this.router.navigate(['group-details'],{queryParams:
+        {id: group.id,
+          branchId: this.currentUser.branchId}});
   }
 
-  createGroup() {
-    console.log("Hello arert is coming")
-    const dialogRef: MatDialogRef<any> = this.dialog.open(CreateGroupComponent, {
-      width:'300px',
-      data: 'Save, attendance?',
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        console.log("YES confirmed");
-      } else {
-        console.log("Oh no!")
-      }
-    });
-  }
   language(lang:string){
     this.languageService.toggle(lang);
   }

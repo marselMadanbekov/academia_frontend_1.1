@@ -1,15 +1,13 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {FormBuilder, FormControl, Validators} from "@angular/forms";
+import {FormControl} from "@angular/forms";
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {ConfirmationAlertComponent} from "../confirmation-alert/confirmation-alert.component";
 import {User} from "../../../models/User";
 import {Subject} from "../../../models/Subject";
-import {BranchService} from "../../../service/entityServices/branch.service";
 import {GroupService} from "../../../service/entityServices/group.service";
 import {UserService} from "../../../service/entityServices/user.service";
 import {SubjectService} from "../../../service/entityServices/subject.service";
 import {map, Observable, startWith} from "rxjs";
-import {error} from "@angular/compiler-cli/src/transformers/util";
 
 @Component({
   selector: 'app-edit-group',
@@ -17,8 +15,8 @@ import {error} from "@angular/compiler-cli/src/transformers/util";
   styleUrls: ['./edit-group.component.scss']
 })
 export class EditGroupComponent implements OnInit {
-  selectedTeacher!: User;
-  selectedSubject!: Subject;
+  selectedTeacher!: User | null;
+  selectedSubject!: Subject | null;
 
   teachers!: User[];
   subjects!: Subject[];
@@ -71,6 +69,8 @@ export class EditGroupComponent implements OnInit {
       console.log(error);
     })
   }
+
+
 
   displayFn(pupil: User): string {
     return pupil && pupil.firstname ? pupil.firstname : '';

@@ -19,7 +19,7 @@ export class GroupService {
     return this.http.post(GROUP_API + 'create',group);
   }
 
-  getGroupsByBranch(branchId: number): Observable<any>{
+  getGroupsByBranch(branchId: number | undefined): Observable<any>{
     return this.http.get(GROUP_API + 'getByBranch/' + branchId);
   }
 
@@ -34,11 +34,15 @@ export class GroupService {
     return this.http.put(GROUP_API + userId + "/addPupilToGroup/" + groupId,null);
   }
 
-  editGroupById(groupId: number, group: { teacher: User; subject: Subject }) : Observable<any>{
+  editGroupById(groupId: number, group: { teacher: User | null; subject: Subject | null }) : Observable<any>{
     return this.http.put(GROUP_API + groupId + "/edit",group);
   }
 
   removePupilFromGroup(groupId: number, pupilId : number | undefined) {
     return this.http.put(GROUP_API + pupilId + "/remove/" + groupId,null);
+  }
+
+  getCurrentUsersGroups() : Observable<any>{
+    return this.http.get(GROUP_API + "currentUser");
   }
 }

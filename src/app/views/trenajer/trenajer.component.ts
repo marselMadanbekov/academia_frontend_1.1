@@ -7,6 +7,10 @@ import {TokenStorageService} from "../../service/token-storage.service";
 import {Router} from "@angular/router";
 import {TextToSpeechService} from "../../service/text-to-speech.service";
 import {Group} from "../../models/Group";
+import {UserService} from "../../service/entityServices/user.service";
+import {MarkService} from "../../service/entityServices/mark.service";
+import {GroupService} from "../../service/entityServices/group.service";
+import {CRoleService} from "../../service/current/c-role.service";
 
 export interface Task {
   name: string;
@@ -57,8 +61,8 @@ export class TrenajerComponent {
   //common variables
   pbSelectInfo = pomoshBrata;
   pdSelectInfo = pomoshDruga;
-  pdSelectedTask: any;
-  pbSelectedTask: any;
+  pdSelectedTask: string | null = null;
+  pbSelectedTask: string | null = null;
   inter = 1;
   digits = 1;
   count = 3;
@@ -67,7 +71,7 @@ export class TrenajerComponent {
   countOfPupils = 1;
   countFrames = [1, 2, 3, 4];
   countedWidth = 100;
-  countedHeight = 95;
+  countedHeight = 90;
 
   firstFramePupil!: User;
   preFirstPupil!: User;
@@ -78,16 +82,20 @@ export class TrenajerComponent {
   fourthFramePupil!: User;
   preFourthPupil!: User;
 
-  firstPupilsMark = this.defaultMark();
-  secondPupilsMark = this.defaultMark();
-  thirdPupilsMark = this.defaultMark();
-  fourthPupilsMark = this.defaultMark();
+  firstPupilsMark = this.defaultMark(0);
+  secondPupilsMark = this.defaultMark(0);
+  thirdPupilsMark = this.defaultMark(0);
+  fourthPupilsMark = this.defaultMark(0);
 
 
   firstFrameNum: any;
+  firstFramePrev:any;
   secondFrameNum: any;
+  secondFramePrev: any;
   thirdFrameNum: any;
+  thirdFramePrev: any;
   fourthFrameNum: any;
+  fourthFramePrev: any;
   firstFrameArray!: any[];
   secondFrameArray!: any[];
   thirdFrameArray!: any[];
@@ -102,7 +110,7 @@ export class TrenajerComponent {
 
   startButtonEnable = true;
   showAnswerEnable = false;
-  fontSize = 30;
+  fontSize = 20;
   voice = true;
 
   isPupil = false;
@@ -110,35 +118,33 @@ export class TrenajerComponent {
   opened = false;
 
   constructor(private trenajer: TrenajerService,
+              private roleService: CRoleService,
               private tokenService: TokenStorageService,
               private route: Router,
               private speechService: TextToSpeechService,
-              // private userService: UserService,
-              // private markService: MarkService,
-              // private groupService: GroupService,
+              private userService: UserService,
+              private markService: MarkService,
+              private groupService: GroupService,
   ) {
-    // this.groupService.getCurrentUsersGroups().subscribe(data =>{
-    //   this.groups = data;
-    // })
-    // this.userService.getRole().subscribe(data =>{
-    //   console.log(data);
-    //   this.isPupil = (data == 'ROLE_PUPIL');
-    //   console.log(this.isPupil);
-    // })
+    this.groupService.getCurrentUsersGroups().subscribe(data => {
+      this.groups = data;
+    })
   }
+
   changeLanguage(lang: string) {
     this.lang = lang;
   }
 
-  changeStatus():boolean{
+  changeStatus(): boolean {
     this.opened = !this.opened;
     return this.opened;
   }
-  resetMarks():void{
-    this.firstPupilsMark = this.defaultMark();
-    this.secondPupilsMark = this.defaultMark();
-    this.thirdPupilsMark = this.defaultMark();
-    this.fourthPupilsMark = this.defaultMark();
+
+  resetMarks(): void {
+    this.firstPupilsMark = this.defaultMark(0);
+    this.secondPupilsMark = this.defaultMark(0);
+    this.thirdPupilsMark = this.defaultMark(0);
+    this.fourthPupilsMark = this.defaultMark(0);
   }
 
   resetAll(): void {
@@ -169,8 +175,10 @@ export class TrenajerComponent {
     this.fourthFrameNum = null;
   }
 
-  defaultMark(): Mark {
+  defaultMark(userId: number): { createdDate: Date; total_questions: number; subject: { id: number }; correct_answers: number; topic: string; userId: number } {
     return {
+      userId:userId,
+      subject:{id:1},
       correct_answers: 0,
       total_questions: 0,
       topic: this.selectedTaskName(),
@@ -180,7 +188,7 @@ export class TrenajerComponent {
 
   defaultUser(): User {
     return {
-      id:0,
+      id: 0,
       username: '',
       firstname: '',
       lastname: '',
@@ -190,14 +198,16 @@ export class TrenajerComponent {
   }
 
   ngOnInit() {
-    // this.userService.getRole().subscribe(data =>{
-    //   if(data === "ROLE_PUPIL"){
-    //     this.isPupil = true;
-    //   }
-    // });
-    // this.userService.getAllPupils().subscribe(data => {
-    //   this.pupils = data;
-    // });
+    this.roleService.currentRole$.subscribe(role => {
+      if (role === 'ROLE_PUPIL' || role === 'ROLE_BRANCH_OWNER' || role === 'ROLE_SUPER_ADMIN') {
+        this.isPupil = true;
+      }
+    })
+    this.userService.getCurrentUsersPupils().subscribe(data => {
+      this.pupils = data;
+    }, error => {
+      console.log(error);
+    })
   }
 
 
@@ -214,10 +224,10 @@ export class TrenajerComponent {
   }
 
   async getTasks(): Promise<any> {
-    // this.firstFrameArray = await this.trenajer.getArray(this.selectedTaskName(), this.digits, this.count);
-    // if (this.countOfPupils > 1) this.secondFrameArray = await this.trenajer.getArray(this.selectedTaskName(), this.digits, this.count);
-    // if (this.countOfPupils > 2) this.thirdFrameArray = await this.trenajer.getArray(this.selectedTaskName(), this.digits, this.count);
-    // if (this.countOfPupils > 3) this.fourthFrameArray = await this.trenajer.getArray(this.selectedTaskName(), this.digits, this.count);
+    this.firstFrameArray = await this.trenajer.getArray(this.selectedTaskName(), this.digits, this.count);
+    if (this.countOfPupils > 1) this.secondFrameArray = await this.trenajer.getArray(this.selectedTaskName(), this.digits, this.count);
+    if (this.countOfPupils > 2) this.thirdFrameArray = await this.trenajer.getArray(this.selectedTaskName(), this.digits, this.count);
+    if (this.countOfPupils > 3) this.fourthFrameArray = await this.trenajer.getArray(this.selectedTaskName(), this.digits, this.count);
   }
 
   selectedTaskName(): string {
@@ -251,12 +261,42 @@ export class TrenajerComponent {
 
       this.subscription = this.source.subscribe(() => {
         if (i < this.count) {
-          this.firstFrameNum = this.firstFrameArray[i];
+          if(this.firstFrameArray[i] == this.firstFramePrev){
+            this.firstFrameNum = "  " + this.firstFrameArray[i];
+            this.firstFramePrev = null;
+          }else {
+            this.firstFrameNum = this.firstFrameArray[i];
+            this.firstFramePrev = this.firstFrameArray[i];
+          }
           console.log(this.voice);
-          // if (this.voice) this.speechService.speakNumber(this.firstFrameNum);
-          if (this.countOfPupils > 1) this.secondFrameNum = this.secondFrameArray[i];
-          if (this.countOfPupils > 2) this.thirdFrameNum = this.thirdFrameArray[i];
-          if (this.countOfPupils > 3) this.fourthFrameNum = this.fourthFrameArray[i];
+          if (this.voice) this.speechService.speakNumber(this.firstFrameNum);
+          if (this.countOfPupils > 1) {
+            if(this.secondFrameArray[i] == this.secondFramePrev){
+              this.secondFrameNum = "  " + this.secondFrameArray[i];
+              this.secondFramePrev = null;
+            }else {
+              this.secondFrameNum = this.secondFrameArray[i];
+              this.secondFramePrev = this.secondFrameArray[i];
+            }
+          }
+          if (this.countOfPupils > 2) {
+            if(this.thirdFrameArray[i] == this.thirdFramePrev){
+              this.thirdFrameNum = "  " + this.thirdFrameArray[i];
+              this.thirdFramePrev = null;
+            }else {
+              this.thirdFrameNum = this.thirdFrameArray[i];
+              this.thirdFramePrev = this.thirdFrameArray[i];
+            }
+          }
+          if (this.countOfPupils > 3) {
+            if(this.fourthFrameArray[i] == this.fourthFramePrev){
+              this.fourthFrameNum = "  " + this.fourthFrameArray[i];
+              this.fourthFramePrev = null;
+            }else {
+              this.fourthFrameNum = this.fourthFrameArray[i];
+              this.fourthFramePrev = this.fourthFrameArray[i];
+            }
+          }
           this.startButtonEnable = false;
         }
         if (i == this.count + 1) {
@@ -273,7 +313,7 @@ export class TrenajerComponent {
         i += 1;
         console.log(i);
       });
-    }catch (error){
+    } catch (error) {
       if (this.subscription) {
         this.subscription.unsubscribe();
       }
@@ -322,7 +362,7 @@ export class TrenajerComponent {
   }
 
   answer() {
-    // if (this.voice) this.speechService.speakNumber(this.firstFrameArray[this.count]);
+    if (this.voice) this.speechService.speakNumber(this.firstFrameArray[this.count]);
     this.firstFrameNum = '=' + this.firstFrameArray[this.count];
     if (this.countOfPupils > 1) this.secondFrameNum = '=' + this.secondFrameArray[this.count];
     if (this.countOfPupils > 2) this.thirdFrameNum = '=' + this.thirdFrameArray[this.count];
@@ -380,34 +420,32 @@ export class TrenajerComponent {
 
 
   pupilChanged(frameNum: number) {
-    // switch (frameNum) {
-    //   case 1:
-    //     this.uploadMark(this.firstPupilsMark, this.preFirstPupil);
-    //     console.log('this is a first frame');
-    //     this.preFirstPupil = this.firstFramePupil;
-    //     this.firstPupilsMark = this.defaultMark();
-    //     break;
-    //   case 2:
-    //     this.uploadMark(this.secondPupilsMark, this.preSecondPupil);
-    //     console.log('this is a second frame');
-    //     this.preSecondPupil = this.secondFramePupil;
-    //     this.secondPupilsMark = this.defaultMark();
-    //     break;
-    //   case 3:
-    //     this.uploadMark(this.thirdPupilsMark, this.preThirdPupil);
-    //     console.log('this is a third frame');
-    //     this.preThirdPupil = this.thirdFramePupil;
-    //     this.thirdPupilsMark = this.defaultMark();
-    //     break;
-    //   case 4:
-    //     this.uploadMark(this.fourthPupilsMark, this.preFourthPupil);
-    //     console.log('this is a fourth frame');
-    //     this.preFourthPupil = this.fourthFramePupil;
-    //     this.fourthPupilsMark = this.defaultMark();
-    //     break;
-    //   default:
-    //     break;
-    // }
+    switch (frameNum) {
+      case 1:
+        console.log(this.firstPupilsMark);
+        this.uploadMark(this.firstPupilsMark);
+        console.log('this is a first frame');
+        this.firstPupilsMark = this.defaultMark(this.firstFramePupil.id);
+
+        break;
+      case 2:
+        this.uploadMark(this.secondPupilsMark);
+        console.log('this is a second frame');
+        this.secondPupilsMark = this.defaultMark(this.secondFramePupil.id);
+        break;
+      case 3:
+        this.uploadMark(this.thirdPupilsMark);
+        console.log('this is a third frame');
+        this.thirdPupilsMark = this.defaultMark(this.thirdFramePupil.id);
+        break;
+      case 4:
+        this.uploadMark(this.fourthPupilsMark);
+        console.log('this is a fourth frame');
+        this.fourthPupilsMark = this.defaultMark(this.fourthFramePupil.id);
+        break;
+      default:
+        break;
+    }
   }
 
   countOfPupilChange() {
@@ -429,53 +467,54 @@ export class TrenajerComponent {
     } else {
       this.countedHeight = 45;
       this.countedWidth = 45;
-      if(this.digits === 1) this.fontSize = 20;
+      if (this.digits === 1) this.fontSize = 20;
       else
         this.fontSize = 25 - this.digits * 2;
     }
   }
 
   save() {
-    // this.uploadMark(this.firstPupilsMark, this.firstFramePupil);
-    // this.firstPupilsMark = this.defaultMark();
-    //
-    // this.uploadMark(this.secondPupilsMark, this.secondFramePupil);
-    // this.secondPupilsMark = this.defaultMark();
-    //
-    // this.uploadMark(this.thirdPupilsMark, this.thirdFramePupil);
-    // this.thirdPupilsMark = this.defaultMark();
-    //
-    // this.uploadMark(this.fourthPupilsMark, this.fourthFramePupil);
-    // this.fourthPupilsMark = this.defaultMark();
+    this.uploadMark(this.firstPupilsMark);
+    this.firstPupilsMark = this.defaultMark(this.firstFramePupil.id);
+
+    this.uploadMark(this.secondPupilsMark);
+    this.secondPupilsMark = this.defaultMark(this.secondFramePupil.id);
+
+    this.uploadMark(this.thirdPupilsMark);
+    this.thirdPupilsMark = this.defaultMark(this.thirdFramePupil.id);
+
+    this.uploadMark(this.fourthPupilsMark);
+    this.fourthPupilsMark = this.defaultMark(this.fourthFramePupil.id);
   }
 
-  // uploadMark(mark: Mark, user: User): void {
-  //   if (mark.totalQuestions != 0 && user.firstname != '') {
-  //     console.log(user.username);
-  //     this.markService.setMark(mark, user.username).subscribe(data => {
-  //       console.log(data);
-  //     })
-  //   }
-  // }
-  //
-  // onGroupChange() {
-  //   if(this.selectedGroup){
-  //     this.userService.getMembersOfGroup(this.selectedGroup.id).subscribe(data =>{
-  //       this.pupils = data;
-  //     });
-  //   }else{
-  //     this.userService.getAllPupils().subscribe(data =>{
-  //       this.pupils = data;
-  //     });
-  //   }
-  // }
+  uploadMark(mark: { createdDate: Date; total_questions: number; subject: { id: number }; correct_answers: number; topic: string; userId: number }): void {
+    if (mark.total_questions != 0 && mark.userId != 0) {
+      this.markService.createMark({
+        total_questions: mark.total_questions,
+        correct_answers: mark.correct_answers,
+        userId: mark.userId,
+        subject: {id: 1},
+        topic: mark.topic
+      }).subscribe(data => {
+        console.log(data);
+      })
+    }
+  }
+
+  onGroupChange() {
+    if (this.selectedGroup) {
+      this.userService.getPupilsByGroup(this.selectedGroup.id).subscribe(data => {
+        this.pupils = data;
+      });
+    } else {
+      this.userService.getCurrentUsersPupils().subscribe(data => {
+        this.pupils = data;
+      });
+    }
+  }
 
   logout() {
     this.tokenService.logOut();
     this.route.navigate(['/login'])
-  }
-
-  main() {
-    this.route.navigate(['main']);
   }
 }

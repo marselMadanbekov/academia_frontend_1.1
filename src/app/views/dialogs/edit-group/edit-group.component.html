@@ -9,11 +9,16 @@
                [matAutocomplete]="auto">
         <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
         </mat-autocomplete>
-        <p style="margin: 0;" class="text-end">{{selectedTeacher?.firstname}} {{selectedTeacher?.lastname}}</p>
+        <mat-chip-row>
+          {{selectedTeacher?.firstname}} {{selectedTeacher?.lastname}}
+          <button matChipRemove [attr.aria-label]="'remove ' + selectedSubject?.name" (click)="selectedTeacher = null">
+            <mat-icon>cancel</mat-icon>
+          </button>
+        </mat-chip-row>
       </div>
       <!-- Card Body -->
       <div class="m-3">
-        <table class="table table-hover table-bordered mt-7">
+        <table class="table table-hover table-bordered" style="margin-top: 65px">
           <thead>
           <tr>
             <th scope="col">#</th>
@@ -41,11 +46,16 @@
                [matAutocomplete]="auto1">
         <mat-autocomplete #auto1="matAutocomplete" [displayWith]="displayFnSubject">
         </mat-autocomplete>
-        <p style="margin: 0;" class="text-end">{{selectedSubject?.name}}</p>
+        <mat-chip-row>
+          {{selectedSubject?.name}}
+          <button matChipRemove [attr.aria-label]="'remove ' + selectedSubject?.name" (click)="selectedSubject = null">
+            <mat-icon>cancel</mat-icon>
+          </button>
+        </mat-chip-row>
       </div>
       <!-- Card Body -->
       <div class="m-3">
-        <table class="table table-hover table-bordered mt-7">
+        <table class="table table-hover table-bordered" style="margin-top: 65px">
           <thead>
           <tr>
             <th scope="col">#</th>

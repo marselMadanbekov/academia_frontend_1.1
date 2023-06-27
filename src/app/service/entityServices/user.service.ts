@@ -17,7 +17,8 @@ export class UserService {
   createUserByBranch(user: { firstname: string | null | undefined; password: string | null | undefined; role: any; address: string | null | undefined; phone_number: string | null | undefined; email: string | null | undefined; age: string | null | undefined; lastname: string | null | undefined; username: string | null | undefined; confirm_password: string | null | undefined; branchId: number }): Observable<any> {
     return this.http.post(USER_API + 'create', user);
   }
-  createUserByGroup(user: { firstname: string | null | undefined; password: string | null | undefined; role: any; address: string | null | undefined; phone_number: string | null | undefined; email: string | null | undefined; age: string | null | undefined; lastname: string | null | undefined; username: string | null | undefined; confirm_password: string | null | undefined; branchId: number }, groupId:number):Observable<any>{
+
+  createUserByGroup(user: { firstname: string | null | undefined; password: string | null | undefined; role: any; address: string | null | undefined; phone_number: string | null | undefined; email: string | null | undefined; age: string | null | undefined; lastname: string | null | undefined; username: string | null | undefined; confirm_password: string | null | undefined; branchId: number }, groupId: number): Observable<any> {
     return this.http.post(USER_API + 'createByGroup/' + groupId, user);
   }
 
@@ -37,9 +38,10 @@ export class UserService {
     return this.http.get(USER_API);
   }
 
-  getProfile(): Observable<any>{
+  getProfile(): Observable<any> {
     return this.http.get(USER_API + "profile");
   }
+
   getAllPupils(branchId: number): Observable<any> {
     return this.http.get(USER_API + 'pupils/byBranch/' + branchId);
   }
@@ -60,18 +62,23 @@ export class UserService {
     return this.http.get<string>(USER_API + "role");
   }
 
-  deleteUser(userId: number | undefined) : Observable<any>{
+  deleteUser(userId: number | undefined): Observable<any> {
     return this.http.delete(USER_API + 'delete/' + userId);
   }
 
   getPupilsByBranch(branchId: number): Observable<any> {
     return this.http.get(USER_API + "pupils/getByBranch/" + branchId);
   }
+
   getTeachersByBranch(branchId: number): Observable<any> {
     return this.http.get(USER_API + "teachers/getByBranch/" + branchId);
   }
 
-  balanceUp(userId: number, balance: number) {
-    return this.http.post(USER_API + "balance/" + balance,userId);
+  balanceUp(userId: number, balance: number) : Observable<any>{
+    return this.http.post(USER_API + "balance/" + balance, userId);
+  }
+
+  getCurrentUsersPupils() :Observable<any>{
+    return this.http.get(USER_API + "currentUsersPupils");
   }
 }
