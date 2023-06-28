@@ -10,6 +10,7 @@ import {Group} from "../../../models/Group";
 import {UpBalanceComponent} from "../../dialogs/up-balance/up-balance.component";
 import {TokenStorageService} from "../../../service/token-storage.service";
 import {LanguageService} from "../../../service/translations/language.service";
+import {Subject} from "../../../models/Subject";
 
 @Component({
   selector: 'app-user-details',
@@ -18,9 +19,10 @@ import {LanguageService} from "../../../service/translations/language.service";
 })
 export class UserDetailsComponent implements OnInit {
   userId!: number;
-  currentLang!: string;
+  currentLang: string = 'kg';
   currentUser!: User;
   user!: User;
+  selectedSubject!: Subject;
 
   constructor(private sidebarService: SidebarService,
               private activatedRoute: ActivatedRoute,

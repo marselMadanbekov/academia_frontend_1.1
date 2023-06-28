@@ -167,12 +167,15 @@
           <h1 [style.font-size]="fontSize + 'vh'" style="white-space: pre">{{firstFrameNum}}</h1>
         </mat-card-content>
         <mat-card-actions style="justify-content: space-between;padding: 20px">
-          <a class="btn btn-success btn-icon-split" *ngIf="firstFrameCheckers" (click)="correct(1)">
+          <button [matBadge]="firstPupilsMark.correct_answers" matBadgePosition="before"
+                  class="btn btn-success btn-icon-split" *ngIf="firstFrameCheckers" (click)="correct(1)">
             <span class="text">correct</span>
-          </a>
-          <a class="btn btn-danger btn-icon-split" *ngIf="firstFrameCheckers" (click)="incorrect(1)">
+          </button>
+          <button [matBadge]="firstPupilsMark.total_questions - firstPupilsMark.correct_answers"
+                  matBadgePosition="before" class="btn btn-danger btn-icon-split" *ngIf="firstFrameCheckers"
+                  (click)="incorrect(1)">
             <span class="text">incorrect</span>
-          </a>
+          </button>
         </mat-card-actions>
       </mat-card>
       <mat-card *ngIf="countOfPupils > 1" class="example-card" [style.width]="countedWidth + '%'"
@@ -194,12 +197,15 @@
           <h1 [style.font-size]="fontSize + 'vh'" style="white-space: pre">{{secondFrameNum}}</h1>
         </mat-card-content>
         <mat-card-actions style="justify-content: space-between;padding: 20px">
-          <a class="btn btn-success btn-icon-split" *ngIf="secondFrameCheckers" (click)="correct(2)">
+          <button [matBadge]="secondPupilsMark.correct_answers" matBadgePosition="before" matBadgeColor="accent"
+                  class="btn btn-success btn-icon-split" *ngIf="secondFrameCheckers" (click)="correct(2)">
             <span class="text">correct</span>
-          </a>
-          <a class="btn btn-danger btn-icon-split" *ngIf="secondFrameCheckers" (click)="incorrect(2)">
+          </button>
+          <button [matBadge]="secondPupilsMark.total_questions - secondPupilsMark.correct_answers"
+                  matBadgePosition="before" class="btn btn-danger btn-icon-split" *ngIf="secondFrameCheckers"
+                  (click)="incorrect(2)">
             <span class="text">incorrect</span>
-          </a>
+          </button>
         </mat-card-actions>
       </mat-card>
       <mat-card *ngIf="countOfPupils > 2" class="example-card" [style.width]="countedWidth + '%'"
@@ -221,12 +227,14 @@
           <h1 [style.font-size]="fontSize + 'vh'" style="white-space: pre">{{thirdFrameNum}}</h1>
         </mat-card-content>
         <mat-card-actions style="justify-content: space-between;padding: 20px">
-          <a class="btn btn-success btn-icon-split" *ngIf="thirdFrameCheckers" (click)="correct(3)">
+          <button [matBadge]="thirdPupilsMark.correct_answers"
+             matBadgePosition="before" class="btn btn-success btn-icon-split" *ngIf="thirdFrameCheckers" (click)="correct(3)">
             <span class="text">correct</span>
-          </a>
-          <a class="btn btn-danger btn-icon-split" *ngIf="thirdFrameCheckers" (click)="incorrect(3)">
+          </button>
+          <button [matBadge]="thirdPupilsMark.total_questions - thirdPupilsMark.correct_answers"
+             matBadgePosition="before" class="btn btn-danger btn-icon-split" *ngIf="thirdFrameCheckers" (click)="incorrect(3)">
             <span class="text">incorrect</span>
-          </a>
+          </button>
         </mat-card-actions>
       </mat-card>
       <mat-card *ngIf="countOfPupils > 3" class="example-card" [style.width]="countedWidth + '%'"
@@ -248,12 +256,14 @@
           <h1 [style.font-size]="fontSize + 'vh'" style="white-space: pre">{{fourthFrameNum}}</h1>
         </mat-card-content>
         <mat-card-actions style="justify-content: space-between;padding: 20px">
-          <a class="btn btn-success btn-icon-split" *ngIf="fourthFrameCheckers" (click)="correct(4)">
+          <button [matBadge]="fourthPupilsMark.correct_answers"
+             matBadgePosition="before" class="btn btn-success btn-icon-split" *ngIf="fourthFrameCheckers" (click)="correct(4)">
             <span class="text">correct</span>
-          </a>
-          <a class="btn btn-danger btn-icon-split" *ngIf="fourthFrameCheckers" (click)="incorrect(4)">
+          </button>
+          <button [matBadge]="fourthPupilsMark.total_questions - fourthPupilsMark.correct_answers"
+             matBadgePosition="before" class="btn btn-danger btn-icon-split" *ngIf="fourthFrameCheckers" (click)="incorrect(4)">
             <span class="text">incorrect</span>
-          </a>
+          </button>
         </mat-card-actions>
       </mat-card>
     </div>

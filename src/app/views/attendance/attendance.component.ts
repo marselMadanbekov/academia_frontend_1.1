@@ -45,12 +45,16 @@ export class AttendanceComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.languageService.lang$.subscribe(lang =>{
+    this.languageService.lang$.subscribe(lang => {
       this.currentLang = lang;
     })
-    this.userService.getCurrentUser().subscribe(user =>{
+    this.userService.getCurrentUser().subscribe(user => {
       this.currentUser = user;
     })
+    this.refreshData();
+  }
+
+  refreshData(): void {
     this.userService.getPupilsByGroup(this.groupId).subscribe(data => {
       this.pupils = data;
       this.studentAttendance = data.map((pupil: User) => {
@@ -77,11 +81,12 @@ export class AttendanceComponent implements OnInit {
     }, error => {
       console.log(error);
     })
-
   }
-  language(lang:string){
+
+  language(lang: string) {
     this.languageService.toggle(lang);
   }
+
   sidebarToggle() {
     this.sidebarService.toggle();
   }
@@ -101,16 +106,17 @@ export class AttendanceComponent implements OnInit {
             attendance: this.studentAttendance,
           }).subscribe(data => {
             console.log(data);
+            this.refreshData();
           }, error => {
             console.log(error);
           })
-        }else{
-          this.lessonService.updateLesson(this.selectedLesson.id,{
+        } else {
+          this.lessonService.updateLesson(this.selectedLesson.id, {
             attendance: this.studentAttendance,
             group: this.group
-          }).subscribe(data =>{
+          }).subscribe(data => {
             console.log(data);
-          },error => {
+          }, error => {
             console.log(error);
           })
         }
@@ -138,9 +144,11 @@ export class AttendanceComponent implements OnInit {
       this.studentAttendance = this.selectedLesson.attendance;
     }
   }
+
   profile() {
-    this.router.navigate(['user-details'],{queryParams: {userId:0}});
+    this.router.navigate(['user-details'], {queryParams: {userId: 0}});
   }
+
   logout() {
     this.tokenStorage.logOut();
     this.router.navigate(['login'])

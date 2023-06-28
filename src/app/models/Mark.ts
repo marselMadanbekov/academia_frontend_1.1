@@ -6,6 +6,6 @@ export interface Mark{
   correct_answers: number;
   total_questions: number;
   subject?: Subject;
-  topic: string;
-  createdDate: Date;
+  topic: string | null;
+  created_date: Date;
 }

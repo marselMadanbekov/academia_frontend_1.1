@@ -156,10 +156,16 @@
               <div
                 class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                 <h4 class="m-0 font-weight-bold text-primary">Statistics by days</h4>
+                <mat-select class="marsForm" placeholder="{{'EDIT'|translationPipe:currentLang}}"
+                            [(ngModel)]="selectedSubject">
+                  <mat-option [value]="null">{{'NO'|translationPipe:currentLang}}</mat-option>
+                  <mat-option *ngFor="let group of user.groups"
+                              [value]="group.subject">{{group.subject?.name}}</mat-option>
+                </mat-select>
               </div>
               <!-- Card Body -->
               <div class="card-body">
-                <app-day-stat></app-day-stat>
+                <app-day-stat [userId]="user.id" [subjectId]="selectedSubject.id" *ngIf="selectedSubject"></app-day-stat>
               </div>
             </div>
           </div>
@@ -175,7 +181,7 @@
               </div>
               <!-- Card Body -->
               <div class="card-body">
-                <app-day-stat></app-day-stat>
+                <app-topic-stat [userId]="user.id" [subjectId]="selectedSubject.id" *ngIf="selectedSubject"></app-topic-stat>
               </div>
             </div>
           </div>

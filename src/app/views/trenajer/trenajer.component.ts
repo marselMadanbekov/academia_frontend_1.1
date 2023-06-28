@@ -11,6 +11,7 @@ import {UserService} from "../../service/entityServices/user.service";
 import {MarkService} from "../../service/entityServices/mark.service";
 import {GroupService} from "../../service/entityServices/group.service";
 import {CRoleService} from "../../service/current/c-role.service";
+import {NotificationService} from "../../service/notification.service";
 
 export interface Task {
   name: string;
@@ -73,14 +74,14 @@ export class TrenajerComponent {
   countedWidth = 100;
   countedHeight = 90;
 
-  firstFramePupil!: User;
-  preFirstPupil!: User;
-  secondFramePupil!: User;
-  preSecondPupil!: User;
-  thirdFramePupil!: User;
-  preThirdPupil!: User;
-  fourthFramePupil!: User;
-  preFourthPupil!: User;
+  firstFramePupil = this.defaultUser();
+  preFirstPupil = this.defaultUser();
+  secondFramePupil = this.defaultUser();
+  preSecondPupil = this.defaultUser();
+  thirdFramePupil = this.defaultUser();
+  preThirdPupil = this.defaultUser();
+  fourthFramePupil = this.defaultUser();
+  preFourthPupil = this.defaultUser();
 
   firstPupilsMark = this.defaultMark(0);
   secondPupilsMark = this.defaultMark(0);
@@ -89,7 +90,7 @@ export class TrenajerComponent {
 
 
   firstFrameNum: any;
-  firstFramePrev:any;
+  firstFramePrev: any;
   secondFrameNum: any;
   secondFramePrev: any;
   thirdFrameNum: any;
@@ -122,6 +123,7 @@ export class TrenajerComponent {
               private tokenService: TokenStorageService,
               private route: Router,
               private speechService: TextToSpeechService,
+              private notification: NotificationService,
               private userService: UserService,
               private markService: MarkService,
               private groupService: GroupService,
@@ -177,8 +179,8 @@ export class TrenajerComponent {
 
   defaultMark(userId: number): { createdDate: Date; total_questions: number; subject: { id: number }; correct_answers: number; topic: string; userId: number } {
     return {
-      userId:userId,
-      subject:{id:1},
+      userId: userId,
+      subject: {id: 1},
       correct_answers: 0,
       total_questions: 0,
       topic: this.selectedTaskName(),
@@ -261,38 +263,38 @@ export class TrenajerComponent {
 
       this.subscription = this.source.subscribe(() => {
         if (i < this.count) {
-          if(this.firstFrameArray[i] == this.firstFramePrev){
+          if (this.firstFrameArray[i] == this.firstFramePrev) {
             this.firstFrameNum = "  " + this.firstFrameArray[i];
             this.firstFramePrev = null;
-          }else {
+          } else {
             this.firstFrameNum = this.firstFrameArray[i];
             this.firstFramePrev = this.firstFrameArray[i];
           }
           console.log(this.voice);
           if (this.voice) this.speechService.speakNumber(this.firstFrameNum);
           if (this.countOfPupils > 1) {
-            if(this.secondFrameArray[i] == this.secondFramePrev){
+            if (this.secondFrameArray[i] == this.secondFramePrev) {
               this.secondFrameNum = "  " + this.secondFrameArray[i];
               this.secondFramePrev = null;
-            }else {
+            } else {
               this.secondFrameNum = this.secondFrameArray[i];
               this.secondFramePrev = this.secondFrameArray[i];
             }
           }
           if (this.countOfPupils > 2) {
-            if(this.thirdFrameArray[i] == this.thirdFramePrev){
+            if (this.thirdFrameArray[i] == this.thirdFramePrev) {
               this.thirdFrameNum = "  " + this.thirdFrameArray[i];
               this.thirdFramePrev = null;
-            }else {
+            } else {
               this.thirdFrameNum = this.thirdFrameArray[i];
               this.thirdFramePrev = this.thirdFrameArray[i];
             }
           }
           if (this.countOfPupils > 3) {
-            if(this.fourthFrameArray[i] == this.fourthFramePrev){
+            if (this.fourthFrameArray[i] == this.fourthFramePrev) {
               this.fourthFrameNum = "  " + this.fourthFrameArray[i];
               this.fourthFramePrev = null;
-            }else {
+            } else {
               this.fourthFrameNum = this.fourthFrameArray[i];
               this.fourthFramePrev = this.fourthFrameArray[i];
             }
@@ -485,6 +487,8 @@ export class TrenajerComponent {
 
     this.uploadMark(this.fourthPupilsMark);
     this.fourthPupilsMark = this.defaultMark(this.fourthFramePupil.id);
+
+    this.notification.showSnackBar('saved')
   }
 
   uploadMark(mark: { createdDate: Date; total_questions: number; subject: { id: number }; correct_answers: number; topic: string; userId: number }): void {
